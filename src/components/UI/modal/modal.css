@@ -1,0 +1,73 @@
+.backdrop{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 1000;
+}
+.backdrop .fa-times{
+    color: white;
+    right: 25px;
+    position: absolute;
+    top: 25px;
+    cursor: pointer;
+    font-size: 26px;
+}
+.open-backdrop{
+    animation: 1.5s animate-back-in ease-in-out forwards;
+}
+.hide-backdrop{
+    animation: 1.5s animate-back-out ease-in-out forwards;
+}
+@keyframes animate-back-in{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@keyframes animate-back-out{
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+.modal-container{
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: lightblue;
+    transition: 1s all ease-in-out;
+}
+.modal-container-open{
+    animation: 1.5s modal-in ease-in-out forwards;
+}
+.modal-container-close{
+    animation: 1.5s modal-out ease-in-out forwards;
+}
+@keyframes modal-in{
+   0%{
+       left: -100vw;
+   }
+   50%{
+       left: 60%;
+   }
+   100%{
+       left: 50%;
+   }
+}
+@keyframes modal-out{
+    0%{
+        left: 50%;
+    }
+    50%{
+        left: 60%;
+    }
+    100%{
+        left: -100vw;
+    }
+}

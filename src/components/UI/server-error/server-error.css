@@ -1,0 +1,23 @@
+.server-error{
+    color: tomato;
+    text-align: center;
+    font-size: 18px;
+    padding: 10px 0;
+    margin: 10px 0;
+    position: relative;
+    font-weight: bold;
+    transition: 1s all ease-in-out;
+    letter-spacing: 1.5px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    animation: 1s animate-server-error-in linear forwards;
+}
+
+@keyframes animate-server-error-in{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}

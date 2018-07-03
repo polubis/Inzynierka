@@ -1,0 +1,58 @@
+.register-form-container{
+    margin-top: 200px;
+    display: flex;
+    justify-content: space-around;
+}
+.register-form{
+    position: relative;
+    width: 35%;
+    padding: 0 35px;
+    box-sizing: border-box;
+    -webkit-box-shadow: -1px 1px 38px -2px rgba(0,0,0,0.42);
+    -moz-box-shadow: -1px 1px 38px -2px rgba(0,0,0,0.42);
+    box-shadow: -1px 1px 38px -2px rgba(0,0,0,0.42);
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+}
+.form-item{
+    display: flex;
+    flex-flow: column;
+}
+.form-item label{
+    font-size: 16px;
+    padding: 10px 0;
+    color: rgb(187, 221, 221);
+    letter-spacing: 1.5px;
+}
+.register-form h2{
+    color: lightblue;
+    text-align: center;
+    font-size: 26px;
+    padding: 5px 0;
+    margin: 10px 0;
+    transition: 0.5s all ease-in-out;
+}
+.come-back-spn{
+    color: orangered;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.5s all ease-in-out;
+}
+.come-back-spn:hover{
+    transform: scale(1.1);
+}
+.select-box{
+    width: 100%;
+    padding: 12.5px;
+    font-weight: bolder;
+    transition: 0.5s all ease-in-out;
+}
+.select-box:focus{
+    -webkit-box-shadow: -1px 1px 24px -2px rgb(112, 202, 233);
+    -moz-box-shadow: -1px 1px 24px -2px rgb(112, 202, 233);
+    box-shadow: -1px 1px 24px -2px rgb(112, 202, 233);
+}

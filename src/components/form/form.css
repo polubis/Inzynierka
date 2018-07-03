@@ -1,0 +1,24 @@
+.u-form-container{
+    padding: 15px 35px;
+    width: 35%;
+    margin: 0 auto;
+    position: relative;
+    box-sizing: border-box;
+    -webkit-box-shadow: -1px 1px 38px -2px rgba(0,0,0,0.42);
+    -moz-box-shadow: -1px 1px 38px -2px rgba(0,0,0,0.42);
+    box-shadow: -1px 1px 38px -2px rgba(0,0,0,0.42);
+    transition: 1s all ease-in-out;
+}
+.u-form-container h1{
+    color: lightblue;
+    text-align: center;
+    padding: 10px 0;
+}
+.server-error{
+    color: tomato;
+    font-size: 20px;
+    position: absolute;
+    bottom: -80px;
+    left: 0;
+    right: 0;
+}

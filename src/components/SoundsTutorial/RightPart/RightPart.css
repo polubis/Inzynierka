@@ -1,0 +1,80 @@
+.right-tutorial-container{
+    width: 60%;
+    position: relative;
+}
+.right-tutorial-container .lds-ring{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 44%;
+}
+
+.right-tutorial-container .server-error{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 43%;
+}
+.track-list-navigation{
+    display: flex;
+    justify-content: space-between;
+}
+.track-list-navigation h3 b{
+    color: tomato;
+}
+.track-list-navigation nav{
+    display: flex;
+    align-items: center;
+}
+.track-list-navigation nav i{
+    color: white;
+    margin: 0 15px 0 0;
+    color: lightgreen;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.searcher{
+    padding: 7.5px;
+    border: none;
+    width: 150px;
+    transition: 0.5s all ease-in-out;
+}
+.searcher:focus{
+    outline: none;
+    width: 220px;
+    padding: 7.5px 16px;
+}
+.searcher::-webkit-input-placeholder{
+    color: black;
+    font-weight: bold;
+}
+
+.track-list-items{
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 0;
+    list-style: none;
+    width: 100%;
+    overflow-y: auto;
+    height: 80%;
+}
+.track-list-items li{
+    margin: 7.5px 0;
+    padding: 10px 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    transition: 0.5s all ease-in-out;
+}
+.track-list-items li b{
+    color: tomato;
+    margin-right: 25px;
+}
+
+.track-list-items li:nth-child(even) {
+    background-color: rgba(170,170,170,0.1);
+}
+.track-list-items li:hover{
+    background-color: rgba(170,170,170,0.3);
+}
