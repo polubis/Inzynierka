@@ -1,10 +1,10 @@
 import React from 'react';
 import './form.css';
-import * as Types from '../../constants/inputsTypes';
+import * as Types from '../../../constants/inputsTypes';
 import FormInput from './formInput/formInput';
-import { validateInput } from '../../services/inputValidator';
-import SpinnerButton from '../UI/spinner-button/spinner-button';
-import { isSomethingExists } from '../../services/helperMethods';
+import { validateInput, checkPasswordsAreTheSame } from '../../../services/inputValidator';
+import SpinnerButton from '../spinner-button/spinner-button';
+import { isSomethingExists, mapArrayIntoObject } from '../../../services/helperMethods';
 class Form extends React.PureComponent{
     state = {
         items: [],
@@ -13,8 +13,10 @@ class Form extends React.PureComponent{
     }
     componentDidMount(){
         const items = [];
-        for(let i = 0; i < Types[this.props.type].length; i++)
-            items.push({value: "", error: ""});
+        for(let i = 0; i < Types[this.props.type].length; i++){
+            items.push({value: Types[this.props.type][i].type === "select" ? "wybierz pole" : "", error: ""});
+        }
+        
         this.setState({items: items});
     }
     componentWillReceiveProps(nextProps){
@@ -26,11 +28,20 @@ class Form extends React.PureComponent{
         newItems[itemsId].value = value;
         newItems[itemsId].error = validateInput(value, 
             Types[this.props.requirements][itemsId]);
-        
-           
-        const ableToSubmit = isSomethingExists(newItems, "error");
+
+        if(this.props.comparePasswordIndexes && !newItems[itemsId].error){
+            const { comparePasswordIndexes } = this.props;
+            const result = checkPasswordsAreTheSame(newItems[comparePasswordIndexes[0]].value, 
+                newItems[comparePasswordIndexes[1]].value)
+            console.log(result);
+            newItems[comparePasswordIndexes[0]].error = result;
+            newItems[comparePasswordIndexes[1]].error = result;
+        }
+       
+        const ableToSubmit = isSomethingExists(newItems, "error").result;
         this.setState({items: newItems, ableToSubmit: !ableToSubmit});
     }
+   
     validateBeforeSubmit = () => {
         const newItems = [...this.state.items];
         for(let i = 0; i < newItems.length; i++){
@@ -42,29 +53,33 @@ class Form extends React.PureComponent{
     onSubmit = e => {
         e.preventDefault();
         const items = this.validateBeforeSubmit();
-        const ableToSubmit = isSomethingExists(items, "value");
+        const ableToSubmit = isSomethingExists(items, "value").result;
         if(!ableToSubmit){
             this.setState({items: items, ableToSubmit: false})
         }
         else{
            this.setState({isSubmiting: true, ableToSubmit: true});
-           this.props.onSubmit(this.state.items[0].value, 
-            this.state.items[1].value);
+           this.props.onSubmit(
+               mapArrayIntoObject(this.state.items, "value", Types[this.props.type], "serverName")
+            );
         }
        
     }
+ 
     render(){
-        const {items} = this.state;
-        console.log(this.props.submitResult);
+        const { items } = this.state;
+        const { additionalClasses } = this.props;
         return (
-            <form onSubmit={e => this.onSubmit(e)} className="u-form-container">
+            <form onSubmit={e => this.onSubmit(e)} className={`u-form-container ${additionalClasses}`}>
                 <header>
-                    <h1>{this.props.formTitle}</h1>
+                    <h1>{this.props.formTitle} {this.props.subHeader && <span>{this.props.subHeader}</span>}</h1>
                 </header>
                 {items.length > 0 && 
                     Types[this.props.type].map((i, index) => {
                     return (
                         <FormInput
+                        nullable={Types[this.props.requirements][index].nullable} 
+                        selectItems={i.selectItems}
                         onChange={e => this.onChange(e.target.value, index)}
                         value={items[index].value}
                         error={items[index].error}
@@ -87,11 +102,12 @@ class Form extends React.PureComponent{
                 corClass="reg-btn-cor"
                 />
 
-                {this.props.submitResult !== null && 
+                {(this.props.submitResult !== null && this.props.submitResult !== undefined ) && 
                     <p className="server-error">
                         {!this.props.submitResult ? this.props.submitErrors[0] : null}
                     </p>
                 }
+                {this.state.isSubmiting || this.props.additionalBtn}
             </form>
         );
     }

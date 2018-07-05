@@ -16,7 +16,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 WebFont.load({
   google: {
-    families: ['Montserrat:300,400,700', 'sans-serif']
+    families: ['Roboto:300,400,600,700', 'sans-serif']
   }
 });
 
