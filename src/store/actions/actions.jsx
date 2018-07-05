@@ -34,17 +34,8 @@ export const sendRegisterEmail = (sendEmailResult, sendEmailError, activateLink)
         sendEmailError: sendEmailError
     };
 }
-export const sendRegisterEmailActionCreator = registerCoreItems => {
+export const sendRegisterEmailActionCreator = registerModel => {
     return dispatch => {
-        const registerModel = {
-            Username: registerCoreItems[0].value,
-            Email: registerCoreItems[1].value,
-            Password: registerCoreItems[2].value,
-            FirstName: null,
-            LastName: null,
-            BirthDate: null,
-            Sex: null
-        }
         annonymousInstance.post('/users/register', registerModel).then(response => {
             dispatch(sendRegisterEmail(true, ""));
         }).catch(error => {
@@ -128,13 +119,9 @@ export const logIn = (loginResult, loginErrors, token) => {
     }
 }
 
-export const loginActionCreator = (login, password, history) => {
+export const loginActionCreator = (loginModel, history) => {
     return dispatch => {
-        const objectToSend = {
-            Username: login,
-            Password: password
-        }
-        annonymousInstance.post("/users/login/", objectToSend).then(response => {
+        annonymousInstance.post("/users/login/", loginModel).then(response => {
             dispatch(logIn(true, [], response.data.successResult.token));
             setCookie("token", 1, "/", response.data.successResult.token);
             document.cookie = `token=${response.data.successResult.token}; path=/`;

@@ -2,7 +2,6 @@ import React from 'react';
 import './RightPart.css';
 import Spinner from '../../UI/spinner/spinner';
 import Aux from '../../../hoc/hoc';
-import ServerError from '../../UI/server-error/server-error';
 const rightPart = props => (
 <div className="right-tutorial-container">
     {props.isLoading ? 
@@ -39,7 +38,7 @@ const rightPart = props => (
        
     </Aux>
 
-    : <ServerError error={props.error[0]}/>}
+    : null}
     
                        
 </div>    

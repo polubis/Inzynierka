@@ -41,8 +41,6 @@ export const validateInput = (inputValue, requirements) => {
         }
     }
     
-
-    
     return ""
 }
 
