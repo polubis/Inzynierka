@@ -14,21 +14,21 @@
 }
 .u-form-container h1{
     font-size: 24px;
-    color: lightblue;
+    color: #707070;
     text-align: center;
     position: relative;
     padding: 5px 0;
 }
 .u-form-container h1 span{
-    color: lightseagreen;
+    color: #831AFB;
     position: absolute;
     font-size: 14px;
     right: 10px;
     top: -15px;
     letter-spacing: 1.5px;
 }
-.server-error{
-    color: tomato;
+.server-error{  
+    color: #8E0909;
     position: absolute;
     left: 0;
     bottom: -60px;

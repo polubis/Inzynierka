@@ -1,8 +1,7 @@
 import React from "react";
 import "./StartPage.css";
 import Button from "../../UI/button/button.jsx";
-
-const startPage = ({changeOnRegister}) => (
+const startPage = ({ changeOnRegister, changeOnLogin }) => (
   <div className="content-container">
     <h1>MCompose</h1>
     <p>Trenowanie słuchu na wysokim poziomie</p>
@@ -21,7 +20,11 @@ const startPage = ({changeOnRegister}) => (
         className="big-btn check-out-btn-empty btn-white-item"
       />
     </section>
-    <Button name="Dalej" className="medium-btn go-next-btn" />
+    <Button
+      onClick={changeOnLogin}
+      name="Logowanie"
+      className="medium-btn go-next-btn"
+    />
   </div>
 );
 export default startPage;

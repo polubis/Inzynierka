@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import "./HomePage.css";
-import Button from "../../components/UI/button/button";
 import StartPage from "../../components/homePage/StartPage/StartPage";
+import Register from '../../components/Forms/Register/Register';
+import Login from '../../components/Forms/Login/Login';
 class HomePage extends Component {
   state = {
     currentBlockNumber: 0
@@ -9,10 +10,17 @@ class HomePage extends Component {
   chooseBlock = () => {
     switch (this.state.currentBlockNumber) {
       case 1:
-        break;
+        return (
+          <Register backIntoMainView={() => this.setState({ currentBlockNumber: 0 })}/>
+        );
+      case 2:
+        return (
+          <Login backIntoMainView={() => this.setState({ currentBlockNumber: 0 })}/>
+        );
       default:
         return (
           <StartPage
+            changeOnLogin={() => this.setState({currentBlockNumber: 2})}
             changeOnRegister={() => this.setState({ currentBlockNumber: 1 })}
           />
         );

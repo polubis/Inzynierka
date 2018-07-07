@@ -4,7 +4,7 @@ import * as Types from '../../../constants/inputsTypes';
 import FormInput from './formInput/formInput';
 import { validateInput, checkPasswordsAreTheSame } from '../../../services/inputValidator';
 import SpinnerButton from '../spinner-button/spinner-button';
-import { isSomethingExists, mapArrayIntoObject } from '../../../services/helperMethods';
+import { isSomethingExists, mapArrayIntoObject, isSomethingEqual } from '../../../services/helperMethods';
 class Form extends React.PureComponent{
     state = {
         items: [],
@@ -29,13 +29,17 @@ class Form extends React.PureComponent{
         newItems[itemsId].error = validateInput(value, 
             Types[this.props.requirements][itemsId]);
 
-        if(this.props.comparePasswordIndexes && !newItems[itemsId].error){
+        if(this.props.comparePasswordIndexes){
             const { comparePasswordIndexes } = this.props;
-            const result = checkPasswordsAreTheSame(newItems[comparePasswordIndexes[0]].value, 
-                newItems[comparePasswordIndexes[1]].value)
-            console.log(result);
-            newItems[comparePasswordIndexes[0]].error = result;
-            newItems[comparePasswordIndexes[1]].error = result;
+            if(isSomethingEqual(comparePasswordIndexes, itemsId) && 
+                newItems[comparePasswordIndexes[0]].value, newItems[comparePasswordIndexes[1]].value){
+                    
+                const result = checkPasswordsAreTheSame(newItems[comparePasswordIndexes[0]].value, 
+                    newItems[comparePasswordIndexes[1]].value);
+                    
+                newItems[comparePasswordIndexes[0]].error = result;
+                newItems[comparePasswordIndexes[1]].error = result;
+            }
         }
        
         const ableToSubmit = isSomethingExists(newItems, "error").result;
@@ -53,8 +57,8 @@ class Form extends React.PureComponent{
     onSubmit = e => {
         e.preventDefault();
         const items = this.validateBeforeSubmit();
-        const ableToSubmit = isSomethingExists(items, "value").result;
-        if(!ableToSubmit){
+        const ableToSubmit = isSomethingExists(items, "error").result;
+        if(ableToSubmit){
             this.setState({items: items, ableToSubmit: false})
         }
         else{
@@ -97,7 +101,7 @@ class Form extends React.PureComponent{
                 isLoading={this.state.isSubmiting}
                 btnType="submit"
                 validation={this.state.ableToSubmit}
-                btnName="Zaloguj"
+                btnName={this.props.btnTitle}
                 disClass="reg-btn-dis"
                 corClass="reg-btn-cor"
                 />

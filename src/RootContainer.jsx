@@ -14,8 +14,7 @@ class RootContainer extends Component {
   }
   render() {
     return (
-        <div>
-            <div id="bg1"></div>
+        <Aux>
             <Route path="/" exact component={HomePage} />
             {this.props.token !== "" ? 
               <Aux>
@@ -28,7 +27,7 @@ class RootContainer extends Component {
               </Aux>
 
             }
-        </div>
+        </Aux>
     );
   }
 }

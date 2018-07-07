@@ -2,14 +2,13 @@ body, html{
   margin: 0;
   font-family: 'Roboto', sans-serif;
 }
-#bg1{
+body{
   background-color: #F39C12;
-  position: absolute;
   height: 100%;
-  width: 100%;
-  z-index: -1;
 }
-
+#root{
+  height: 100%;
+}
 button{
   cursor: pointer;
   transition: 0.5s all ease-in-out;

@@ -6,9 +6,9 @@
 .input-container label{
     padding-bottom: 4px;
     cursor: auto;
-    color: lightblue;
     letter-spacing: 1.2px;
     font-size: 16px;
+    color: #707070;
 }
 .input-container input[type="date"]{
     height: 21px;
@@ -16,8 +16,11 @@
 }
 .input-container select{
     height: 36px;
+    background: rgba(255, 255,255, 0.81);
     margin-top: 5px;
+    transition: 0.5s all ease-in-out;
     font-size: 16px;
+    color: #9B9B9B;
     cursor: pointer;
     border-radius: 5px;
     padding-left: 15px;
@@ -28,7 +31,9 @@
 .input-container input{
     padding: 7.5px;
     font-size: 15px;
+    color: #9B9B9B;
     margin-top: 5px;
+    background: rgba(255, 255,255, 0.81);
     border-radius: 4px;
     border: 1px solid transparent;    
     transition: 0.5s all ease-in-out;
@@ -36,21 +41,18 @@
 .input-container input:focus, 
 .input-container select:focus{
     outline: none;
+    transform: scale(1.02);
 }
-.valid-input:focus{
-    border-color: rgb(71, 138, 160);
-    -webkit-box-shadow: -1px 1px 24px -2px rgb(71, 138, 160);
-    -moz-box-shadow: -1px 1px 24px -2px rgb(112, 202, 233);
-    box-shadow: -1px 1px 24px -2px rgb(112, 202, 233);
+
+.invalid-input{
+    background: rgba(184, 23, 23, 0.81) !important;
+    color: #FFFFFF !important;
 }
-.invalid-input, .invalid-input:focus{
-    border-color: red;
-    -webkit-box-shadow: -1px 1px 24px -2px red;
-    -moz-box-shadow: -1px 1px 24px -2px red;
-    box-shadow: -1px 1px 24px -2px red;
+.invalid-input::placeholder{
+    color: #FFFFFF !important;
 }
 .u-form-validation{
-    color: tomato;
+    color: #8E0909;
     height: 14px;
     font-size: 14px;
 }

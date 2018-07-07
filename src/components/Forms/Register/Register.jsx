@@ -20,6 +20,7 @@ class Register extends React.PureComponent {
   }
   render() {
     const props = {...this.props};
+    const { backIntoMainView } = this.props;
     return (
       <div className="register-form-container">
         {this.state.blockNumber === 1 ? (
@@ -34,6 +35,7 @@ class Register extends React.PureComponent {
             subHeader="Etap 1"
             onSubmit={this.changeToNextBlock}
             comparePasswordIndexes={[2,3]}
+            btnTitle="Dalej"
           />
         ) : (
           <Form
@@ -48,6 +50,7 @@ class Register extends React.PureComponent {
             onSubmit={this.onSubmit}
             submitErrors={props.sendEmailError}
             submitResult={props.sendEmailResult}
+            btnTitle="Załóż konto"
             additionalBtn={
               <Button 
               name="Cofnij"
@@ -58,6 +61,9 @@ class Register extends React.PureComponent {
           />
             
         )}
+        <Button name="Powrót" 
+        className="btn btn-abs medium-btn go-next-btn" 
+        onClick={backIntoMainView}/>
       </div>
     );
   }
