@@ -27,7 +27,7 @@
 }
 
 .check-out-btn {
-  background: #831afb;
+  background: #7e3131;
   color: #ffe9e9;
   border-radius: 76px;
 }
@@ -39,13 +39,13 @@
   background-color: grey;
 }
 .check-out-btn-empty {
-  color: #831afb;
+  color: #7e3131;
   position: relative;
   background: transparent;
 }
 @media(min-width: 1000px){
     .check-out-btn-empty:hover {
-        color: #952efd;
+        color: #7e3131;
         border: 1px solid black;
         color: black;
         cursor: none;
@@ -55,7 +55,7 @@
         border-color: rgba(13, 13, 13, 0.26);
     }
     .check-out-btn:hover {
-        background: #952efd;
+        background: #7e3131;
     }
     .btn-white-item::before {
         content: "";

@@ -5,6 +5,7 @@ import FormInput from './formInput/formInput';
 import { validateInput, checkPasswordsAreTheSame } from '../../../services/inputValidator';
 import SpinnerButton from '../spinner-button/spinner-button';
 import { isSomethingExists, mapArrayIntoObject, isSomethingEqual } from '../../../services/helperMethods';
+import ServerError from '../server-error-prompt/server-error';
 class Form extends React.PureComponent{
     state = {
         items: [],
@@ -73,6 +74,9 @@ class Form extends React.PureComponent{
     render(){
         const { items } = this.state;
         const { additionalClasses } = this.props;
+        const { submitResult } = this.props;
+        const { submitErrors } = this.props;
+        console.log(submitResult);
         return (
             <form onSubmit={e => this.onSubmit(e)} className={`u-form-container ${additionalClasses}`}>
                 <header>
@@ -105,12 +109,17 @@ class Form extends React.PureComponent{
                 disClass="reg-btn-dis"
                 corClass="reg-btn-cor"
                 />
-
-                {(this.props.submitResult !== null && this.props.submitResult !== undefined ) && 
-                    <p className="server-error">
-                        {!this.props.submitResult ? this.props.submitErrors[0] : null}
-                    </p>
+                
+                
+                {(submitResult === false && submitResult !== undefined && 
+                    submitErrors.length > 0) &&
+                    <ServerError 
+                    mainClass="server-error-container"
+                    show={(submitResult === false && submitResult !== undefined && 
+                    submitErrors.length > 0)}
+                    content={submitErrors[0]} />
                 }
+
                 {this.state.isSubmiting || this.props.additionalBtn}
             </form>
         );

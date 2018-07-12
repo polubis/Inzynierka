@@ -7,7 +7,7 @@ import ConfigureModal from "../../components/quiz/configureModal/configureModal"
 import TestQuiz from '../../components/quiz/testQuiz/testQuiz';
 class HomePage extends React.PureComponent {
   state = {
-    currentBlockNumber: 3,
+    currentBlockNumber: 0,
     openConfigureModal: false
   }
   chooseBlock = () => {

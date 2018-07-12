@@ -63,7 +63,7 @@ class Register extends React.PureComponent {
         )}
         <Button name="Powrót" 
         className="btn btn-abs medium-btn go-next-btn" 
-        onClick={backIntoMainView}/>
+        onClick={backIntoMainView} />
       </div>
     );
   }

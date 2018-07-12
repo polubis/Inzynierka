@@ -9,7 +9,7 @@
 }
 #bg2{
     position: absolute;
-    background-color: rgba(170, 129, 37, 0.86);
+    background-color: #7e3131;
     -webkit-clip-path: polygon(14% 66%, 61% 90%, 100% 100%, 0 100%, 0 0);
     clip-path: polygon(14% 66%, 61% 90%, 100% 100%, 0 100%, 0 0);
     bottom: -40px;

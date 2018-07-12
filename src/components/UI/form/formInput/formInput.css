@@ -8,7 +8,6 @@
     cursor: auto;
     letter-spacing: 1.2px;
     font-size: 16px;
-    color: #707070;
 }
 .input-container input[type="date"]{
     height: 21px;
@@ -16,11 +15,11 @@
 }
 .input-container select{
     height: 36px;
-    background: rgba(255, 255,255, 0.81);
+    background-color: #F3F3C4;
     margin-top: 5px;
+    border:none;
     transition: 0.5s all ease-in-out;
     font-size: 16px;
-    color: #9B9B9B;
     cursor: pointer;
     border-radius: 5px;
     padding-left: 15px;
@@ -31,10 +30,9 @@
 .input-container input{
     padding: 7.5px;
     font-size: 15px;
-    color: #9B9B9B;
     margin-top: 5px;
-    background: rgba(255, 255,255, 0.81);
     border-radius: 4px;
+    background-color: #F3F3C4;
     border: 1px solid transparent;    
     transition: 0.5s all ease-in-out;
 }
