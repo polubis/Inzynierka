@@ -40,7 +40,7 @@
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    background-color: lightblue;
+    background-color: #ffffff;
     transition: 1s all ease-in-out;
 }
 .modal-container-open{

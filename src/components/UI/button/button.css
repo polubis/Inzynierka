@@ -31,6 +31,13 @@
   color: #ffe9e9;
   border-radius: 76px;
 }
+.check-out-btn:disabled{
+  cursor: not-allowed;
+  background-color: grey;
+}
+.check-out-btn:disabled:hover{
+  background-color: grey;
+}
 .check-out-btn-empty {
   color: #831afb;
   position: relative;
