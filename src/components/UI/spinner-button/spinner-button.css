@@ -21,7 +21,7 @@
     color: black;
 }
 .submit-btn:disabled{
-    color: lightblue;
+    color: black;
     background-color: transparent;
     cursor: not-allowed;
 }
