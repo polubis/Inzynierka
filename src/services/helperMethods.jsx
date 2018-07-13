@@ -27,3 +27,10 @@ export const contains = (array, element) => {
 
     return false;
 }
+export const isSomethingEqual = (array, element) => {
+    for(let key in array){
+        if(array[key] === element)
+            return true;
+    }
+    return false;
+}

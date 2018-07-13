@@ -13,15 +13,15 @@
     box-shadow: -1px 1px 38px -2px rgba(0,0,0,0.42);
     font-size: 16px;
     color: white;
-    background-color: mediumseagreen;
+    background-color: #7e3131;
     cursor: pointer;
 }
 .spinner-btn:hover{
-    background-color: lightseagreen;
+    background-color: #6e2111;
     color: black;
 }
 .submit-btn:disabled{
-    color: lightblue;
+    color: black;
     background-color: transparent;
     cursor: not-allowed;
 }
@@ -47,7 +47,7 @@
     position: absolute;
     width: 15px;
     height: 15px;
-    background-color: white;
+    background-color: #7e3131;
     border-radius: 50%;
 }
 .spinner-btn::before{

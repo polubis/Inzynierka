@@ -1,59 +1,88 @@
+.big-btn {
+  width: 300px;
+  height: 90px;
+  font-size: 30px;
+}
+.medium-btn {
+  height: 60px;
+  font-size: 22px;
+  width: 170px;
+}
+@media(max-width: 550px){
+    .big-btn {
+        width: 270px;
+        height: 80px;
+        font-size: 30px;
+    }
+    .medium-btn {
+        height: 50px;
+        font-size: 20px;
+        width: 170px;
+    }
+}
+.go-next-btn {
+  border: 1px solid #707070;
+  border-radius: 37px;
+  background: transparent;
+}
 
-.big-btn{
-    width: 300px;
-    height: 90px;
-    font-size: 30px;
+.check-out-btn {
+  background: #7e3131;
+  color: #ffe9e9;
+  border-radius: 76px;
 }
-.medium-btn{
-    height: 60px;
-    font-size: 22px;
-    width: 170px;
+.check-out-btn:disabled{
+  cursor: not-allowed;
+  background-color: grey;
 }
-.go-next-btn{
-    border: 1px solid #707070;
-    border-radius: 37px;
-    background: transparent;
+.check-out-btn:disabled:hover{
+  background-color: grey;
 }
-.go-next-btn:hover{
-    background: rgba(13, 13, 13, 0.26);
-    border-color: rgba(13, 13, 13, 0.26);
+.check-out-btn-empty {
+  color: #7e3131;
+  position: relative;
+  background: transparent;
+}
+@media(min-width: 1000px){
+    .check-out-btn-empty:hover {
+        color: #7e3131;
+        border: 1px solid black;
+        color: black;
+        cursor: none;
+    }
+    .go-next-btn:hover {
+        background: rgba(13, 13, 13, 0.26);
+        border-color: rgba(13, 13, 13, 0.26);
+    }
+    .check-out-btn:hover {
+        background: #7e3131;
+    }
+    .btn-white-item::before {
+        content: "";
+        width: 73px;
+        height: 52px;
+        background: white;
+        position: absolute;
+        transition: 0.5s all ease-in-out;
+        bottom: -35px;
+        right: -25px;
+        clip-path: polygon(50% 0, 85% 83%, 53% 100%, 23% 83%);
+        transform: rotate(-60deg);
+        cursor: initial;
+      }
+        
+      .btn-white-item:hover:before {
+        background: black;
+        bottom: -20px;
+        right: 55px;
+        transform: rotate(-40deg);
+      }
 }
 
-.check-out-btn{
-    background: #831AFB;
-    color: #FFE9E9;
-    border-radius: 76px;
-}
-.check-out-btn-empty{
-    color: #831AFB;
-    position: relative;
-    background: transparent;
-}
-.check-out-btn-empty:hover{
-    color: #952EFD;
-    border: 1px solid black;
-    color: black;
-    cursor: none;
-}
-.check-out-btn:hover{
-    background: #952EFD;
-}
-.btn-white-item::before{
-    content: '';
-    width: 73px;
-    height: 52px;
-    background: white;
-    position: absolute;
-    transition: 0.5s all ease-in-out;
-    bottom: -35px;
-    right: -25px;
-    clip-path: polygon(50% 0, 85% 83%, 53% 100%, 23% 83%);
-    transform: rotate(-60deg);
-    cursor: initial;
-}
-.btn-white-item:hover:before{
-    background: black;
-    bottom: -20px;
-    right: 55px;
-    transform: rotate(-40deg);
+.form-hlp-btn {
+  background-color: transparent;
+  color: white;
+  text-transform: uppercase;
+  font-size: 15px;
+  letter-spacing: 1.2px;
 }
