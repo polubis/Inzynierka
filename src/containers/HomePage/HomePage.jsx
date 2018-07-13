@@ -5,41 +5,17 @@ import Register from "../../components/Forms/Register/Register";
 import Login from "../../components/Forms/Login/Login";
 import ConfigureModal from "../../components/quiz/configureModal/configureModal";
 import TestQuiz from '../../components/quiz/testQuiz/testQuiz';
+import { withRouter } from 'react-router';
+import { Route } from 'react-router-dom';
+
 class HomePage extends React.PureComponent {
   state = {
     currentBlockNumber: 0,
     openConfigureModal: false
   }
-  chooseBlock = () => {
-    switch (this.state.currentBlockNumber) {
-      case 1:
-        return (
-          <Register
-            backIntoMainView={() => this.setState({ currentBlockNumber: 0 })}
-          />
-        );
-      case 2:
-        return (
-          <Login
-            backIntoMainView={() => this.setState({ currentBlockNumber: 0 })}
-          />
-        );
-      case 3:
-        return (
-          <TestQuiz 
-          backIntoMainView={() => this.setState({ currentBlockNumber: 0 })} 
-          />
-        );
-      default:
-        return (
-          <StartPage
-            changeOnTestQuiz={() => this.setState({ openConfigureModal: true })}
-            changeOnLogin={() => this.setState({ currentBlockNumber: 2 })}
-            changeOnRegister={() => this.setState({ currentBlockNumber: 1 })}
-          />
-        );
-    }
-  };
+  pushIntoRoute = path => {
+    this.props.history.push(path);
+  }
   render() {
     const { openConfigureModal } = this.state;
     return (
@@ -47,7 +23,24 @@ class HomePage extends React.PureComponent {
         {this.state.currentBlockNumber !== 3 && 
           <div id="bg2" />
         }
-        {this.chooseBlock()}
+        
+        <Route path="/" render={() => {
+          return ( <StartPage changeOnTestQuiz={() => this.setState({ openConfigureModal: true })} 
+          pushIntoRoute={this.pushIntoRoute}/> )
+        }} exact />
+
+        <Route path="/register" render={() => {
+          return (
+            <Register pushIntoRoute={this.pushIntoRoute} />
+          )
+        }} />
+
+        <Route path="/login" render={() => {
+          return (
+            <Login pushIntoRoute={this.pushIntoRoute} />
+          )
+        }} />
+
         <ConfigureModal
           openQuiz={() => this.setState({currentBlockNumber: 3, openConfigureModal: false})}
           close={() => this.setState({ openConfigureModal: false })}
@@ -58,4 +51,4 @@ class HomePage extends React.PureComponent {
   }
 }
 
-export default HomePage;
+export default withRouter(HomePage);

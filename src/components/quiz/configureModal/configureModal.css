@@ -53,3 +53,10 @@
 .bottom-content .medium-btn{
     bottom: -25px;
 }
+
+@media(max-width: 800px){
+    .modal-content-container{
+        width: 98vw;
+        height: 70vh;
+    }
+}

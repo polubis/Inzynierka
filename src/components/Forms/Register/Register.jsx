@@ -20,7 +20,7 @@ class Register extends React.PureComponent {
   }
   render() {
     const props = {...this.props};
-    const { backIntoMainView } = this.props;
+    const { pushIntoRoute } = this.props;
     return (
       <div className="register-form-container">
         {this.state.blockNumber === 1 ? (
@@ -63,7 +63,7 @@ class Register extends React.PureComponent {
         )}
         <Button name="Powrót" 
         className="btn btn-abs medium-btn go-next-btn" 
-        onClick={backIntoMainView} />
+        onClick={() => pushIntoRoute("/")} />
       </div>
     );
   }

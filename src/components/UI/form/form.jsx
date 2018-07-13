@@ -76,7 +76,6 @@ class Form extends React.PureComponent{
         const { additionalClasses } = this.props;
         const { submitResult } = this.props;
         const { submitErrors } = this.props;
-        console.log(submitResult);
         return (
             <form onSubmit={e => this.onSubmit(e)} className={`u-form-container ${additionalClasses}`}>
                 <header>

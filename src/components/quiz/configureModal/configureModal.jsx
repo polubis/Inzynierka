@@ -53,14 +53,14 @@ class ConfigureModal extends React.PureComponent {
             className="top-content"
           >
             <nav className="modal-icons-container">
-              <span onMouseOver={() => this.setState({whichBlockShouldBeShow: 0})}>
+              <span onClick={() => this.setState({whichBlockShouldBeShow: 0})}>
                 <i className="fa fa-music" />
               </span>
-              <span onMouseOver={() => this.setState({whichBlockShouldBeShow: 1})}>
+              <span onClick={() => this.setState({whichBlockShouldBeShow: 1})}>
                 <i className="fa fa-play" />
               </span>
 
-              <span onMouseOver={() => this.setState({whichBlockShouldBeShow: 2})}>
+              <span onClick={() => this.setState({whichBlockShouldBeShow: 2})}>
                 <i className="fa fa-headphones" />
               </span>
             </nav>

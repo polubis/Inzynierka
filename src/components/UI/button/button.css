@@ -1,3 +1,6 @@
+.remove-decorations{
+  text-decoration: none;
+}
 .big-btn {
   width: 300px;
   height: 90px;

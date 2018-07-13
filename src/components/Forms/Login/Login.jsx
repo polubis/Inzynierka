@@ -8,7 +8,7 @@ import { formTitlesGenerator } from '../../../constants/formTitles';
 import Button from '../../UI/button/button';
 class Login extends React.PureComponent {
     render() { 
-        const { backIntoMainView } = this.props;
+        const { pushIntoRoute } = this.props;
         const props = {...this.props};
         return ( 
         <main className="login-form-container from-navbar-padding">
@@ -20,7 +20,7 @@ class Login extends React.PureComponent {
 
             <Button name="Powrót" 
             className="btn btn-abs medium-btn go-next-btn" 
-            onClick={backIntoMainView}/>
+            onClick={() => pushIntoRoute("/")}/>
         </main>
         )
     }
