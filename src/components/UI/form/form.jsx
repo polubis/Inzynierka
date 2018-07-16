@@ -8,24 +8,24 @@ import { isSomethingExists, mapArrayIntoObject, isSomethingEqual } from '../../.
 import ServerError from '../server-error-prompt/server-error';
 class Form extends React.PureComponent{
     state = {
-        items: [],
         isSubmiting: false,
         ableToSubmit: null
     }
     componentDidMount(){
-        const items = [];
-        for(let i = 0; i < Types[this.props.type].length; i++){
-            items.push({value: Types[this.props.type][i].type === "select" ? "wybierz pole" : "", error: ""});
+        if(this.props.formItems.length === 0){
+            const items = [];
+            for(let i = 0; i < Types[this.props.type].length; i++){
+                items.push({value: Types[this.props.type][i].type === "select" ? "wybierz pole" : "", error: ""});
+            }
+            this.props.setFields(this.props.arrayName, items);
         }
-        
-        this.setState({items: items});
     }
     componentWillReceiveProps(nextProps){
         if(nextProps.submitErrors !== this.props.submitErrors)
             this.setState({isSubmiting: false});
     }
     onChange = (value, itemsId) => {
-        const newItems = [...this.state.items];
+        const newItems = [...this.props.formItems];
         newItems[itemsId].value = value;
         newItems[itemsId].error = validateInput(value, 
             Types[this.props.requirements][itemsId]);
@@ -44,11 +44,12 @@ class Form extends React.PureComponent{
         }
        
         const ableToSubmit = isSomethingExists(newItems, "error").result;
-        this.setState({items: newItems, ableToSubmit: !ableToSubmit});
+        this.setState({ableToSubmit: !ableToSubmit});
+        this.props.setFields(this.props.arrayName, newItems);
     }
    
     validateBeforeSubmit = () => {
-        const newItems = [...this.state.items];
+        const newItems = [...this.props.formItems];
         for(let i = 0; i < newItems.length; i++){
             newItems[i].error = validateInput(newItems[i].value, 
                 Types[this.props.requirements][i]);
@@ -60,19 +61,17 @@ class Form extends React.PureComponent{
         const items = this.validateBeforeSubmit();
         const ableToSubmit = isSomethingExists(items, "error").result;
         if(ableToSubmit){
-            this.setState({items: items, ableToSubmit: false})
+            this.setState({ableToSubmit: false});
+            this.props.setFields(this.props.arrayName, items);
         }
         else{
            this.setState({isSubmiting: true, ableToSubmit: true});
-           this.props.onSubmit(
-               mapArrayIntoObject(this.state.items, "value", Types[this.props.type], "serverName")
-            );
+           this.props.onSubmit();
         }
        
     }
- 
     render(){
-        const { items } = this.state;
+        const { formItems } = this.props;
         const { additionalClasses } = this.props;
         const { submitResult } = this.props;
         const { submitErrors } = this.props;
@@ -81,15 +80,15 @@ class Form extends React.PureComponent{
                 <header>
                     <h1>{this.props.formTitle} {this.props.subHeader && <span>{this.props.subHeader}</span>}</h1>
                 </header>
-                {items.length > 0 && 
+                {formItems.length > 0 && 
                     Types[this.props.type].map((i, index) => {
                     return (
                         <FormInput
                         nullable={Types[this.props.requirements][index].nullable} 
                         selectItems={i.selectItems}
                         onChange={e => this.onChange(e.target.value, index)}
-                        value={items[index].value}
-                        error={items[index].error}
+                        value={formItems[index].value}
+                        error={formItems[index].error}
                         key={i.title} 
                         type={i.type}
                         placeholder={i.holder}
@@ -108,8 +107,7 @@ class Form extends React.PureComponent{
                 disClass="reg-btn-dis"
                 corClass="reg-btn-cor"
                 />
-                
-                
+
                 {(submitResult === false && submitResult !== undefined && 
                     submitErrors.length > 0) &&
                     <ServerError 

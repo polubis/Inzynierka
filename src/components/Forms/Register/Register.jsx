@@ -1,30 +1,48 @@
 import React from "react";
 import "./Register.css";
 import { connect } from "react-redux";
-import { sendRegisterEmailActionCreator } from "../../../store/actions/actions";
+import { sendRegisterEmailActionCreator, sendRegisterEmail } from "../../../store/actions/actions";
 import Form from "../../UI/form/form";
 import { formTitlesGenerator } from "../../../constants/formTitles";
 import Button from '../../UI/button/button';
+import Modal from '../../../components/UI/modal/modal';
+
 class Register extends React.PureComponent {
   state = {
     blockNumber: 1,
-    registerObject: null
+    formItems: [], 
+    secondFormItems: [],
+    showSendEmailModal: false
   };
+  componentWillReceiveProps(nextProps){
+    if(nextProps.sendEmailResult){
+      this.setState({showSendEmailModal: true});
+    }
+  }
   changeToNextBlock = registerObject => {
     this.setState({blockNumber: this.state.blockNumber + 1, registerObject: registerObject});
   }
-  onSubmit = registerObject => {
-    let oldRegisterObject = {...this.state.registerObject};
-    const newRegisterObject = Object.assign(oldRegisterObject, registerObject);
-    this.props.sendRegisterEmail(newRegisterObject);
+  onSubmit = () => {
+    const { formItems, secondFormItems } = this.state;
+    this.props.sendRegisterEmail(formItems, secondFormItems);
+  }
+  setFields = (name, formItems) => { 
+    this.setState({[name]: formItems});
+  }
+  pushIntoRouteWithDataClear = () => {
+    this.props.clearRegisterData(null, []);
+    this.props.pushIntoRoute("/");
   }
   render() {
-    const props = {...this.props};
-    const { pushIntoRoute } = this.props;
+    const { sendEmailError, sendEmailResult } = this.props;
+    const { formItems, secondFormItems, showSendEmailModal } = this.state;
     return (
       <div className="register-form-container">
         {this.state.blockNumber === 1 ? (
           <Form
+            setFields={this.setFields}
+            arrayName="formItems"
+            formItems={formItems}
             additionalClasses="space-from-bottom"
             key={1}
             {...formTitlesGenerator(
@@ -39,6 +57,9 @@ class Register extends React.PureComponent {
           />
         ) : (
           <Form
+            setFields={this.setFields}
+            arrayName="secondFormItems"
+            formItems={secondFormItems}
             additionalClasses="space-from-bottom"
             subHeader="Etap 2"
             key={2}
@@ -48,8 +69,8 @@ class Register extends React.PureComponent {
               "Rejestracja"
             )}
             onSubmit={this.onSubmit}
-            submitErrors={props.sendEmailError}
-            submitResult={props.sendEmailResult}
+            submitErrors={sendEmailError}
+            submitResult={sendEmailResult}
             btnTitle="Załóż konto"
             additionalBtn={
               <Button 
@@ -63,7 +84,13 @@ class Register extends React.PureComponent {
         )}
         <Button name="Powrót" 
         className="btn btn-abs medium-btn go-next-btn" 
-        onClick={() => pushIntoRoute("/")} />
+        onClick={this.pushIntoRouteWithDataClear} />
+
+        <Modal show={showSendEmailModal} close={() => this.setState({showSendEmailModal: false})}>
+          <div>
+            Tu bedzie informacja
+          </div>
+        </Modal>
       </div>
     );
   }
@@ -78,8 +105,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    sendRegisterEmail: registerModel =>
-      dispatch(sendRegisterEmailActionCreator(registerModel))
+    sendRegisterEmail: (firstArray, secondArray) =>
+      dispatch(sendRegisterEmailActionCreator(firstArray, secondArray)),
+    clearRegisterData: (sendEmailResult, sendEmailError) => dispatch(sendRegisterEmail(sendEmailResult, sendEmailError))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

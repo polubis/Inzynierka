@@ -16,7 +16,7 @@ export const registerTypes = [
 
 export const registerRequirements = [
     {inputName: "Login", nullable: false, minLength: 5, maxLength: 30},
-    {inputName: "Adres email", nullable: false, minLength: 5, maxLength: 30},
+    {inputName: "Adres email", nullable: false, minLength: 7, maxLength: 30},
     {inputName: "Hasło", nullable: false, minLength: 5, maxLength: 20},
     {inputName: "Hasło", nullable: false, minLength: 5, maxLength: 20}
 ];

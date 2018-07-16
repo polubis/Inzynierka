@@ -1,26 +1,39 @@
 import React from 'react';
 import './Login.css';
 import { connect } from 'react-redux';
-import { loginActionCreator } from '../../../store/actions/actions';
+import { loginActionCreator, clearTheData } from '../../../store/actions/actions';
 import Form from '../../UI/form/form';
 import { withRouter } from 'react-router-dom';
 import { formTitlesGenerator } from '../../../constants/formTitles';
 import Button from '../../UI/button/button';
 class Login extends React.PureComponent {
+    state = {
+        formItems: []
+    }
+    setFields = (name, formItems) => { 
+        this.setState({[name]: formItems});
+    }
+    pushIntoRouteWithClear = () => {
+        this.props.clearTheData({loginResult: null, loginErrors: []});
+        this.props.pushIntoRoute("/");
+    }
     render() { 
-        const { pushIntoRoute } = this.props;
-        const props = {...this.props};
+        const { loginErrors, loginResult, history, login } = this.props;
+        const { formItems } = this.state;
         return ( 
         <main className="login-form-container from-navbar-padding">
             <Form {...formTitlesGenerator("loginTypes", "loginRequirements", "Logowanie")} 
-            onSubmit={props.login} 
-            submitErrors={props.loginErrors} 
-            submitResult={props.loginResult}
+            onSubmit={() => login(formItems, history)} 
+            formItems={formItems}
+            arrayName="formItems"
+            setFields={this.setFields}
+            submitErrors={loginErrors} 
+            submitResult={loginResult}
             btnTitle="Zaloguj"/>
 
             <Button name="Powrót" 
             className="btn btn-abs medium-btn go-next-btn" 
-            onClick={() => pushIntoRoute("/")}/>
+            onClick={this.pushIntoRouteWithClear}/>
         </main>
         )
     }
@@ -36,7 +49,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        login: (loginModel, history) => dispatch(loginActionCreator(loginModel, history))
+        login: (loginArray, history) => dispatch(loginActionCreator(loginArray, history)),
+        clearTheData: ({ content }) => dispatch(clearTheData({ content }))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

@@ -1,4 +1,4 @@
-import * as actionTypes from '../actionTypes';
+import { SEND_REGISTER_EMAIL, END_REGISTER, LOGIN, SET_TOKEN, CLEAR_THE_DATA } from '../actionTypes';
 import { updateObject } from '../utility/updateObject';
 
 
@@ -16,19 +16,22 @@ const initialState = {
 }
 const reducer = (state = initialState, action) => {
     switch(action.type){
-        case actionTypes.SEND_REGISTER_EMAIL:
+        case SEND_REGISTER_EMAIL:
             return updateObject(state, {sendEmailResult: action.sendEmailResult, 
                 sendEmailError: action.sendEmailError})
 
-        case actionTypes.END_REGISTER:
+        case END_REGISTER:
             return updateObject(state, {registerResult: action.registerResult, 
                 registerError: action.registerError, registerUserData: action.registerUserData})
         
-        case actionTypes.LOGIN:
+        case LOGIN:
             return updateObject(state, {loginResult: action.loginResult, loginErrors: action.loginErrors, 
                 token: action.token})
-        case actionTypes.SET_TOKEN:
+        case SET_TOKEN:
             return updateObject(state, { token: action.token, loginResult: action.loginResult })
+
+        case CLEAR_THE_DATA:
+            return updateObject(state, { loginResult: action.loginResult, loginErrors: action.loginErrors })
         default:
         
         break;

@@ -29,7 +29,7 @@ class HomePage extends React.PureComponent {
           pushIntoRoute={this.pushIntoRoute}/> )
         }} exact />
 
-        <Route path="/register" render={() => {
+        <Route path="/register" exact render={() => {
           return (
             <Register pushIntoRoute={this.pushIntoRoute} />
           )
@@ -38,6 +38,14 @@ class HomePage extends React.PureComponent {
         <Route path="/login" render={() => {
           return (
             <Login pushIntoRoute={this.pushIntoRoute} />
+          )
+        }} />
+
+        <Route path="/register/activate/:id" render={() => {
+          return (
+            <div className="confirm-register-container">
+              Tu bedzie informacja o pomyslnym zalozeniu konta
+            </div>
           )
         }} />
 

@@ -1,11 +1,12 @@
-import * as actionTypes from '../actionTypes';
+import { CLEAR_THE_DATA, SET_TOKEN, SEND_REGISTER_EMAIL, END_REGISTER, LOGIN } from '../actionTypes';
 import annonymousInstance from '../../api/axios';
 import { handleErrors } from '../utility/handleErrors';
 import { getASpecyficCookieValue, setCookie, deleteCookie } from '../../services/cookiesHelper';
 import axios from 'axios';
+
 export const setToken = (token, loginResult) => {
     return {
-        type: actionTypes.SET_TOKEN,
+        type: SET_TOKEN,
         token: token,
         loginResult: loginResult
     }
@@ -27,15 +28,25 @@ export const logoutActionCreator = history => {
     }
 }
 
-export const sendRegisterEmail = (sendEmailResult, sendEmailError, activateLink) => {
+export const sendRegisterEmail = (sendEmailResult, sendEmailError) => {
     return {
-        type: actionTypes.SEND_REGISTER_EMAIL,
+        type: SEND_REGISTER_EMAIL,
         sendEmailResult: sendEmailResult,
         sendEmailError: sendEmailError
     };
 }
-export const sendRegisterEmailActionCreator = registerModel => {
+export const sendRegisterEmailActionCreator = (firstArray, secondArray) => {
     return dispatch => {
+        const registerModel = {
+            "Username": firstArray[0].value,
+            "Email": firstArray[1].value,
+            "Password": firstArray[2].value,
+            "FirstName": secondArray[0].value === "" ? null : secondArray[0].value,
+            "LastName": secondArray[1].value === "" ? null : secondArray[1].value,
+            "BirthDate": secondArray[2].value === "" ? null : secondArray[2].value,
+            "Sex": secondArray[3].value === "wybierz pole" ? null : 
+                secondArray[3].value === "Kobieta" ? false : true
+        }
         annonymousInstance.post('/users/register', registerModel).then(response => {
             dispatch(sendRegisterEmail(true, ""));
         }).catch(error => {
@@ -46,7 +57,7 @@ export const sendRegisterEmailActionCreator = registerModel => {
 
 export const endRegister = (registerResult, registerError, registerUserData) => {
     return {
-        type: actionTypes.END_REGISTER,
+        type: END_REGISTER,
         registerResult,
         registerError,
         registerUserData
@@ -67,60 +78,21 @@ export const endRegisterActionCreator = currentUrl => {
     }
 }
 
-
-export const fetchUser = (user, fetchUserErrors, fetchUserResult) => {
-    return {
-        type: actionTypes.FETCH_USER,
-        user,
-        fetchUserErrors,
-        fetchUserResult
-    }
-}
-
-export const fetchUserACreator = id => {
-    return dispatch => {
-        axios.get('https://jsonplaceholder.typicode.com/users/' + id).then(response => {
-            dispatch(fetchUser(response.data, [], true));
-        }).catch(error => {
-            dispatch(fetchUser(null, handleErrors(error), false));
-        })
-    }
-}
-
-export const loadTracks = (loadedTracks, loadTracksErrors, loadTrackResult) => {
-    return {
-        type: actionTypes.LOAD_TRACKS,
-        loadedTracks,
-        loadTracksErrors,
-        loadTrackResult 
-    }
-}
-
-
-
-export const loadTracksActionCreator = () => {
-    return dispatch => {
-        axios.get('https://jsonplaceholder.typicode.com/posts').then(response => {
-            dispatch(loadTracks(response.data, [], true));
-        }).catch(error => {
-            dispatch(loadTracks(null, handleErrors(error), false));
-        })
-    }
-}
-
-
-
 export const logIn = (loginResult, loginErrors, token) => {
     return {
-        type: actionTypes.LOGIN,
+        type: LOGIN,
         loginResult: loginResult,
         loginErrors: loginErrors,
         token: token
     }
 }
 
-export const loginActionCreator = (loginModel, history) => {
+export const loginActionCreator = (loginArray, history) => {
     return dispatch => {
+        const loginModel = {
+            "Username": loginArray[0].value,
+            "Password": loginArray[1].value
+        }
         annonymousInstance.post("/users/login/", loginModel).then(response => {
             dispatch(logIn(true, [], response.data.successResult.token));
             setCookie("token", 1, "/", response.data.successResult.token);
@@ -131,3 +103,8 @@ export const loginActionCreator = (loginModel, history) => {
         })
     }
 }
+
+export const clearTheData = ({ ...content }) => {
+    return { type: CLEAR_THE_DATA, ...content }
+}
+
