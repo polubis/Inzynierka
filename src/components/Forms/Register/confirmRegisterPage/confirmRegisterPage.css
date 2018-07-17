@@ -1,0 +1,65 @@
+.confirm-register-page-container{
+    width: 80vw;
+    height: 80vh;
+}
+.confirm-register-page-container > .lds-ring{
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.confirm-register-page-container > .lds-ring div {
+    border-color: lightgreen transparent transparent transparent;
+}
+.conf-reg-informations{
+    padding: 10px 25px;
+}
+.conf-reg-informations b{
+    color: #7e3131;
+}
+.error-occured{
+    font-size: 24px;
+    color: tomato;
+}
+.conf-reg-informations article{
+    font-size: 17px;
+    line-height: 22px;
+    padding: 15px;
+    position: relative;
+}
+.conf-reg-informations article .medium-btn:first-of-type{
+   bottom: -120px;
+   right: 50px;
+}
+.conf-reg-informations article .medium-btn:last-of-type{
+    border: none;
+    color: rgb(129, 202, 226);
+    right: 250px;
+    bottom: -120px;
+}
+.conf-reg-informations article .medium-btn:last-of-type:hover{
+    background: none;
+}
+@media(max-width: 600px){
+    .confirm-register-page-container{
+        width: 98vw;
+        height: 90vh;
+        text-align: center;
+    }
+    .conf-reg-informations article .medium-btn{
+        left: 0;
+        right: 0 !important;
+        margin: 0 auto;
+    }
+    .conf-reg-informations article .medium-btn:last-of-type{
+        bottom: -200px;
+    }
+}
+@media(max-width: 450px){
+    .conf-reg-informations article{
+        font-size: 16px;
+        line-height: 20px;
+    }
+    .error-occured{
+        margin: 0;
+    }
+}

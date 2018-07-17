@@ -1,0 +1,35 @@
+.nav-logo {
+  font-size: 34px;
+  display: inline-block;
+  padding: 10px;
+  z-index: 2;
+}
+.nav-logo span:first-child {
+  color: rgba(255, 254, 254, 0.774);
+}
+.nav-logo span:last-child {
+  color: rgb(108, 233, 185);
+}
+.modal-logo {
+  margin: 5px auto;
+  font-size: 40px;
+  position: relative;
+  width: 250px;
+  text-align: center;
+}
+.modal-logo span:first-child {
+  color: #7e3131;
+}
+.modal-logo span:last-child {
+  color: rgb(46, 153, 112);
+}
+.modal-logo::after{
+    content: '';
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    background: #7e3131;
+    border-radius: 50%;
+    top: -15px;
+    right: -15px;
+}

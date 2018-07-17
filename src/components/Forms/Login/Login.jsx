@@ -1,7 +1,7 @@
 import React from 'react';
 import './Login.css';
 import { connect } from 'react-redux';
-import { loginActionCreator, clearTheData } from '../../../store/actions/actions';
+import { loginActionCreator, clearTheData } from '../../../store/actions/Authenticate';
 import Form from '../../UI/form/form';
 import { withRouter } from 'react-router-dom';
 import { formTitlesGenerator } from '../../../constants/formTitles';
@@ -21,7 +21,7 @@ class Login extends React.PureComponent {
         const { loginErrors, loginResult, history, login } = this.props;
         const { formItems } = this.state;
         return ( 
-        <main className="login-form-container from-navbar-padding">
+        <main className="login-form-container">
             <Form {...formTitlesGenerator("loginTypes", "loginRequirements", "Logowanie")} 
             onSubmit={() => login(formItems, history)} 
             formItems={formItems}

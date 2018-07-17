@@ -4,7 +4,6 @@ import { Route } from 'react-router-dom';
 import Aux from './hoc/hoc';
 import Navbar from './components/navigation/navbar';
 
-import { setTokenActionCreator, logoutActionCreator } from './store/actions/actions';
 class RootContainer extends React.PureComponent {
   render() {
     return (

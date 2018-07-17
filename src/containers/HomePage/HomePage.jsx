@@ -7,6 +7,7 @@ import ConfigureModal from "../../components/quiz/configureModal/configureModal"
 import TestQuiz from '../../components/quiz/testQuiz/testQuiz';
 import { withRouter } from 'react-router';
 import { Route } from 'react-router-dom';
+import ConfirmRegisterPage from '../../components/Forms/Register/confirmRegisterPage/confirmRegisterPage';
 
 class HomePage extends React.PureComponent {
   state = {
@@ -43,9 +44,7 @@ class HomePage extends React.PureComponent {
 
         <Route path="/register/activate/:id" render={() => {
           return (
-            <div className="confirm-register-container">
-              Tu bedzie informacja o pomyslnym zalozeniu konta
-            </div>
+            <ConfirmRegisterPage redirectToHomePage={this.props.history.push}/>
           )
         }} />
 
@@ -59,4 +58,6 @@ class HomePage extends React.PureComponent {
   }
 }
 
+
 export default withRouter(HomePage);
+

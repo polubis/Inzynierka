@@ -3,7 +3,7 @@ import './BottomPanel.css';
 import Transition from 'react-transition-group/Transition';
 import SoundsTutorial from '../../components/SoundsTutorial/SoundsTutorial';
 import { connect } from 'react-redux';
-import { fetchUserACreator } from '../../store/actions/actions';
+import { fetchUserACreator } from '../../store/actions/Authenticate';
 
 class BottomPanel extends Component{
 

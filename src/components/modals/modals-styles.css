@@ -1,0 +1,55 @@
+.register-modal-container{
+    width: 750px;
+    height: 500px;
+    padding: 25px;
+    box-sizing: border-box;
+}
+.register-modal-container b{
+    color: #7e3131;
+}
+.register-modal-container h2{
+    padding: 15px 0;
+}
+.register-modal-container > p{
+    font-size: 18px;
+}
+.register-modal-container article{
+    padding: 0 10px;
+    line-height: 22.5px;
+}
+.register-modal-container article p{
+    text-align: right;
+}
+.register-modal-container .medium-btn{
+    bottom: -30px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}
+@media(max-width: 800px){
+    .register-modal-container{
+        width: 98vw;
+        height: 80vh;
+        padding: 25px 7.5px;
+    }
+}
+@media(max-width: 500px){
+    .register-modal-container{
+        text-align: center;
+    }
+    .register-modal-container h2{
+        padding: 7.5px 0;
+        font-size: 22px;
+    }
+    .register-modal-container > p{
+        font-size: 16px;
+    }
+    .register-modal-container article{
+        padding: 0 5px;
+        font-size: 14px;
+        line-height: 19px;
+    }
+    .register-modal-container article p{
+        text-align: center;
+    }
+}

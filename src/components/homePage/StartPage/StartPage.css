@@ -101,6 +101,9 @@
   .content-container article {
     font-size: 18px;
   }
+  .content-container .btn-white-item{
+    color: #3900bd;
+  }
 }
 @media(max-width: 450px){
     .content-container h1{

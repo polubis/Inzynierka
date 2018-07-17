@@ -1,11 +1,11 @@
 import React from "react";
 import "./Register.css";
 import { connect } from "react-redux";
-import { sendRegisterEmailActionCreator, sendRegisterEmail } from "../../../store/actions/actions";
+import { sendRegisterEmailActionCreator, sendRegisterEmail } from "../../../store/actions/Authenticate";
 import Form from "../../UI/form/form";
 import { formTitlesGenerator } from "../../../constants/formTitles";
 import Button from '../../UI/button/button';
-import Modal from '../../../components/UI/modal/modal';
+import RegisterModal from '../../modals/register';
 
 class Register extends React.PureComponent {
   state = {
@@ -15,7 +15,7 @@ class Register extends React.PureComponent {
     showSendEmailModal: false
   };
   componentWillReceiveProps(nextProps){
-    if(nextProps.sendEmailResult){
+    if(nextProps.sendEmailResult === true){
       this.setState({showSendEmailModal: true});
     }
   }
@@ -83,14 +83,15 @@ class Register extends React.PureComponent {
             
         )}
         <Button name="Powrót" 
-        className="btn btn-abs medium-btn go-next-btn" 
+        className="medium-btn go-next-btn" 
         onClick={this.pushIntoRouteWithDataClear} />
 
-        <Modal show={showSendEmailModal} close={() => this.setState({showSendEmailModal: false})}>
-          <div>
-            Tu bedzie informacja
-          </div>
-        </Modal>
+        <RegisterModal close={() => this.setState({ showSendEmailModal: false })} 
+          username={formItems.length > 0 ? formItems[0].value : ""} 
+          email={formItems.length > 0 ? formItems[1].value : ""} show={showSendEmailModal} />
+       
+     
+        
       </div>
     );
   }

@@ -2,3 +2,9 @@
     width: 100%;
     min-height: 100%;
 }
+.login-form-container .go-next-btn{
+    left: 25px;
+    color: white;
+    border-color: white;
+    bottom: -15px;
+}

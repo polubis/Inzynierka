@@ -3,7 +3,7 @@ import './SoundsTutorial.css';
 import { connect } from 'react-redux';
 import LeftPart from './LeftPart/LeftPart';
 import RightPart from './RightPart/RightPart';
-import { loadTracksActionCreator } from '../../store/actions/actions';
+import { loadTracksActionCreator } from '../../store/actions/Authenticate';
 import Sound from '../../assets/testSounds/gtr-nylon22.mp3';
 
 class SoundsTutorial extends Component {

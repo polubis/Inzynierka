@@ -60,3 +60,8 @@
         height: 70vh;
     }
 }
+@media(max-width: 450px){
+    .bottom-content article{
+        font-size: 17px;
+    }
+}
