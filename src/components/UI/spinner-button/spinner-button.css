@@ -16,8 +16,7 @@
     background-color: #7e3131;
     cursor: pointer;
 }
-.spinner-btn:hover{
-    background-color: #6e2111;
+.submit-btn:hover{
     color: black;
 }
 .submit-btn:disabled{

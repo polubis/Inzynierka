@@ -71,7 +71,11 @@ export const endRegisterActionCreator = currentUrl => {
         
         annonymousInstance.post('/Users/register/activate/' + activateAccountLink).
         then(response => {
-            dispatch(endRegister(true, [], response.data.successResult));
+            const model = {...response.data.successResult};
+            model.creationDate = model.creationDate.slice(0, 10) + " " + model.creationDate.slice(11, 16);
+            model.modifiedDate = model.modifiedDate.slice(0, 10) + " " + model.modifiedDate.slice(11, 16);
+            
+            dispatch(endRegister(true, [], model));
         }).catch(error => {
             dispatch(endRegister(false, handleErrors(error), null));
         })

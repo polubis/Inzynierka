@@ -1,6 +1,7 @@
 .confirm-register-page-container{
     width: 80vw;
-    height: 80vh;
+    min-height: 80vh;
+    z-index: 10;
 }
 .confirm-register-page-container > .lds-ring{
     position: fixed;
@@ -39,10 +40,59 @@
 .conf-reg-informations article .medium-btn:last-of-type:hover{
     background: none;
 }
+
+
+.correct-reg-message{
+    color: mediumaquamarine;
+    font-weight: 600;
+    font-size: 30px;
+    text-align: center;
+}
+.confirm-register-page-container h3{
+    border-top: 1px solid lightblue;
+    padding-top: 25px;
+}
+.conf-reg-informations article p{
+    padding-top: 20px;
+    text-align: right;
+    margin: 0 45px 0 0;
+}
+
+@media(min-width: 1300px){
+    .conf-reg-informations table{
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 25px;
+        text-align: center;
+    }
+    .conf-reg-informations table, th, td{
+        border: 1px solid black;
+    }
+    .conf-reg-informations th, td{
+        padding: 10px;
+        box-sizing: border-box;
+        width: 25%;
+    }
+    .reg-detail{
+        display: none;
+    }
+}
+@media(max-width: 1299px){
+    .conf-reg-informations table{
+        display: none;
+    }
+    .reg-detail{
+        display: block;
+        text-align: right;
+    }
+    .confirm-register-page-container h3{
+        text-align: center;
+    }
+}
 @media(max-width: 600px){
     .confirm-register-page-container{
         width: 98vw;
-        height: 90vh;
+        min-height: 90vh;
         text-align: center;
     }
     .conf-reg-informations article .medium-btn{
@@ -53,6 +103,11 @@
     .conf-reg-informations article .medium-btn:last-of-type{
         bottom: -200px;
     }
+    .conf-reg-informations article p{
+        text-align: center;
+        margin: 0;
+        
+    }
 }
 @media(max-width: 450px){
     .conf-reg-informations article{
@@ -61,5 +116,36 @@
     }
     .error-occured{
         margin: 0;
+    }
+    .correct-reg-message{
+        margin: 0;
+    }
+    .confirm-register-page-container h3{
+        border-width: 3px;
+    }
+    .reg-detail{
+        font-size: 15px;
+        display: flex;
+        flex-flow: wrap;
+        margin: 5px 0;
+        justify-content: center;
+        text-align: center;
+        color: mediumaquamarine;
+    }
+    .reg-detail b{
+        margin-left: 7.5px;
+    }
+    .reg-detail-container{
+        padding: 15px;
+        box-sizing: border-box;
+        background-color: rgba(0,0,0,0.6);
+    }
+}
+@media(max-width: 340px){
+    .confirm-register-page-container h3{
+        font-size: 16px;
+    }
+    .reg-detail-container{
+        margin-bottom: 80px;
     }
 }

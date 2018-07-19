@@ -24,11 +24,10 @@ class ConfirmRegisterPage extends React.PureComponent{
         }
     }
     
-    refreshPage = () => {
-        window.location.href = window.location.href;
-    }
+    refreshPage = () => { window.location.href = window.location.href; }
+    
     render(){
-        const { registerResult, registerError, redirectToHomePage } = this.props;
+        const { registerResult, registerError, redirectToHomePage, registerUserData } = this.props;
         const { isLoading } = this.state;
         return (
             <div ref={el => { this.scrollRef = el }} className="confirm-register-page-container">
@@ -37,7 +36,44 @@ class ConfirmRegisterPage extends React.PureComponent{
                     registerResult !== null && 
                     registerResult ? 
                     <div className="conf-reg-informations">
-                    dasdasdsa
+                        <p className="correct-reg-message">Twoje konto zostało aktywowane</p>
+                        <article>
+                            Założone przez Ciebie konto umożliwi Ci wykorzystanie możliwości naszego serwisu 
+                            zgodnie z jego przeznaczeniem. Poniższe statystki pomogą Ci z ewentualnymi
+                            problemami dotyczącymi użytkowania serwisu. Zapisanie ich gwarantuje szybką odpowiedź
+                            podczas kontaktu z naszym oddziałem wsparcia. 
+                            <p>Pozdrawiamy <b>mcomposesupport@gmail.com</b></p>
+                        </article>
+                        <h3>Szczegóły dotyczące rejestracji</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Data utworzenia konta</th>
+                                    <th>Data potwierdzenia konta</th>
+                                    <th>Nazwa użytkownika</th>
+                                    <th>Adres email</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                <tr>
+                                    <td>{registerUserData.creationDate}</td>
+                                    <td>{registerUserData.modifiedDate}</td>
+                                    <td>{registerUserData.username}</td>
+                                    <td>{registerUserData.email}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div className="reg-detail-container">
+                            <p className="reg-detail">Data utworzenia konta: <b>{registerUserData.creationDate}</b></p>
+                            <p className="reg-detail">Data potwierdzenia konta: <b>{registerUserData.modifiedDate}</b></p>
+                            <p className="reg-detail">Nazwa użytkownika: <b>{registerUserData.username}</b></p>
+                            <p className="reg-detail">Adres email: <b>{registerUserData.email}</b></p>
+                        </div>
+                        
+                        <Button name="Wróć" 
+                            className="medium-btn go-next-btn" 
+                            onClick={() => redirectToHomePage("/")} />              
                     </div> 
                     :
                     <div className="conf-reg-informations">
