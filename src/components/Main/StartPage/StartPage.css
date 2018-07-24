@@ -1,0 +1,110 @@
+.main-advise{
+    display: flex;
+    padding: 25px;
+    margin-top: 25px;
+    justify-content: center;
+    flex-flow: wrap;
+    margin-top: 50px;
+}
+.main-advise > div{
+    width: 40%;
+}
+.main-advise > div h1{
+    font-size: 50px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+}
+.main-advise > div article{
+    font-size: 24px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.main-advise ul{
+    list-style: none;
+    width: 40%;
+    margin-top: 60px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+.main-advise ul li{
+    width: 480px;
+    display: inherit;
+    cursor: pointer;
+    height: 80px;
+    padding: 10px;
+    position: relative;
+    transform: rotateY(-30deg) rotateX(15deg);
+    transition: 0.2s all ease-in;
+    color: white;
+}
+.main-advise ul li:nth-of-type(1){
+    background: #7e3131;
+    letter-spacing: 1.2px;
+}
+.main-advise ul li:nth-of-type(2){
+    background: #551f1f;
+    margin-top: 2.5px;
+}
+.main-advise ul li:nth-of-type(3){
+    background: #361212;
+    margin-top: 5px;
+}
+.main-advise ul li:hover{
+    transform: rotateY(-25deg) rotateX(5deg);
+}
+.main-advise ul li i{
+    display: block;
+    font-size: 70px;
+    margin: auto 15px;
+}
+.main-advise ul li p:first-of-type{
+   margin: 10px 0;
+}
+.main-advise ul li p:last-of-type{
+    font-size: 14px;
+    position: absolute;
+    width: 70%;
+    left: 24.5%;
+    text-align: justify;
+    top: 27.5%;
+}
+
+@media(max-width: 1050px){
+    .main-advise > div{
+        width: 48%;
+        width: 100%;
+    }
+    .main-advise div > article{
+        padding: 20px;
+    }
+    .main-advise ul{
+        width: 100%;
+        margin-top: 80px;
+    }
+}
+@media(max-width: 625px){
+    .main-advise ul{
+        margin-top: 40px 0 0 0;
+        padding: 0;
+    }
+}
+@media(max-width: 500px){
+    .main-advise ul li{
+        width: 100%;
+        padding: 5px;
+    }
+    .main-advise ul li i{
+        font-size: 32px;
+    }
+    .main-advise ul li p:first-of-type{
+        margin: 5px 0;
+    }
+    .main-advise ul li p:last-of-type{
+        text-align: initial !important;
+        top: 18% !important;
+        font-size: 15px;
+        line-height: 15px;
+    }
+}

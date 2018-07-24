@@ -98,10 +98,11 @@ export const loginActionCreator = (loginArray, history) => {
             "Password": loginArray[1].value
         }
         annonymousInstance.post("/users/login/", loginModel).then(response => {
-            dispatch(logIn(true, [], response.data.successResult.token));
-            setCookie("token", 1, "/", response.data.successResult.token);
-            document.cookie = `token=${response.data.successResult.token}; path=/`;
-            history.push("/logged");
+            const { token } = response.data.successResult;
+            dispatch(logIn(true, [], token));
+            setCookie("token", 1, "/", token);
+            document.cookie = `token=${token}; path=/`;
+            history.push("/main");
         }).catch(error => {
             dispatch(logIn(false, handleErrors(error), ""));
         })
