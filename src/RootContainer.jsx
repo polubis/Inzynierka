@@ -5,6 +5,8 @@ import Navbar from './components/navigation/navbar';
 import Main from './containers/Main/Main';
 import { connect } from 'react-redux';
 import { setTokenActionCreator } from './store/actions/Authenticate';
+import Quiz from './components/quiz/Quiz';
+
 class RootContainer extends React.PureComponent {
   componentDidMount(){
     this.props.setTokenActionCreator();
@@ -26,6 +28,12 @@ class RootContainer extends React.PureComponent {
                 <HomePage />
               );
             }} />
+
+             <Route path="/quiz" render={() => {
+                  return (
+                      <Quiz path="/quiz" />
+                  );
+              }} />
         </React.Fragment>
     );
   }

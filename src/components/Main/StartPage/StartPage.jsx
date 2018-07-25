@@ -1,9 +1,9 @@
 import React from 'react';
 import './StartPage.css';
 
-const startPage = (props) => {
+const startPage = ({push, scrollRef}) => {
     return(
-        <div ref={props.scrollRef} className="main-start-page">
+        <div ref={scrollRef} className="main-start-page">
             <section className="main-advise">
                 <div>
                     <h1>Muzyka, Sluch.</h1>
@@ -15,7 +15,7 @@ const startPage = (props) => {
                     </article>
                 </div>
                 <ul>
-                    <li>
+                    <li onClick={() => push("/quiz")}>
                         <i className="fa fa-photo"></i>
                         <p>Samouczek</p>
                         <p>Przejdź szybki quiz dla rozgrzania słychu.</p>

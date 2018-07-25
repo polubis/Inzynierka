@@ -17,6 +17,10 @@ class HomePage extends React.PureComponent {
   pushIntoRoute = path => {
     this.props.history.push(path);
   }
+  openQuiz = () => {
+    this.setState({openConfigureModal: false});
+    this.pushIntoRoute("/quiz");
+  }
   render() {
     const { openConfigureModal } = this.state;
     return (
@@ -49,7 +53,7 @@ class HomePage extends React.PureComponent {
         }} />
 
         <ConfigureModal
-          openQuiz={() => this.setState({currentBlockNumber: 3, openConfigureModal: false})}
+          openQuiz={this.openQuiz}
           close={() => this.setState({ openConfigureModal: false })}
           show={openConfigureModal}
         />
