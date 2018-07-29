@@ -46,7 +46,7 @@ class ConfigureModal extends React.PureComponent {
     const { show } = this.props;
     const { openQuiz } = this.props;
     return (
-      <Modal close={close} show={show}>
+      <Modal close={close} show={show} showIcon={true}>
         <div className="modal-content-container">
           <header
             style={{ backgroundImage: `url(${Bg})` }}

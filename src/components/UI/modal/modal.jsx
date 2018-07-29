@@ -10,7 +10,9 @@ const modal = props => (
             timeout={1500}>
                 {state => (
                 <div className={`backdrop ${props.show ? "open-backdrop" : "hide-backdrop"}`}>
-                    <i onClick={props.close} className="fa fa-times"></i>
+                    {props.showIcon && 
+                        <i onClick={props.close} className="fa fa-times"></i>
+                    }
                     <div className={`modal-container ${props.show ? "modal-container-open" 
                     : "modal-container-close"}`}>
                         {props.children}
