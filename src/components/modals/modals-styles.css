@@ -36,6 +36,7 @@
 @media(max-width: 500px){
     .register-modal-container{
         text-align: center;
+        height: 90vh;
     }
     .register-modal-container h2{
         padding: 7.5px 0;

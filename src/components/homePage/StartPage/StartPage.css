@@ -106,6 +106,9 @@
   }
 }
 @media(max-width: 450px){
+  .content-container{
+    margin-top: 45px;
+  }
     .content-container h1{
         font-size: 45px;
         width: 250px;

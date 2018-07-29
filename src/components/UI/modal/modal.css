@@ -8,6 +8,7 @@
 }
 .backdrop .fa-times{
     color: white;
+    z-index: 10;
     right: 25px;
     position: absolute;
     top: 25px;
