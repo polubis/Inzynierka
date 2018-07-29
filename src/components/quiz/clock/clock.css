@@ -1,9 +1,9 @@
 .clock-container{
-    position: absolute;
-    left: 25px;
-    top: 25px;
     color: white;
     font-size: 26px;
+    left: 25px;
+    position: absolute;
+    top: 25px;
 }
 .clock-container i{
     margin-right: 15px;

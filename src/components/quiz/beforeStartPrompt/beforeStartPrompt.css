@@ -1,0 +1,41 @@
+.before-start-prompt{
+    width: 500px;
+    display: flex;
+    flex-flow: column;
+    animation: 1.5s animate-prompt linear infinite;
+    background: rgba(0,0,0,0.90);
+    padding: 30px;
+    box-sizing: border-box;
+}
+.before-start-prompt h3{
+    margin: 0;
+    color: orangered;
+    text-align: center;
+}
+.before-start-prompt article{
+    text-align: justify;
+}
+.before-start-prompt article p{
+    font-size: 16px;
+    font-weight: bold;
+}
+.before-start-prompt button{
+    margin: 30px auto 0 auto;
+}
+@keyframes animate-prompt{
+    0%{
+        margin-top: 10px;
+    }
+    25%{
+        margin-top: 0
+    }
+    50%{
+        margin-top: -10px;
+    }
+    75%{
+        margin-top: 0;
+    }
+    100%{
+        margin-top: 10px;
+    }
+}
