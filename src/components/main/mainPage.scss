@@ -1,3 +1,39 @@
+.main-start-page{
+    height: 100%;
+    .slider{
+        width: 100%;
+        height: 500px;
+        margin: 65px 0 0 0;
+        position: relative;
+        div{
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-repeat: no-repeat;
+            animation: 25s animate-pic infinite;
+            @keyframes animate-pic {
+                0%{
+                    background-position: top;
+                }
+                25%{
+                    background-position: center;
+                }
+                50%{
+                    background-position: bottom;
+                }
+                75%{
+                    background-position: center;
+                }
+                100%{
+                    background-position: top;
+                }
+            }
+        }
+    }
+}
+
+
 .main-advise{
     display: flex;
     padding: 25px;

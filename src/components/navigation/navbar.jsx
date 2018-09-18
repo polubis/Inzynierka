@@ -19,7 +19,7 @@ class Navbar extends React.PureComponent{
         return (
             <header ref={el => { this.navRef = el }} className={`navbar-container ${navbarExtended ? "nav-extended" : "nav-normal"}`}>
                 <Logo type="nav-logo"/>
-                
+
                 <span onClick={this.extendNavbar} 
                 className={`nav-span ${navbarExtended ? "nav-span-extended" : "nav-span-normal"}`}>
                 </span>

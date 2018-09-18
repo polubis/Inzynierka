@@ -1,5 +1,6 @@
 import React from 'react';
-import './mainPage.css';
+import './mainPage.scss';
+import Guitar from '../../assets/bgs/guitar.jpg';
 
 const mainPage = ({push, scrollRef}) => {
     return(
@@ -32,6 +33,10 @@ const mainPage = ({push, scrollRef}) => {
                     </li>
                 </ul>
             </section>
+
+            <figure className="slider">
+                <div style={{ backgroundImage: `url(${Guitar})` }} />
+            </figure>
         </div>
     );
 }

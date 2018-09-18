@@ -26,7 +26,6 @@ const errorParser = error => {
         throw ["Ups, coś poszło nie tak"];
     }
 
-
     const errors = handleErrors(error);
 
     if(error.response.status === 401){
