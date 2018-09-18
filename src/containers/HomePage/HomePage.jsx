@@ -11,7 +11,6 @@ import ConfirmRegisterPage from '../../components/Forms/Register/confirmRegister
 
 class HomePage extends React.PureComponent {
   state = {
-    currentBlockNumber: 0,
     openConfigureModal: false
   }
   pushIntoRoute = path => {
@@ -25,9 +24,7 @@ class HomePage extends React.PureComponent {
     const { openConfigureModal } = this.state;
     return (
       <main className="home-page">
-        {this.state.currentBlockNumber !== 3 && 
-          <div id="bg2" />
-        }
+        <div id="bg2" />
         
         <Route path="/" render={() => {
           return ( <StartPage changeOnTestQuiz={() => this.setState({ openConfigureModal: true })} 

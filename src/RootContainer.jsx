@@ -15,7 +15,6 @@ class RootContainer extends React.PureComponent {
     const { loginResult } = this.props;
     return (
         <React.Fragment>
-          <Navbar loginResult/>
             <Route path="/main" render={() => {
               return (
                 loginResult === true ? <Main /> : <Redirect to="/login" />
