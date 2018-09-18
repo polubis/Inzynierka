@@ -18,12 +18,14 @@
   "devDependencies": {
     "axios": "^0.18.0",
     "moment": "^2.22.2",
+    "node-sass": "^4.9.3",
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-transition-group": "^2.3.1",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
+    "sass-loader": "^7.1.0",
     "videojs-wavesurfer": "^2.5.0"
   }
 }
