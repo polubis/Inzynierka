@@ -9,6 +9,7 @@ import Quiz from './components/quiz/Quiz';
 
 class RootContainer extends React.PureComponent {
   componentDidMount(){
+    console.log(this.props.loginObject);
     this.props.setTokenActionCreator(this.props.loginObject);
   }
   render() {

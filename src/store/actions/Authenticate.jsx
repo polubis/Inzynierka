@@ -3,11 +3,12 @@ import annonymousInstance from '../../api/axios';
 import { handleErrors } from '../utility/handleErrors';
 import { getASpecyficCookieValue, setCookie, deleteCookie } from '../../services/cookiesHelper';
 import axios from 'axios';
-
+import { Api } from '../../api/index.js';
 
 export const setTokenActionCreator = currentLoginObject => {
     return dispatch => {
         const copiedObject = {...currentLoginObject};
+        console.log(copiedObject);
         const cookies = document.cookie;
         const token = getASpecyficCookieValue("token", cookies);
         copiedObject.token = token;
@@ -89,14 +90,13 @@ export const loginActionCreator = (loginArray, history) => {
             "Username": loginArray[0].value,
             "Password": loginArray[1].value
         }
-        annonymousInstance.post("/users/login/", loginModel).then(response => {
-            const { successResult } = response.data;
+        console.log(Api.Authorization.login(loginModel));
 
-            dispatch(logIn(true, [], successResult));
-            setCookie("token", 1, "/", successResult.token);
-            document.cookie = `token=${successResult.token}; path=/`;
+        Api.Authorization.login(loginModel).then(response => {
+            dispatch(logIn(true, [], response));
+            setCookie("token", 1, "/", response.token);
+            document.cookie = `token=${response.token}; path=/`;
             history.push("/main");
-
         }).catch(error => {
             dispatch(logIn(false, handleErrors(error), ""));
         })

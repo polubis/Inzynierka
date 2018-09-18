@@ -15,6 +15,7 @@ class Navbar extends React.PureComponent{
     }
     render(){
         const { navbarExtended } = this.state;
+        const { logout } = this.props;
         return (
             <header ref={el => { this.navRef = el }} className={`navbar-container ${navbarExtended ? "nav-extended" : "nav-normal"}`}>
                 <Logo type="nav-logo"/>
@@ -23,6 +24,7 @@ class Navbar extends React.PureComponent{
                 className={`nav-span ${navbarExtended ? "nav-span-extended" : "nav-span-normal"}`}>
                 </span>
 
+                <button onClick={logout}>Wyloguj</button>
             </header>
         );
     }

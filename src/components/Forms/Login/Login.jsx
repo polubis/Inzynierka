@@ -14,7 +14,7 @@ class Login extends React.PureComponent {
         this.setState({[name]: formItems});
     }
     pushIntoRouteWithClear = () => {
-        this.props.clearTheData(null, [], null);
+        this.props.clearLoginData(null, [], null);
         this.props.pushIntoRoute("/");
     }
     render() { 
