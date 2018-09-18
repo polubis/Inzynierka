@@ -1,29 +1,24 @@
-import { CLEAR_THE_DATA, SET_TOKEN, SEND_REGISTER_EMAIL, END_REGISTER, LOGIN } from '../actionTypes';
+import { SEND_REGISTER_EMAIL, END_REGISTER, LOGIN } from '../actionTypes';
 import annonymousInstance from '../../api/axios';
 import { handleErrors } from '../utility/handleErrors';
 import { getASpecyficCookieValue, setCookie, deleteCookie } from '../../services/cookiesHelper';
 import axios from 'axios';
 
-export const setToken = (token, loginResult) => {
-    return {
-        type: SET_TOKEN,
-        token: token,
-        loginResult: loginResult
-    }
-}
 
-export const setTokenActionCreator = () => {
+export const setTokenActionCreator = currentLoginObject => {
     return dispatch => {
+        const copiedObject = {...currentLoginObject};
         const cookies = document.cookie;
         const token = getASpecyficCookieValue("token", cookies);
-
-        dispatch(setToken(token, token !== "" ? true : false));
+        copiedObject.token = token;
+        dispatch(logIn(true, [], copiedObject));
     }
 }
+
 export const logoutActionCreator = history => {
     return dispatch => {
         deleteCookie("token");
-        dispatch(setToken("", null));
+        dispatch(logIn(null, [], null));
         history.push("/");
     }
 }
@@ -82,12 +77,9 @@ export const endRegisterActionCreator = currentUrl => {
     }
 }
 
-export const logIn = (loginResult, loginErrors, token) => {
+export const logIn = (loginResult, loginErrors, loginObject) => {
     return {
-        type: LOGIN,
-        loginResult: loginResult,
-        loginErrors: loginErrors,
-        token: token
+        type: LOGIN, loginResult, loginErrors, loginObject
     }
 }
 
@@ -98,18 +90,15 @@ export const loginActionCreator = (loginArray, history) => {
             "Password": loginArray[1].value
         }
         annonymousInstance.post("/users/login/", loginModel).then(response => {
-            const { token } = response.data.successResult;
-            dispatch(logIn(true, [], token));
-            setCookie("token", 1, "/", token);
-            document.cookie = `token=${token}; path=/`;
+            const { successResult } = response.data;
+
+            dispatch(logIn(true, [], successResult));
+            setCookie("token", 1, "/", successResult.token);
+            document.cookie = `token=${successResult.token}; path=/`;
             history.push("/main");
+
         }).catch(error => {
             dispatch(logIn(false, handleErrors(error), ""));
         })
     }
 }
-
-export const clearTheData = ({ ...content }) => {
-    return { type: CLEAR_THE_DATA, ...content }
-}
-

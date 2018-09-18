@@ -3,7 +3,7 @@ import './logo.css';
 const logo = ({type}) => (
   <div className={type}>
     <span>M</span>
-    <span>Compose</span>
+    <span>.Com</span>
   </div>
 );
 

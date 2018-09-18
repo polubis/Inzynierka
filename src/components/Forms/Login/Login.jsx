@@ -1,7 +1,7 @@
 import React from 'react';
 import './Login.css';
 import { connect } from 'react-redux';
-import { loginActionCreator, clearTheData } from '../../../store/actions/Authenticate';
+import { loginActionCreator, logIn } from '../../../store/actions/Authenticate';
 import Form from '../../UI/form/form';
 import { withRouter } from 'react-router-dom';
 import { formTitlesGenerator } from '../../../constants/formTitles';
@@ -14,7 +14,7 @@ class Login extends React.PureComponent {
         this.setState({[name]: formItems});
     }
     pushIntoRouteWithClear = () => {
-        this.props.clearTheData({loginResult: null, loginErrors: []});
+        this.props.clearTheData(null, [], null);
         this.props.pushIntoRoute("/");
     }
     render() { 
@@ -50,7 +50,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         login: (loginArray, history) => dispatch(loginActionCreator(loginArray, history)),
-        clearTheData: ({ content }) => dispatch(clearTheData({ content }))
+        clearLoginData: (loginStatus, loginErrors, loginObject) => dispatch(logIn(loginStatus, loginErrors, loginObject))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

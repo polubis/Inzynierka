@@ -9,7 +9,7 @@ import Quiz from './components/quiz/Quiz';
 
 class RootContainer extends React.PureComponent {
   componentDidMount(){
-    this.props.setTokenActionCreator();
+    this.props.setTokenActionCreator(this.props.loginObject);
   }
   render() {
     const { loginResult } = this.props;
@@ -40,7 +40,8 @@ class RootContainer extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-      loginResult: state.Authenticate.loginResult
+      loginResult: state.Authenticate.loginResult, 
+      loginObject: state.Authenticate.loginObject
   };
 }
 
