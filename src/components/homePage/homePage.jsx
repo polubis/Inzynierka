@@ -1,5 +1,5 @@
 import React from "react";
-import "./homePage.css";
+import "./homePage.scss";
 import Button from "../UI/button/button.jsx";
 const homePage = ({ pushIntoRoute, changeOnTestQuiz }) => (
   <div className="content-container">

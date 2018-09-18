@@ -61,6 +61,7 @@ export const loginActionCreator = (loginArray, history) => {
             document.cookie = `token=${response.token}; path=/`;
             history.push("/main");
         }).catch(errors => {
+            console.log(errors);
             dispatch(logIn(false, errors, ""));
         })
     }

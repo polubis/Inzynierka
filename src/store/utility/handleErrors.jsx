@@ -4,16 +4,12 @@ const NotStandardErrors = {
 }
 
 export const handleErrors = errorObject => {
-    if(!errorObject){
-        return [NotStandardErrors[501]];
-    }
-
     if(!errorObject.response){
-        return [NotStandardErrors[501]];
+        return [NotStandardErrors[500]];
     }
 
     if(!errorObject.response.data){
-        return [NotStandardErrors[501]];
+        return [NotStandardErrors[500]];
     }
 
     if(errorObject.response.data.status === 401){

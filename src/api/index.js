@@ -22,8 +22,13 @@ const succParser = response => {
     return response.data.successResult;
 }
 const errorParser = error => {
+    if(error.response === undefined){
+        throw ["Ups, coś poszło nie tak"];
+    }
+
+
     const errors = handleErrors(error);
-    console.log(error.response);
+
     if(error.response.status === 401){
         deleteCookie("token");
         window.location.href = "/";
