@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Main.css';
 import {Route} from 'react-router-dom';
-import MainStartPage from '../../components/Main/StartPage/StartPage';
+import MainStartPage from '../../components/main/mainPage';
 import { scrollBottom } from '../../services/componentsMethods';
 import { withRouter } from 'react-router';
 import Navbar from '../../components/navigation/navbar';

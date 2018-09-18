@@ -1,7 +1,7 @@
 import React from "react";
-import "./StartPage.css";
-import Button from "../../UI/button/button.jsx";
-const startPage = ({ pushIntoRoute, changeOnTestQuiz }) => (
+import "./homePage.css";
+import Button from "../UI/button/button.jsx";
+const homePage = ({ pushIntoRoute, changeOnTestQuiz }) => (
   <div className="content-container">
     <h1>MCompose</h1>
     <p>Trenowanie słuchu na wysokim poziomie</p>
@@ -27,4 +27,4 @@ const startPage = ({ pushIntoRoute, changeOnTestQuiz }) => (
     />
   </div>
 );
-export default startPage;
+export default homePage;

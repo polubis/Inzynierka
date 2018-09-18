@@ -1,6 +1,6 @@
 import React from "react";
 import "./HomePage.css";
-import StartPage from "../../components/homePage/StartPage/StartPage";
+import StartPage from "../../components/homePage/homePage";
 import Register from "../../components/Forms/Register/Register";
 import Login from "../../components/Forms/Login/Login";
 import ConfigureModal from "../../components/quiz/configureModal/configureModal";

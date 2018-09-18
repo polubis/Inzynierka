@@ -1,7 +1,7 @@
 import React from 'react';
-import './StartPage.css';
+import './mainPage.css';
 
-const startPage = ({push, scrollRef}) => {
+const mainPage = ({push, scrollRef}) => {
     return(
         <div ref={scrollRef} className="main-start-page">
             <section className="main-advise">
@@ -36,4 +36,4 @@ const startPage = ({push, scrollRef}) => {
     );
 }
 
-export default startPage;
+export default mainPage;

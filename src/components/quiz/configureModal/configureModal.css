@@ -33,6 +33,7 @@
     box-sizing: border-box;
     align-items: center;
 }
+
 .modal-icons-container span:nth-child(1){
     background-color: #831afb;
     color: white;
@@ -41,11 +42,27 @@
 .modal-icons-container span:nth-of-type(2){
     padding-left: 10px;
 }
+@media(max-width: 750px){
+    .modal-icons-container{
+        bottom: -25px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .modal-icons-container span{
+        width: 50px;
+        height: 50px;
+        font-size: 22px;
+    }
+    .modal-icons-container span:nth-of-type(2){
+        padding-left: 5px;
+    }
+}
 .bottom-content{
     height: 50%;
     padding: 10px;
     box-sizing: border-box;
-    margin-top: 15px;
+    margin-top: 25px;
 }
 .bottom-content article{
     font-size: 18px;
