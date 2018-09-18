@@ -1,12 +1,12 @@
-import * as actionTypes from '../actionTypes';
+import * as actionTypes from '../actionTypes.js';
 import { updateObject } from '../utility/updateObject';
 
 
 const initialState = {
 }
-const reducer = (state = initialState, action) => {
+const User = (state = initialState, action) => {
     switch(action.type){
     }
     return state;   
 }
-export default reducer;
+export default User;

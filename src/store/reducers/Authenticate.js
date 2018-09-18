@@ -14,7 +14,7 @@ const initialState = {
     loginErrors: [],
     loginObject: null
 }
-const reducer = (state = initialState, action) => {
+const Authenticate = (state = initialState, action) => {
     switch(action.type){
         case SEND_REGISTER_EMAIL:
             return updateObject(state, {sendEmailResult: action.sendEmailResult, 
@@ -32,4 +32,4 @@ const reducer = (state = initialState, action) => {
     }
     return state;   
 }
-export default reducer;
+export default Authenticate;
