@@ -12,7 +12,8 @@ const initialState = {
 
     loginResult: null,
     loginErrors: [],
-    loginObject: null
+    loginObject: null,
+    token: ""
 }
 const Authenticate = (state = initialState, action) => {
     switch(action.type){
@@ -26,7 +27,7 @@ const Authenticate = (state = initialState, action) => {
         
         case LOGIN:
             return updateObject(state, {loginResult: action.loginResult, loginErrors: action.loginErrors, 
-                loginObject: action.loginObject})
+                loginObject: action.loginObject, token: action.token})
         default:
             break;
     }

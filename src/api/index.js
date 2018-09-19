@@ -1,19 +1,30 @@
 import axios from "axios";
 import '../services/inputValidator.jsx';
 import { handleErrors } from '../store/utility/handleErrors.jsx';
-import { deleteCookie } from '../services/cookiesHelper';
+import { deleteCookie, getASpecyficCookieValue } from '../services/cookiesHelper';
+//import {store} from '../index';
+
+//const getToken = state => state.Authenticate.token;
+
+const token = getASpecyficCookieValue("token", document.cookie);
+
 const endPoint = "http://localhost:52535/api";
 
-/*
-const instance = axios.create({
-    baseURL: 'http://localhost:52535/api',
-    headers: { 'Content-Type': 'multipart/form-data', 
-    'Authorization' : "bearer " + token }
-});
-*/
+const instance = axios.create({baseURL: endPoint});
 
-const dataExtractor = (requestType, path, payload) => {
-    return axios[requestType](endPoint + path, payload)
+const contentTypes = {
+    "standard": "application/x-www-form-urlencoded"
+}
+
+const dataExtractor = (requestType, path, payload, authorization, contentType) => {
+    if(contentType)
+        instance.defaults.headers['Content-Type'] = contentTypes[contentType];
+    if(authorization){
+        instance.defaults.withCredentials = true;
+        console.log(instance.defaults);
+        instance.defaults.headers.common['Authorization'] = "Bearer " + token;
+    }
+    return instance[requestType](endPoint + path, payload)
     .then(response => succParser(response))
     .catch(error => errorParser(error));
 }
@@ -27,11 +38,13 @@ const errorParser = error => {
     }
 
     const errors = handleErrors(error);
-
+    
     if(error.response.status === 401){
-        deleteCookie("token");
-        window.location.href = "/";
+        console.log(401);
+        //deleteCookie("token");
+        //window.location.href = "/";
     }
+    
 
     throw errors;
 }
@@ -41,5 +54,8 @@ export const Api = {
     login: loginModel => { return dataExtractor("post", "/users/login/", loginModel) },
     sendRegisterEmail: registerModel => { return dataExtractor("post", "/users/register/", registerModel) },
     endRegister: (activateAccountLink) => { return dataExtractor("post", "/users/activate/account/" + activateAccountLink) }
+  },
+  User: {
+    getUserData: () => { return dataExtractor("get", "/users/userdata", undefined, true) }
   }
 };

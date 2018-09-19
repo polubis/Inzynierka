@@ -8,9 +8,8 @@ import { Provider} from 'react-redux';
 import WebFont from 'webfontloader';
 import storeCreator from './store/index';
 
-const {store}  = storeCreator();
+export const {store}  = storeCreator();
 
-console.log(store);
 WebFont.load({
   google: {
     families: ['Roboto:300,400,600,700', 'sans-serif']

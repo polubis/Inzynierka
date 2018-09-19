@@ -14,7 +14,7 @@ class Login extends React.PureComponent {
         this.setState({[name]: formItems});
     }
     pushIntoRouteWithClear = () => {
-        this.props.clearLoginData(null, [], null);
+        this.props.clearLoginData(null, [], null, "");
         this.props.pushIntoRoute("/");
     }
     render() { 
@@ -42,15 +42,14 @@ class Login extends React.PureComponent {
 const mapStateToProps = state => {
     return {
         loginResult: state.Authenticate.loginResult,
-        loginErrors: state.Authenticate.loginErrors,
-        token: state.Authenticate.token
+        loginErrors: state.Authenticate.loginErrors
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         login: (loginArray, history) => dispatch(loginActionCreator(loginArray, history)),
-        clearLoginData: (loginStatus, loginErrors, loginObject) => dispatch(logIn(loginStatus, loginErrors, loginObject))
+        clearLoginData: (loginStatus, loginErrors, loginObject, token) => dispatch(logIn(loginStatus, loginErrors, loginObject, token))
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

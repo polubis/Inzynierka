@@ -5,13 +5,21 @@ import { getASpecyficCookieValue, setCookie, deleteCookie } from '../../services
 import axios from 'axios';
 import { Api } from '../../api/index.js';
 
-export const setTokenActionCreator = currentLoginObject => { // Dorzuca token po odswiezeniu strony
-    return dispatch => {
-        const copiedObject = {...currentLoginObject};
-        const cookies = document.cookie;
-        const token = getASpecyficCookieValue("token", cookies);
-        copiedObject.token = token;
+export const setTokenActionCreator = () => dispatch => { // Dorzuca token po odswiezeniu strony
+    const cookie = document.cookie;
+    const token = getASpecyficCookieValue("token", cookie);
+    
+    if(token){
+        Api.User.getUserData().then(response => {
+            console.log(response);
+            dispatch(logIn(true, [], response, token));
+        }).catch(errors => dispatch(logIn(null, errors, null, "")));
     }
+    // Odswiezam strone
+    // Sciagam dane usera
+    // Jezeli 401 - przekieruj do logowania
+    // Jezelo  OK => wrzuc dane logowania
+    
 }
 
 export const logoutActionCreator = history => {
@@ -42,9 +50,9 @@ export const endRegisterActionCreator = currentUrl => {
     }
 }
 
-export const logIn = (loginResult, loginErrors, loginObject) => {
+export const logIn = (loginResult, loginErrors, loginObject, token) => {
     return {
-        type: LOGIN, loginResult, loginErrors, loginObject
+        type: LOGIN, loginResult, loginErrors, loginObject, token
     }
 }
 
@@ -56,13 +64,13 @@ export const loginActionCreator = (loginArray, history) => {
         }
 
         Api.Authorization.login(loginModel).then(response => {
-            dispatch(logIn(true, [], response));
             setCookie("token", 1, "/", response.token);
             document.cookie = `token=${response.token}; path=/`;
+            dispatch(logIn(true, [], response, response.token));
             history.push("/main");
         }).catch(errors => {
             console.log(errors);
-            dispatch(logIn(false, errors, ""));
+            dispatch(logIn(false, errors, "", ""));
         })
     }
 }

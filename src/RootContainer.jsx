@@ -6,28 +6,21 @@ import Main from './containers/Main/Main';
 import { connect } from 'react-redux';
 import { setTokenActionCreator } from './store/actions/Authenticate';
 import Quiz from './components/quiz/Quiz';
+import PrivateRoute from './containers/PrivateRoute/PrivateRoute';
 
 class RootContainer extends React.PureComponent {
   componentDidMount(){
-    this.props.setTokenActionCreator(this.props.loginObject);
+    this.props.setTokenActionCreator();
   }
   render() {
     const { loginResult } = this.props;
+    //<PrivateRoute component={Main} isAuthenticated={loginResult} path="/main" pathToRedirect="/login" />
     return (
         <React.Fragment>
-            <Route path="/main" render={() => {
-              return (
-                loginResult === true ? <Main /> : <Redirect to="/login" />
-              );
-            }} /> 
+            <Route component={Main} path="/main" />
 
-            <Route path="/" render={() => {
-              return (
-                loginResult === true ? <Redirect to="/main" /> : 
-                <HomePage />
-              );
-            }} />
-
+            <PrivateRoute component={HomePage} isAuthenticated={!loginResult} path="/" pathToRedirect="/main" />
+            
              <Route path="/quiz" render={() => {
                   return (
                       <Quiz path="/quiz" />
