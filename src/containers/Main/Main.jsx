@@ -7,19 +7,24 @@ import { withRouter } from "react-router";
 import { logoutActionCreator } from "../../store/actions/Authenticate";
 import Navbar from "../../components/navigation/navbar";
 import { connect } from "react-redux";
+import { getUserDataACreator } from '../../store/actions/User.js';
 
 class Main extends Component {
   componentDidMount() {
-    if (this.scrollRef) scrollBottom(this.scrollRef);
+    if (this.scrollRef) scrollBottom(this.scrollRef); 
+
+    if(this.props.userData === null)
+      this.props.getUserDataACreator();
   }
 
   render() {
     const { push } = this.props.history;
-    const { logoutActionCreator, history, loginObject } = this.props;
+    const { logoutActionCreator, history, userData, getUserDataErrors } = this.props;
     return (
       <section className="main">
         <Navbar
-          loginObject={loginObject}
+          userData={userData}
+          getUserDataErrors={getUserDataErrors}
           logout={() => logoutActionCreator(history, "/")}
         />
         <Route
@@ -42,14 +47,16 @@ class Main extends Component {
 
 const mapStateToProps = state => {
   return {
-    loginObject: state.Authenticate.loginObject
+    userData: state.User.userData,
+    getUserDataErrors: state.User.getUserDataErrors
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     logoutActionCreator: (history, path) =>
-      dispatch(logoutActionCreator(history, path))
+      dispatch(logoutActionCreator(history, path)),
+      getUserDataACreator: () => dispatch(getUserDataACreator())
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Main));

@@ -12,7 +12,6 @@ const initialState = {
 
     loginResult: null,
     loginErrors: [],
-    loginObject: null,
     token: ""
 }
 const Authenticate = (state = initialState, action) => {
@@ -27,7 +26,7 @@ const Authenticate = (state = initialState, action) => {
         
         case LOGIN:
             return updateObject(state, {loginResult: action.loginResult, loginErrors: action.loginErrors, 
-                loginObject: action.loginObject, token: action.token})
+                token: action.token})
         default:
             break;
     }

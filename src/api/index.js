@@ -35,9 +35,8 @@ const errorParser = error => {
     }
 
     const errors = handleErrors(error);
-    
     if(error.response.status === 401){
-        console.log("Blad");
+        deleteCookie(document.cookie);
         history.push("/login");
     }
     
@@ -52,6 +51,6 @@ export const Api = {
     endRegister: (activateAccountLink) => { return dataExtractor("post", "/users/activate/account/" + activateAccountLink) }
   },
   User: {
-    getUserData: () => { return dataExtractor("get", "/users/userdata", undefined, true) }
+    getUserData: () => { return dataExtractor("get", "/usersd/userdata", undefined, true) }
   }
 };

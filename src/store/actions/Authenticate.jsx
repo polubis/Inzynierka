@@ -1,17 +1,8 @@
 import { SEND_REGISTER_EMAIL, END_REGISTER, LOGIN } from '../actionTypes.js';
 import { handleErrors } from '../utility/handleErrors';
-import { getASpecyficCookieValue, setCookie, deleteCookie } from '../../services/cookiesHelper.js';
+import { setCookie, deleteCookie } from '../../services/cookiesHelper.js';
 import { Api } from '../../api/index.js';
-
-export const setTokenActionCreator = () => dispatch => { // Dorzuca token po odswiezeniu strony
-    const cookie = document.cookie;
-    const token = getASpecyficCookieValue("token", cookie);
-    if(token){
-        Api.User.getUserData().then(response => {
-            dispatch(logIn(true, [], response, token));
-        }).catch(errors => dispatch(logIn(null, errors, null, "")));
-    }
-}
+import { getUserData } from './User.js';
 
 export const logoutActionCreator = (history, path) => {
     return dispatch => {
@@ -41,9 +32,9 @@ export const endRegisterActionCreator = currentUrl => {
     }
 }
 
-export const logIn = (loginResult, loginErrors, loginObject, token) => {
+export const logIn = (loginResult, loginErrors, token) => {
     return {
-        type: LOGIN, loginResult, loginErrors, loginObject, token
+        type: LOGIN, loginResult, loginErrors, token
     }
 }
 
@@ -57,10 +48,10 @@ export const loginActionCreator = (loginArray, history) => {
         Api.Authorization.login(loginModel).then(response => {
             setCookie("token", 1, "/", response.token);
             document.cookie = `token=${response.token}; path=/`;
-            dispatch(logIn(true, [], response, response.token));
+            dispatch(logIn(true, [], response.token));
+            dispatch(getUserData(response, []));
             history.push("/main");
         }).catch(errors => {
-            console.log(errors);
             dispatch(logIn(false, errors, "", ""));
         })
     }
