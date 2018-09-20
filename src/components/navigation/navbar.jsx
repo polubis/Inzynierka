@@ -28,7 +28,7 @@ class Navbar extends React.PureComponent {
     this.setState({oldScrollPosition: window.scrollY, shouldNavBeFixed});
   }
   render() {
-    const { logout, userData, getUserDataErrors } = this.props;
+    const { logout, getUserDataACreator, userData, getUserDataErrors } = this.props;
     const { showSidebar, shouldNavBeFixed, showMotivesPanel } = this.state;
 
     return (
@@ -41,7 +41,7 @@ class Navbar extends React.PureComponent {
 
             <div className="motive-container">
               {showMotivesPanel && 
-              <MotivesPanel userData={userData} getUserDataErrors={getUserDataErrors}
+              <MotivesPanel getUserDataACreator={getUserDataACreator} userData={userData} getUserDataErrors={getUserDataErrors}
               currentMotive={'initial'} />}
 
               <Button onClick={() => this.setState({showMotivesPanel: !showMotivesPanel})} 

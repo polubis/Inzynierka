@@ -10,22 +10,28 @@ import { connect } from "react-redux";
 import { getUserDataACreator } from '../../store/actions/User.js';
 
 class Main extends Component {
+  state = {
+    isUserDataLoadingAgain: false
+  }
   componentDidMount() {
     if (this.scrollRef) scrollBottom(this.scrollRef); 
 
-    if(this.props.userData === null)
-      this.props.getUserDataACreator();
+    if(this.props.userData === null){
+      this.setState({isUserDataLoadingAgain: true});
+      this.props.getUserDataACreator().then(this.setState({isUserDataLoadingAgain: false}));
+    }
   }
 
   render() {
     const { push } = this.props.history;
-    const { logoutActionCreator, history, userData, getUserDataErrors } = this.props;
+    const { logoutActionCreator, getUserDataACreator, history, userData, getUserDataErrors } = this.props;
     return (
       <section className="main">
         <Navbar
           userData={userData}
           getUserDataErrors={getUserDataErrors}
           logout={() => logoutActionCreator(history, "/")}
+          getUserDataACreator={getUserDataACreator}
         />
         <Route
           path="/main"

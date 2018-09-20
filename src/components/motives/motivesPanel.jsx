@@ -11,7 +11,7 @@ class MotivesPanel extends Component{
     changeSortOrder = () => { this.setState({sortOrd: this.state.sortOrd === "asc" ? "desc" : "asc"}); }
 
     render(){
-        const { userData, getUserDataErrors } = this.props;
+        const { userData, getUserDataErrors, getUserDataACreator } = this.props;
         const { sortOrd, isLoadingUserDataAgain } = this.state;
         
         this.manageDataConfig.orderBy.order = sortOrd;
@@ -21,20 +21,25 @@ class MotivesPanel extends Component{
         return (
             <div className="panel-container">
                 <h4>Twoje motywy<span className="sub-title-span">przestrzeń sztuki</span></h4>
-                <nav>
-                    <span className="span-btn">Nowy</span>
-                    <span className="span-btn">Udostępnij</span>
-                    <span className="span-btn" onClick={this.changeSortOrder}>Filtr 
-                        <i className={`fa fa-sort-alpha-${sortOrd === 'asc' ? "asc" : "desc"}`}></i>
-                    </span>
-                </nav>
-                <ErrorHoc errors={getUserDataErrors} isLoading={isLoadingUserDataAgain}>
-                    {filteredMotives.length > 0 ? 
-                        <ul>
-                        {filteredMotives.map((motive, index) => 
+                <ErrorHoc errors={getUserDataErrors} isRefresingRequest={isLoadingUserDataAgain} 
+                operation={() => this.setState({isLoadingUserDataAgain: true})}>
+                    <React.Fragment>
+                        <nav>
+                            <span className="span-btn">Nowy</span>
+                            <span className="span-btn">Udostępnij</span>
+
+                            
+                            <span className="span-btn" onClick={this.changeSortOrder}>Filtr 
+                                <i className={`fa fa-sort-alpha-${sortOrd === 'asc' ? "asc" : "desc"}`}></i>
+                            </span>
+                        </nav>  
+                        {filteredMotives.length > 0 ? 
+                            <ul>
+                            {filteredMotives.map((motive, index) => 
                                 <Motive motive={motive} key={index}/> )}
-                        </ul> : 
-                    <p>Brak stworzonych motywów</p>}
+                            </ul> : 
+                        <p>Brak stworzonych motywów</p>}
+                    </React.Fragment>
                 </ErrorHoc>
             </div>
         );

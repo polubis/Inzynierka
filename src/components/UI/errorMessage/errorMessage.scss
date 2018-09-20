@@ -12,17 +12,50 @@
         align-items: center;
         font-size: 15px;
         justify-content: space-between;
+        i{
+            margin-right: 10px;
+            font-size: 20px;
+        }
         span{
             width: 30px;
             text-align: right;
             i{
                 cursor: pointer;
             }
+            .imit-rotate{
+                animation: .5s rotate-inf ease-in-out infinite;
+                @keyframes rotate-inf {
+                    0%{
+                        transform: rotate(0);
+                    }
+                    100%{
+                        transform: rotate(180deg);
+                    }
+                }
+            }
         }
-        
     }
 }
 .standard-error{
     background-color: #ff7272;
     color: white;
+    .fa-ambulance{
+        color: #ff7272;
+    }
+}
+
+.requesting-again{
+    background: lightseagreen;
+    animation: 2s animate-request-again infinite;
+    @keyframes animate-request-again {
+        0%{
+            opacity: 1;
+        }
+        50%{
+            opacity: .6;
+        }
+        100%{
+            opacity: 1;
+        }
+    }
 }

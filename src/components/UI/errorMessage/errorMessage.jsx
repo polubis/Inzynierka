@@ -2,13 +2,15 @@ import React from 'react'
 import './errorMessage.scss';
 
 
-const errorMessage = ({error, eClass, operation}) => (
-    <div className={`err-container ${eClass ? eClass : "standard-error"}`}>
+const errorMessage = ({error, eClass, operation, isRefresingRequest}) => (
+    <div className={`err-container ${eClass ? eClass : "standard-error"} ${isRefresingRequest && "requesting-again"}`}>
         <p>
-            {error} 
-            {operation && <span><i onClick={operation} className="fa fa-refresh"></i></span>}
+            <div>
+                {isRefresingRequest || <i className="fa fa-exclamation"></i>}
+                {isRefresingRequest ? "Trwa ponowne wykonywanie operacji..." : error}
+            </div>
+            {operation && <span><i onClick={operation} className={`fa fa-refresh ${isRefresingRequest && "imit-rotate"}`}></i></span>}
         </p>
-        <div className="animated-error-occured"></div>
 
           
     </div>
