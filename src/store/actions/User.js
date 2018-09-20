@@ -2,12 +2,15 @@ import { GET_USER_DATA } from '../actionTypes';
 import { Api } from '../../api/index.js';
 
 export const getUserDataACreator = () => dispatch => {
-    return new Promise((resolve => {
+    return new Promise((resolve) => {
         Api.User.getUserData().then(response => {
             dispatch(getUserData(response, []));
             resolve();
-        }).catch(errors => dispatch(getUserData(null, errors)));
-    })) 
+        }).catch(errors => {
+            dispatch(getUserData(null, errors))
+            resolve();
+        });
+    })
 }
 
 export const getUserData = (userData, getUserDataErrors) => {

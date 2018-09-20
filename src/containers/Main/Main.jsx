@@ -8,21 +8,35 @@ import { logoutActionCreator } from "../../store/actions/Authenticate.js";
 import Navbar from "../../components/navigation/navbar";
 import { connect } from "react-redux";
 import { getUserDataACreator } from '../../store/actions/User.js';
+import OperationPrompt from '../../components/UI/operationPrompt/operationPrompt';
+import ErrorHoc from '../../hoc/errorHoc';
 
 class Main extends Component {
   state = {
-    isUserDataLoadingAgain: false
+    isUserDataLoadingAgain: false,
+    isUserLoadingDataAfterError: false
   }
   componentDidMount() {
-    if (this.scrollRef) scrollBottom(this.scrollRef); 
-
     if(this.props.userData === null){
-      this.setState({isUserDataLoadingAgain: true});
-      this.props.getUserDataACreator().then(this.setState({isUserDataLoadingAgain: false}));
+      this.loadUserData(true, "isUserDataLoadingAgain");
     }
   }
 
+  loadUserData = (shouldScroll, operationName) => {
+    this.setState({[operationName]: true});
+      this.props.getUserDataACreator().then(() => {
+        this.setState({[operationName]: false}, () => {
+          if(shouldScroll) this.scrollToBottomHandler();
+        })
+      });
+  }
+  
+  scrollToBottomHandler = () => {
+      if (this.scrollRef) scrollBottom(this.scrollRef); 
+  }
+
   render() {
+    const { isUserDataLoadingAgain, isUserLoadingDataAfterError } = this.state;
     const { push } = this.props.history;
     const { logoutActionCreator, getUserDataACreator, history, userData, getUserDataErrors } = this.props;
     return (
@@ -33,19 +47,26 @@ class Main extends Component {
           logout={() => logoutActionCreator(history, "/")}
           getUserDataACreator={getUserDataACreator}
         />
-        <Route
-          path="/main"
-          render={() => {
-            return (
-              <MainStartPage
-                push={push}
-                scrollRef={el => {
-                  this.scrollRef = el;
-                }}
-              />
-            );
-          }}
-        />
+
+        {isUserDataLoadingAgain ? <OperationPrompt /> : 
+          <Route
+            path="/main"
+            render={() => {
+              return (
+                <MainStartPage
+                  push={push}
+                  scrollRef={el => {
+                    this.scrollRef = el;
+                  }}
+                />
+              );
+            }}
+            />
+        }
+
+        <ErrorHoc eClass="whole-page-error" errors={getUserDataErrors} isRefresingRequest={isUserLoadingDataAfterError} 
+            operation={() => this.loadUserData(false, "isUserLoadingDataAfterError")}><span/></ErrorHoc>
+        
       </section>
     );
   }

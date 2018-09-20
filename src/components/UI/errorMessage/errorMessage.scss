@@ -3,6 +3,7 @@
     position: absolute;
     width: 100%;
     left: 0;
+    z-index: 10;
     bottom: 0;
     box-sizing: border-box;
     p{
@@ -16,7 +17,7 @@
             margin-right: 10px;
             font-size: 20px;
         }
-        span{
+        span:last-of-type{
             width: 30px;
             text-align: right;
             i{
@@ -39,11 +40,12 @@
 .standard-error{
     background-color: #ff7272;
     color: white;
-    .fa-ambulance{
-        color: #ff7272;
-    }
 }
-
+.whole-page-error{
+    background-color: #7e3131;
+    color: white;
+    position: fixed;
+}
 .requesting-again{
     background: lightseagreen;
     animation: 2s animate-request-again infinite;

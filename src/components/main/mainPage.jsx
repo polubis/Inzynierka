@@ -3,7 +3,6 @@ import './mainPage.scss';
 import Guitar from '../../assets/bgs/guitar.jpg';
 import Button from '../UI/button/button';
 
-
 const mainPage = ({push, scrollRef}) => {
     return(
         <div className="main-start-page">

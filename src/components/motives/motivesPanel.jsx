@@ -10,6 +10,11 @@ class MotivesPanel extends Component{
 
     changeSortOrder = () => { this.setState({sortOrd: this.state.sortOrd === "asc" ? "desc" : "asc"}); }
 
+    loadUserDataAgain = () => {
+        this.setState({isLoadingUserDataAgain: true});
+        this.props.getUserDataACreator().then(() => this.setState({isLoadingUserDataAgain: false}));
+    }
+
     render(){
         const { userData, getUserDataErrors, getUserDataACreator } = this.props;
         const { sortOrd, isLoadingUserDataAgain } = this.state;
@@ -22,7 +27,7 @@ class MotivesPanel extends Component{
             <div className="panel-container">
                 <h4>Twoje motywy<span className="sub-title-span">przestrzeń sztuki</span></h4>
                 <ErrorHoc errors={getUserDataErrors} isRefresingRequest={isLoadingUserDataAgain} 
-                operation={() => this.setState({isLoadingUserDataAgain: true})}>
+                operation={this.loadUserDataAgain}>
                     <React.Fragment>
                         <nav>
                             <span className="span-btn">Nowy</span>
