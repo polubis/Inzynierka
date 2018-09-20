@@ -2,8 +2,7 @@ import axios from "axios";
 import '../services/inputValidator.jsx';
 import { handleErrors } from '../store/utility/handleErrors.jsx';
 import { deleteCookie, getASpecyficCookieValue } from '../services/cookiesHelper';
-//import {store} from '../index';
-
+import { history } from '../index';
 //const getToken = state => state.Authenticate.token;
 
 const token = getASpecyficCookieValue("token", document.cookie);
@@ -38,9 +37,8 @@ const errorParser = error => {
     const errors = handleErrors(error);
     
     if(error.response.status === 401){
-        console.log(401);
-        //deleteCookie("token");
-        //window.location.href = "/";
+        console.log("Blad");
+        history.push("/login");
     }
     
 

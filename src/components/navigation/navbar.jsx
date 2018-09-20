@@ -3,6 +3,7 @@ import "./navbar.scss";
 import Logo from "../UI/logo/logo";
 import { scrollBottom } from "../../services/componentsMethods";
 import Transition from 'react-transition-group/Transition';
+import Button from '../UI/button/button';
 
 class Navbar extends React.PureComponent {
   state = {
@@ -51,6 +52,7 @@ class Navbar extends React.PureComponent {
                         <button>Twój profil</button>
                         <button>Twój profil</button>
                         <button>Twój profil</button>
+                        siema
                     </aside>
                 )}                   
         </Transition>

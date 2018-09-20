@@ -15,10 +15,9 @@ class Main extends Component {
     render() { 
         const { push } = this.props.history;
         const { logoutActionCreator, history } = this.props;
-        console.log(this.props.loginObject);
         return ( 
             <section className="main">
-                <Navbar logout={() => logoutActionCreator(history)}/>
+                <Navbar logout={() => logoutActionCreator(history, "/")}/>
                 <Route path="/main" render={() => {
                     return (
                         <MainStartPage push={push}
@@ -38,7 +37,7 @@ const mapStateToProps = state => {
   
   const mapDispatchToProps = dispatch => {
     return {
-        logoutActionCreator: (history) => dispatch(logoutActionCreator(history))
+        logoutActionCreator: (history, path) => dispatch(logoutActionCreator(history, path))
     };
   }
   export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Main));

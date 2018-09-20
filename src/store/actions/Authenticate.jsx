@@ -1,8 +1,6 @@
 import { SEND_REGISTER_EMAIL, END_REGISTER, LOGIN } from '../actionTypes.js';
-import annonymousInstance from '../../api/axios';
 import { handleErrors } from '../utility/handleErrors';
 import { getASpecyficCookieValue, setCookie, deleteCookie } from '../../services/cookiesHelper.js';
-import axios from 'axios';
 import { Api } from '../../api/index.js';
 
 export const setTokenActionCreator = () => dispatch => { // Dorzuca token po odswiezeniu strony
@@ -15,11 +13,11 @@ export const setTokenActionCreator = () => dispatch => { // Dorzuca token po ods
     }
 }
 
-export const logoutActionCreator = history => {
+export const logoutActionCreator = (history, path) => {
     return dispatch => {
         deleteCookie("token");
         dispatch(logIn(null, [], null, ""));
-        history.push("/");
+        history.push(path);
     }
 }
 

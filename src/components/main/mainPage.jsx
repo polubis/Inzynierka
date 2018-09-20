@@ -1,10 +1,12 @@
 import React from 'react';
 import './mainPage.scss';
 import Guitar from '../../assets/bgs/guitar.jpg';
+import Button from '../UI/button/button';
+
 
 const mainPage = ({push, scrollRef}) => {
     return(
-        <div ref={scrollRef} className="main-start-page">
+        <div className="main-start-page">
             <section className="main-advise">
                 <div>
                     <h1>Muzyka, Sluch.</h1>
@@ -34,9 +36,17 @@ const mainPage = ({push, scrollRef}) => {
                 </ul>
             </section>
 
+            <div className="row" ref={scrollRef} >
+                <Button name="Samouczek" className="medium-btn go-next-btn"/>
+            </div>
             <figure className="slider">
                 <div style={{ backgroundImage: `url(${Guitar})` }} />
+                
             </figure>
+
+            <div className="big-container">
+                <div id="bg2"></div>
+            </div>
         </div>
     );
 }

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import RootContainer from "./RootContainer";
-import { Switch, BrowserRouter as Router } from "react-router-dom";
+import { Switch, Router } from "react-router-dom";
 
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Router history={this.props.history}>
         <Switch>
           <RootContainer />
         </Switch>

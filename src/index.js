@@ -8,7 +8,7 @@ import { Provider} from 'react-redux';
 import WebFont from 'webfontloader';
 import storeCreator from './store/index';
 
-export const {store}  = storeCreator();
+export const {store, history}  = storeCreator();
 
 WebFont.load({
   google: {
@@ -17,8 +17,8 @@ WebFont.load({
 });
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
+  <Provider store={store} >
+    <App history={history}/>
   </Provider>,
   document.getElementById('root')
 );
