@@ -102,3 +102,41 @@
   margin: 0 auto;
   position: absolute;
 }
+
+
+.navbar-btn{
+  padding: 12.5px;
+  margin: 0 10px;
+  font-size: 17px;
+  background: transparent;
+  position: relative;
+  color: inherit;
+  i{
+      margin-left: 5px;
+      font-size: 18px;
+  }
+}
+.linked-btn{
+  &::after{
+      content: '';
+      height: 100%;
+      position: absolute;
+      left: -9px;
+      top: 0;
+      border: .5px dotted #FFFFFF;
+  }
+  &::before{
+      content: '';
+      position: absolute;
+      border: 2.5px solid transparent;
+      width: 0;
+      left: 0;
+      bottom: -18.5px;
+      border-radius: 10px;
+      transition: .5s all;
+  }
+  &:hover::before{
+      width: 100%;
+      border-color: #FFFFFF;
+  }
+}

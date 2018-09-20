@@ -1,9 +1,20 @@
+.block-for-hold-place{
+    height: 85px;
+}
+    
 .navbar{
     background: #7e3131;
     color: #FFFFFF;
+    left: 0;
+    width: 100%;
+    z-index: 3;
+    box-sizing: border-box;
     display: flex;
+    top: 0;
+    position: absolute;
     padding: 10px 30px;
     align-items: center;
+    transition: .5s all;
     justify-content: space-between;
     i{
         transition: .5s all;
@@ -11,49 +22,9 @@
     .btn-holder{
         display: inherit;
         align-items: center;
-        .navbar-btn{
-            padding: 12.5px;
-            margin: 0 10px;
-            font-size: 17px;
-            background: transparent;
+        .motive-container{
             position: relative;
-            color: inherit;
-            i{
-                margin-left: 5px;
-                font-size: 18px;
-            }
-        }
-        .linked-btn{
-            &::after{
-                content: '';
-                height: 100%;
-                position: absolute;
-                left: -9px;
-                top: 0;
-                border: .5px dotted #FFFFFF;
-            }
-            &::before{
-                content: '';
-                position: absolute;
-                border: 2.5px solid transparent;
-                width: 0;
-                left: 0;
-                bottom: -18.5px;
-                border-radius: 10px;
-                transition: .5s all;
-            }
-            &:hover::before{
-                width: 100%;
-                border-color: #FFFFFF;
-            }
-        }
-        .toggler{
-            i{
-                transform: rotate(0);
-            }
-            &:focus i{
-                transform: rotate(180deg);
-            }
+            z-index: 10;
         }
         .fa-bars{
             font-size: 40px;
@@ -67,11 +38,25 @@
     }
    
 }
+.nav-fixed{
+    position: fixed;
+    animation: .5s anmate-nav-in forwards;
+    @keyframes anmate-nav-in {
+        0%{
+            opacity: 0;
+            transform: translateY(-15px);
+        }
+        100%{
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
 
 .side-bar{
     position: fixed;
     top: 0;
-    z-index: 2;
+    z-index: 4;
     padding: 15px;
     color: #7e3131;
     box-sizing: border-box;
@@ -79,6 +64,14 @@
     height: 100%;
     background: #FFFFFF;
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    .fa-chevron-right{
+        position: absolute;
+        font-size: 20px;
+        font-weight: bold;
+        bottom: 15px;
+        cursor: pointer;
+    }    
+    
 }
 .side-bar-open{
     animation: .5s animate-side-in forwards;
