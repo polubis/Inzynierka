@@ -8,24 +8,17 @@ import { Api } from '../../api/index.js';
 export const setTokenActionCreator = () => dispatch => { // Dorzuca token po odswiezeniu strony
     const cookie = document.cookie;
     const token = getASpecyficCookieValue("token", cookie);
-    
     if(token){
         Api.User.getUserData().then(response => {
-            console.log(response);
             dispatch(logIn(true, [], response, token));
         }).catch(errors => dispatch(logIn(null, errors, null, "")));
     }
-    // Odswiezam strone
-    // Sciagam dane usera
-    // Jezeli 401 - przekieruj do logowania
-    // Jezelo  OK => wrzuc dane logowania
-    
 }
 
 export const logoutActionCreator = history => {
     return dispatch => {
         deleteCookie("token");
-        dispatch(logIn(null, [], null));
+        dispatch(logIn(null, [], null, ""));
         history.push("/");
     }
 }

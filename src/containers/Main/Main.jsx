@@ -15,6 +15,7 @@ class Main extends Component {
     render() { 
         const { push } = this.props.history;
         const { logoutActionCreator, history } = this.props;
+        console.log(this.props.loginObject);
         return ( 
             <section className="main">
                 <Navbar logout={() => logoutActionCreator(history)}/>

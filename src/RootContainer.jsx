@@ -12,20 +12,22 @@ class RootContainer extends React.PureComponent {
   componentDidMount(){
     this.props.setTokenActionCreator();
   }
+
   render() {
-    const { loginResult } = this.props;
-    //<PrivateRoute component={Main} isAuthenticated={loginResult} path="/main" pathToRedirect="/login" />
+    const { loginResult, loginObject } = this.props;
     return (
         <React.Fragment>
-            <Route component={Main} path="/main" />
+            <PrivateRoute component={Main} 
+              isAuthenticated={loginResult} path="/main" pathToRedirect="/login" />
 
             <PrivateRoute component={HomePage} isAuthenticated={!loginResult} path="/" pathToRedirect="/main" />
+
+            <Route path="/quiz" render={() => {
+              return (
+                <Quiz path="/quiz" />
+              );
+            }} />
             
-             <Route path="/quiz" render={() => {
-                  return (
-                      <Quiz path="/quiz" />
-                  );
-              }} />
         </React.Fragment>
     );
   }

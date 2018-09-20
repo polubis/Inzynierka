@@ -1,15 +1,103 @@
 .navbar{
     background: #7e3131;
-    color: rgb(108, 233, 185);
+    color: #ADEEE3;
     display: flex;
     padding: 10px 30px;
     align-items: center;
+    justify-content: space-between;
+    i{
+        transition: .5s all;
+    }
+    .btn-holder{
+        display: inherit;
+        align-items: center;
+        .navbar-btn{
+            padding: 12.5px;
+            margin: 0 10px;
+            font-size: 17px;
+            background: transparent;
+            position: relative;
+            color: inherit;
+            i{
+                margin-left: 5px;
+                font-size: 18px;
+            }
+        }
+        .linked-btn{
+            &::after{
+                content: '';
+                height: 100%;
+                position: absolute;
+                left: -9px;
+                top: 0;
+                border: .5px dotted #ADEEE3;
+            }
+            &::before{
+                content: '';
+                position: absolute;
+                border: 2.5px solid transparent;
+                width: 0;
+                left: 0;
+                bottom: -18.5px;
+                border-radius: 10px;
+                transition: .5s all;
+            }
+            &:hover::before{
+                width: 100%;
+                border-color: #ADEEE3;
+            }
+        }
+        .toggler{
+            i{
+                transform: rotate(0);
+            }
+            &:focus i{
+                transform: rotate(180deg);
+            }
+        }
+        .fa-bars{
+            z-index: 4;
+            font-size: 40px;
+            cursor: pointer;
+            margin-left: 50px;
+            color: #ADEEE3;
+            &:hover{
+                color: white;
+            }
+        }
+    }
+   
+}
 
-
-    .fa-bars{
-        font-size: 40px;
-        cursor: pointer;
-        margin-left: auto;
-        color: #ADEEE3;
+.side-bar{
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    padding: 15px;
+    box-sizing: border-box;
+    width: 400px;
+    height: 100%;
+    background: rgba(14, 13, 13, 0.911);
+}
+.side-bar-open{
+    animation: .5s animate-side-in forwards;
+    @keyframes animate-side-in {
+        0%{
+            right: -60vh;
+        }
+        100%{
+            right: 0;
+        }
+    }
+}
+.side-bar-collapsed{
+    animation: .5s animate-side-out forwards;
+    @keyframes animate-side-out {
+        0%{
+            right: 0;
+        }
+        100%{
+            right: -60vh;
+        }
     }
 }

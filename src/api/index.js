@@ -12,17 +12,15 @@ const endPoint = "http://localhost:52535/api";
 
 const instance = axios.create({baseURL: endPoint});
 
+instance.defaults.headers.common['Authorization'] = "Bearer " + token;
+
 const contentTypes = {
     "standard": "application/x-www-form-urlencoded"
 }
 
 const dataExtractor = (requestType, path, payload, authorization, contentType) => {
-    if(contentType)
-        instance.defaults.headers['Content-Type'] = contentTypes[contentType];
-    if(authorization){
-        instance.defaults.withCredentials = true;
-        console.log(instance.defaults);
-        instance.defaults.headers.common['Authorization'] = "Bearer " + token;
+    if(contentType){
+        instance.defaults.headers['Content-Type'] = contentType;
     }
     return instance[requestType](endPoint + path, payload)
     .then(response => succParser(response))
