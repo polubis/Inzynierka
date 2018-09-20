@@ -4,7 +4,7 @@ import { Route } from "react-router-dom";
 import MainStartPage from "../../components/main/mainPage";
 import { scrollBottom } from "../../services/componentsMethods";
 import { withRouter } from "react-router";
-import { logoutActionCreator } from "../../store/actions/Authenticate";
+import { logoutActionCreator } from "../../store/actions/Authenticate.js";
 import Navbar from "../../components/navigation/navbar";
 import { connect } from "react-redux";
 import { getUserDataACreator } from '../../store/actions/User.js';

@@ -1,23 +1,26 @@
 import axios from "axios";
 import '../services/inputValidator.jsx';
 import { handleErrors } from '../store/utility/handleErrors.jsx';
-import { deleteCookie, getASpecyficCookieValue } from '../services/cookiesHelper';
 import { history } from '../index';
-//const getToken = state => state.Authenticate.token;
+import storeCreator from '../store/index';
+import { logoutActionCreator } from '../store/actions/Authenticate';
+const { store } = storeCreator;
 
-const token = getASpecyficCookieValue("token", document.cookie);
+const getToken = state => state.Authenticate.token;
 
 const endPoint = "http://localhost:52535/api";
 
 const instance = axios.create({baseURL: endPoint});
-
-instance.defaults.headers.common['Authorization'] = "Bearer " + token;
 
 const contentTypes = {
     "standard": "application/x-www-form-urlencoded"
 }
 
 const dataExtractor = (requestType, path, payload, authorization, contentType) => {
+    if(authorization){
+        const token = getToken(store.getState());
+        instance.defaults.headers.common['Authorization'] = "Bearer " + token;
+    }
     if(contentType){
         instance.defaults.headers['Content-Type'] = contentType;
     }
@@ -36,10 +39,8 @@ const errorParser = error => {
 
     const errors = handleErrors(error);
     if(error.response.status === 401){
-        deleteCookie(document.cookie);
-        history.push("/login");
+        store.dispatch(logoutActionCreator(history, "/login"));
     }
-    
 
     throw errors;
 }

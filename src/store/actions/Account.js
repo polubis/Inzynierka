@@ -1,17 +1,6 @@
-import { SEND_REGISTER_EMAIL, END_REGISTER, LOGIN } from '../actionTypes.js';
+import { SEND_REGISTER_EMAIL, END_REGISTER } from '../actionTypes.js';
 import { handleErrors } from '../utility/handleErrors';
-import { setCookie, deleteCookie } from '../../services/cookiesHelper.js';
 import { Api } from '../../api/index.js';
-import { getUserData } from './User.js';
-
-export const logoutActionCreator = (history, path) => {
-    return dispatch => {
-        deleteCookie("token");
-        dispatch(logIn(null, [], null, ""));
-        history.push(path);
-    }
-}
-
 
 export const endRegister = (registerResult, registerError, registerUserData) => {
     return { type: END_REGISTER, registerResult, registerError, registerUserData }
@@ -31,32 +20,6 @@ export const endRegisterActionCreator = currentUrl => {
         }).catch( errors => dispatch(endRegister(false, errors, null)) );
     }
 }
-
-export const logIn = (loginResult, loginErrors, token) => {
-    return {
-        type: LOGIN, loginResult, loginErrors, token
-    }
-}
-
-export const loginActionCreator = (loginArray, history) => {
-    return dispatch => {
-        const loginModel = {
-            "Username": loginArray[0].value,
-            "Password": loginArray[1].value
-        }
-
-        Api.Authorization.login(loginModel).then(response => {
-            setCookie("token", 1, "/", response.token);
-            document.cookie = `token=${response.token}; path=/`;
-            dispatch(logIn(true, [], response.token));
-            dispatch(getUserData(response, []));
-            history.push("/main");
-        }).catch(errors => {
-            dispatch(logIn(false, errors, "", ""));
-        })
-    }
-}
-
 
 export const sendRegisterEmail = (sendEmailResult, sendEmailError) => {
     return {

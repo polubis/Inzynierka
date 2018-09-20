@@ -1,7 +1,7 @@
 import React from 'react';
 import './confirmRegisterPage.css';
 import { connect } from 'react-redux';
-import { endRegisterActionCreator } from '../../../../store/actions/Authenticate';
+import { endRegisterActionCreator } from '../../../../store/actions/Account.js';
 import Spinner from '../../../UI/spinner/spinner';
 import { scrollBottom } from '../../../../services/componentsMethods';
 import Button from '../../../UI/button/button';
@@ -102,9 +102,9 @@ class ConfirmRegisterPage extends React.PureComponent{
 
 const mapStateToProps = state => {
     return {
-        registerResult: state.Authenticate.registerResult, 
-        registerError: state.Authenticate.registerError,
-        registerUserData: state.Authenticate.registerUserData
+        registerResult: state.Account.registerResult, 
+        registerError: state.Account.registerError,
+        registerUserData: state.Account.registerUserData
     };
   };
   

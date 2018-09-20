@@ -20,8 +20,9 @@ class RootContainer extends React.PureComponent {
                 <Quiz path="/quiz" />
               );
             }} />
-
-            <Route component={HomePage} path="/" />
+            
+            <PrivateRoute component={HomePage} 
+              isAuthenticated={!loginResult} path="/" pathToRedirect="/main" />
         </React.Fragment>
     );
   }

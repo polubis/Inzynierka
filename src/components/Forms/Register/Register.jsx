@@ -1,7 +1,7 @@
 import React from "react";
 import "./Register.css";
 import { connect } from "react-redux";
-import { sendRegisterEmailActionCreator, sendRegisterEmail } from "../../../store/actions/Authenticate";
+import { sendRegisterEmailActionCreator, sendRegisterEmail } from "../../../store/actions/Account.js";
 import Form from "../../UI/form/form";
 import { formTitlesGenerator } from "../../../constants/formTitles";
 import Button from '../../UI/button/button';
@@ -99,8 +99,8 @@ class Register extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    sendEmailResult: state.Authenticate.sendEmailResult,
-    sendEmailError: state.Authenticate.sendEmailError
+    sendEmailResult: state.Account.sendEmailResult,
+    sendEmailError: state.Account.sendEmailError
   };
 };
 

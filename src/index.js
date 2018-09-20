@@ -7,8 +7,9 @@ import 'font-awesome/css/font-awesome.min.css';
 import { Provider} from 'react-redux';
 import WebFont from 'webfontloader';
 import storeCreator from './store/index';
+import { PersistGate } from "redux-persist/integration/react";
 
-export const {store, history}  = storeCreator();
+export const {store, history,persistor} = storeCreator;
 
 WebFont.load({
   google: {
@@ -18,7 +19,9 @@ WebFont.load({
 
 ReactDOM.render(
   <Provider store={store} >
-    <App history={history}/>
+     <PersistGate persistor={persistor}>
+        <App history={history}/>
+      </PersistGate>
   </Provider>,
   document.getElementById('root')
 );

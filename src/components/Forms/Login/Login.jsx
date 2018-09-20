@@ -1,7 +1,7 @@
 import React from 'react';
 import './Login.css';
 import { connect } from 'react-redux';
-import { loginActionCreator, logIn } from '../../../store/actions/Authenticate';
+import { loginActionCreator, logIn } from '../../../store/actions/Authenticate.js';
 import Form from '../../UI/form/form';
 import { withRouter } from 'react-router-dom';
 import { formTitlesGenerator } from '../../../constants/formTitles';
@@ -41,8 +41,8 @@ class Login extends React.PureComponent {
 
 const mapStateToProps = state => {
     return {
-        loginResult: state.Authenticate.loginResult,
-        loginErrors: state.Authenticate.loginErrors
+        loginResult: state.Account.loginResult,
+        loginErrors: state.Account.loginErrors
     };
 }
 
