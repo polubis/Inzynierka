@@ -2,8 +2,8 @@ import React from 'react'
 import './errorMessage.scss';
 
 
-const errorMessage = ({error, eClass, operation, isRefresingRequest}) => (
-    <div className={`err-container ${eClass ? eClass : "standard-error"} ${isRefresingRequest && "requesting-again"}`}>
+const errorMessage = ({error, eClass, containerClass, operation, isRefresingRequest}) => (
+    <div className={`err-set ${containerClass ? containerClass : "err-container"} ${eClass ? eClass : "standard-error"} ${isRefresingRequest && "requesting-again"}`}>
         <p>
             <span>
                 {isRefresingRequest || <i className="fa fa-exclamation"></i>}

@@ -1,11 +1,4 @@
-.err-container{
-    padding: 10px;
-    position: absolute;
-    width: 100%;
-    left: 0;
-    z-index: 10;
-    bottom: 0;
-    box-sizing: border-box;
+.err-set{
     p{
         margin: 0;
         padding: 0;
@@ -37,6 +30,24 @@
         }
     }
 }
+.err-container{
+    padding: 10px;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    z-index: 10;
+    bottom: 0;
+    box-sizing: border-box;
+}
+.error-in-page-content-container{
+    position: relative;
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+    i{
+        margin-right: 10px;
+    }
+}
 .standard-error{
     background-color: #ff7272;
     color: white;
@@ -45,6 +56,10 @@
     background-color: #7e3131;
     color: white;
     position: fixed;
+}
+.standar-oposite-error{
+    color: #ff7272;
+    background: transparent;
 }
 .requesting-again{
     background: lightseagreen;

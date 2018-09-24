@@ -1,7 +1,6 @@
 import React from 'react';
 import HomePage from './containers/HomePage/HomePage';
 import { Route, Redirect } from 'react-router-dom';
-import Navbar from './components/navigation/navbar';
 import Main from './containers/Main/Main';
 import { connect } from 'react-redux';
 import Quiz from './components/quiz/Quiz';

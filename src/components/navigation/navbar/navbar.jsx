@@ -1,10 +1,12 @@
 import React from "react";
 import "./navbar.scss";
-import Logo from "../UI/logo/logo";
-import { scrollBottom } from "../../services/componentsMethods";
+import Logo from "../../UI/logo/logo";
+import { scrollBottom } from "../../../services/componentsMethods";
 import Transition from 'react-transition-group/Transition';
-import Button from '../UI/button/button';
-import MotivesPanel from '../motives/motivesPanel';
+import Button from '../../UI/button/button';
+import MotivesPanel from '../../motives/motivesPanel';
+import Sidebar from '../sidebar/sidebar';
+import { withRouter } from 'react-router'; 
 class Navbar extends React.PureComponent {
   state = {
     showSidebar: false,
@@ -12,6 +14,7 @@ class Navbar extends React.PureComponent {
     shouldNavBeFixed: false,
     showMotivesPanel: false
   };
+
   componentDidMount(){
     window.addEventListener('scroll', this.windowScrollHandler);
   }
@@ -27,9 +30,21 @@ class Navbar extends React.PureComponent {
     }
     this.setState({oldScrollPosition: window.scrollY, shouldNavBeFixed});
   }
+  closeSidebar = () => {
+    const { history } = this.props;
+    this.setState({showSidebar: false}, () => {
+      history.push("/main");
+    });
+  }
+  openSidebar = () => {
+    const { history } = this.props;
+    this.setState({showSidebar: true}, () => {
+      history.push("main/profile");
+    });
+  }
   render() {
-    const { logout, getUserDataACreator, userData, getUserDataErrors } = this.props;
-    const { showSidebar, shouldNavBeFixed, showMotivesPanel } = this.state;
+    const { getUserDataACreator, userData, getUserDataErrors, logout, history, match } = this.props;
+    const { showSidebar, shouldNavBeFixed, showMotivesPanel, actualOpenedTabTitle } = this.state;
 
     return (
       <React.Fragment>
@@ -52,41 +67,16 @@ class Navbar extends React.PureComponent {
             <Button name="Użytkownicy" className="navbar-btn linked-btn" iconOn iClass="fa fa-users"/>
             <Button name="Instrukcja" className="navbar-btn linked-btn" iconOn iClass="fa fa-leanpub"/>
             <Button name="Odtwarzacz" className="navbar-btn" iconOn iClass="fa fa-headphones"/>
-            <i
-              onClick={() =>
-                this.setState({ showSidebar: !showSidebar })}
-              className="fa fa-bars"
-            />
+            <i onClick={this.openSidebar} className="fa fa-bars"/>
           </div>
         </header>
-                
-        <Transition 
-            mountOnEnter 
-            unmountOnExit
-            in={showSidebar}
-            timeout={500}>
-                {state => (
-                    <aside className={`side-bar ${showSidebar ? "side-bar-open" : "side-bar-collapsed"}`}>
-                      <span onClick={() =>
-                        this.setState({ showSidebar: !showSidebar })}>
-                        <i className="fa fa-chevron-right"></i>
-                      </span>
-                      
-                    
-                        <button onClick={logout}>Twój profil</button>
-                        <button>Twój profil</button>
-                        <button>Twój profil</button>
-                        <button>Twój profil</button>
-                        <button>Twój profil</button>
-                        <button>Twój profil</button>
-                        <button>Twój profil</button>
-                        siema
-                    </aside>
-                )}                   
-        </Transition>
+
+        <Sidebar userData={userData} getUserDataErrors={getUserDataErrors}
+        showSidebar={showSidebar} logout={logout} closeSidebar={this.closeSidebar} 
+        history={history} match={match} userData={userData}/>
 
       </React.Fragment>
     );
   }
 }
-export default Navbar;
+export default withRouter(Navbar);

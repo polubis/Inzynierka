@@ -32,6 +32,7 @@ const dataExtractor = (requestType, path, payload, authorization, contentType) =
 const succParser = response => {
     return response.data.successResult;
 }
+
 const errorParser = error => {
     if(error.response === undefined){
         throw ["Ups, coś poszło nie tak"];
@@ -53,5 +54,8 @@ export const Api = {
   },
   User: {
     getUserData: () => { return dataExtractor("get", "/users/userdata", undefined, true) }
+  },
+  Quiz: {
+    getZippedSounds: () => {}
   }
 };
