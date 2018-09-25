@@ -30,7 +30,7 @@ class Sidebar extends React.PureComponent{
 
     render(){
         const { actualOpenedTab } = this.state;
-        const { showSidebar, logout, closeSidebar, history, match, userData, getUserDataErrors } = this.props;
+        const { showSidebar, logout, closeSidebar, history, match, userData, getUserDataErrors, getUserDataACreator } = this.props;
         return (
         <Transition 
             mountOnEnter 
@@ -50,7 +50,7 @@ class Sidebar extends React.PureComponent{
                         </h3>
 
                         <Route path={`${match.path}/profile`} render={(props) => (
-                            <ErrorHoc operation={() => {}} errors={getUserDataErrors} containerClass="error-in-page-content-container" eClass="standar-oposite-error">
+                            <ErrorHoc operation={getUserDataACreator} errors={getUserDataErrors} containerClass="error-in-page-content-container" eClass="standar-oposite-error">
                                 <ProfileDetails userData={userData}  />
                             </ErrorHoc>
                         )}/>

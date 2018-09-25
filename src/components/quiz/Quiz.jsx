@@ -1,122 +1,131 @@
-import React, { Component } from 'react';
-import './Quiz.css';
-import Button from '../../components/UI/button/button';
-import { withRouter } from 'react-router';
-import Clock from './clock/clock';
-import BeforeStartPrompt from './beforeStartPrompt/beforeStartPrompt';
-import Counter from './counter/counter';
-import { basicContentItems, quizTypes } from '../../constants/quiz';
+import React from 'react';
+import './Quiz.scss';
+import Button from '../UI/button/button';
+import { connect } from 'react-redux';
+import { getSoundsByTypeACreator, getSoundsByType } from '../../store/actions/Sounds.js';
+import ErrorHoc from '../../hoc/errorHoc';
+import { extractFilesFromZip } from '../../services/fileService.js';
+import OperationPrompt from '../UI/operationPrompt/operationPrompt';
+const createStatsItems = setting => {
+    if(setting === undefined)
+        return [];
 
-const basicContent = (
-    <article>
-        <p>{basicContentItems.header}</p>
-        {basicContentItems.content}
-    </article>
-);
-class Quiz extends Component {
+    const { numberOfQuestions } = setting;
+    const createdStatsItems = [];
+    for(let i = 0; i < numberOfQuestions; i++){
+        createdStatsItems.push({ id: i, isQuestionAnswered: false, answer: "", question: "" });
+    }
+
+    return createdStatsItems;
+}
+const settings = {
+    "basic": {
+        numberOfQuestions: 10, requestName: "sound"
+    },
+    "advanced": {
+        numberOfQuestions: 20, requestName: "chord"
+    },
+    "intervals": {
+
+    },
+    "mixed": {
+
+    }
+}
+class Quiz extends React.PureComponent{
     state = {
-        quizType: "",
-        levels: [
-            "Pierwszy",
-            "Drugi",
-            "Trzeci",
-            "Czwarty",
-            "Piąty",
-            "Szósty",
-            "Siódmy",
-            "Ósmy",
-            "Dziewiąty",
-            "Dziesiąty"
-        ],
-        actualLevel: 0,
-        shouldStart: false,
-        isOpenedFirstTime: true,
-
-        startCounter: 3,
-        showStartCounting: null
+        levels: createStatsItems(settings[this.props.match.params.type]),
+        didUserAcceptedPrompt: false,
+        soundIsDownloading: true,
+        isDownloadingSoundsAgain: false,
+        quizResult: {numberOfPositiveRates: 0, numberOfNegativeRates: 0},
+        filesWasDecompresedBefore: false,
+        decompresedSounds: []
     }
-    goIntoNextLevel = () => { 
-        this.setState({actualLevel: this.state.actualLevel + 1})
-    }
-    startGame = () => {
-        this.setState({isOpenedFirstTime: false, showStartCounting: true});
-        this.intervalId = setInterval(() => {this.counting()}, 1000);
-    }
-    counting = () => {
-        if(this.state.startCounter !== 1)
-            this.setState({startCounter: this.state.startCounter-1});
+    componentDidMount(){
+        const { type } = this.props.match.params;
+        if(type === "basic" || type === "advanced")
+            this.downloadSounds("soundIsDownloading");
         else{
-            clearInterval(this.intervalId); 
-            this.setState({shouldStart: true, showStartCounting: false});
+            this.props.history.push("/main");
         }
     }
-    componentWillUnmount(){
-        clearInterval(this.intervalId);
+    // Zabezpieczyc jakos ten durny request co powoduje podwoje sciagniecie danych
+    componentDidUpdate(){
+        if(this.props.getSoundsStatus && !this.state.filesWasDecompresedBefore){
+            const { sounds, getSoundsByType } = this.props;
+            extractFilesFromZip(sounds).then(extractedFiles => {
+                this.setState({ decompresedSounds: extractedFiles, filesWasDecompresedBefore: true });
+            });
+        }
     }
-    render() { 
-        const { levels, actualLevel, shouldStart,
-            isOpenedFirstTime, showStartCounting, startCounter } = this.state;
-        const { push } = this.props.history;
-        return ( 
+
+    downloadSounds = stateToChange => {
+        const { type } = this.props.match.params;
+        const { getSoundsByTypeACreator } = this.props;
+        getSoundsByTypeACreator(settings[type].requestName).then(() => {
+            this.setState({[stateToChange]: false});
+        }).catch(() => {
+            this.setState({[stateToChange]: false});
+        });
+    }
+
+    downloadSoundsByTypeAgain = () => {
+        this.setState({isDownloadingSoundsAgain: true}, () => { this.downloadSounds("isDownloadingSoundsAgain"); });
+    }
+
+    exitFromQuiz = () => {
+        const { getSoundsByType, history } = this.props;
+        getSoundsByType([], [], null);
+        history.push("/main");
+    }
+
+    render(){
+        const { didUserAcceptedPrompt, soundIsDownloading, isDownloadingSoundsAgain, levels, filesWasDecompresedBefore,
+            decompresedSounds } = this.state;
+        const { getSoundsErrors } = this.props;
+        return(
             <div className="quiz-container">
-                <Clock shouldStart={shouldStart}/>
+                {(soundIsDownloading ) && <OperationPrompt />}
                 
-                <div className="quiz-content">
-                    {isOpenedFirstTime && 
-                        <BeforeStartPrompt key={1} header="Zanim rozpoczniesz" name="Rozpocznij"
-                        className="small-btn" onClick={this.startGame}>
-                            {basicContent}
-                        </BeforeStartPrompt>
-                    }
-                    
-                    {showStartCounting && 
-                        <Counter currentCounter={startCounter} />
-                    }
-
-                    {(!shouldStart && showStartCounting === false) && 
-                        <p className="paused-game-info">
-                            Gra została wstrzymana
-                        </p>
-                    }
-
-                    {(shouldStart && showStartCounting === false) && 
-                        <div className="quiz-question-container">
-                            Tu beda pytania
-                        </div>
-
-                    }
-
-                </div>
-
-                <ul className={`quiz-navigation ${!shouldStart ? "q-nav-open" : "q-nav-closed"}`}>
-                    {levels.map((level, index) => {
-                        return ( 
-                            <li className={index <= actualLevel ? "reached" : null} key={level}>
-                              {level}  
-                            </li>
-                        );
-                    })}
-                </ul>
-               
-                <div className="quiz-options-top">
-                    {showStartCounting || 
-                        <i onClick={
-                            isOpenedFirstTime ? this.startGame :
-                            () => this.setState({shouldStart: !shouldStart})
-                        } 
-                        className={`fa ${shouldStart ? "fa-pause" : "fa-play"}`}></i>
-                    }
-                    
-                </div>
-
+                <ErrorHoc errors={getSoundsErrors} isRefresingRequest={isDownloadingSoundsAgain} 
+                    operation={this.downloadSoundsByTypeAgain}>
+                        <aside className="side-stats-menu">
+                            <ul className={filesWasDecompresedBefore && "enable-result-list-animation"}>
+                                {decompresedSounds.map(sound => (
+                                    <li key={sound.name}>{sound.name}</li>
+                                ))}
+                            </ul>
+                        </aside>
+                        <section>
+                            {filesWasDecompresedBefore && 
+                                <div className="ready-to-play-prompt"></div>
+                            }
+                        </section>
+                </ErrorHoc>    
+            
                 <Button
-                onClick={() => push("/main")}
-                name="Wyjdź"
-                className="medium-btn go-next-btn"
+                    onClick={this.exitFromQuiz}
+                    name="Wyjdź"
+                    className="white-btn medium-btn"
                 />
-            </div> 
+            </div>
         );
     }
 }
- 
-export default withRouter(Quiz);
+
+const mapStateToProps = state => {
+    return {
+        sounds: state.Sounds.sounds,
+        getSoundsErrors: state.Sounds.getSoundsErrors,
+        getSoundsStatus: state.Sounds.getSoundsStatus
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        getSoundsByTypeACreator: (type) => dispatch(getSoundsByTypeACreator(type)),
+        getSoundsByType: (sounds, errors, status) => dispatch(getSoundsByType(sounds, errors, status))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Quiz);

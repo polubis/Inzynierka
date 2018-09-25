@@ -4,6 +4,7 @@ import thunk from "redux-thunk";
 import Authenticate from './reducers/Authenticate';
 import User from './reducers/User';
 import Account from './reducers/Account';
+import Sounds from './reducers/Sounds';
 import createHistory from 'history/createBrowserHistory';
 import storage from "redux-persist/lib/storage";
 import { persistStore, persistReducer } from "redux-persist";
@@ -11,13 +12,13 @@ import { persistStore, persistReducer } from "redux-persist";
 const persistConfig = {
     key: "root",
     storage,
-    blacklist: ["User", "Account"]
+    blacklist: ["User", "Account", "Sounds"]
 };
 
 const storeCreator = () => {
     const history = createHistory();
 
-    const rootReducer = combineReducers({Authenticate, User, Account});
+    const rootReducer = combineReducers({Authenticate, User, Account, Sounds});
 
     const persistedReducer = persistReducer(
         persistConfig,

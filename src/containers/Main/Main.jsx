@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Main.css";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import MainStartPage from "../../components/main/mainPage";
 import { scrollBottom } from "../../services/componentsMethods";
 import { withRouter } from "react-router";
@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { getUserDataACreator } from '../../store/actions/User.js';
 import OperationPrompt from '../../components/UI/operationPrompt/operationPrompt';
 import ErrorHoc from '../../hoc/errorHoc';
-
+import Quiz from '../../components/quiz/Quiz';
 class Main extends Component {
   state = {
     isUserDataLoadingAgain: false,
@@ -47,8 +47,11 @@ class Main extends Component {
           logout={() => logoutActionCreator(history, "/")}
           getUserDataACreator={getUserDataACreator}
         />
-
-        {isUserDataLoadingAgain ? <OperationPrompt /> : 
+      
+        <Switch>
+          <Route path="/main/quiz/:type" component={Quiz} />
+          
+          {isUserDataLoadingAgain ? <OperationPrompt /> : 
           <Route
             path="/main"
             render={() => {
@@ -62,7 +65,9 @@ class Main extends Component {
               );
             }}
             />
-        }
+          }
+        </Switch>
+        
 
         <ErrorHoc eClass="whole-page-error" errors={getUserDataErrors} isRefresingRequest={isUserLoadingDataAfterError} 
             operation={() => this.loadUserData(false, "isUserLoadingDataAfterError")}><span/></ErrorHoc>

@@ -41,8 +41,8 @@ class Login extends React.PureComponent {
 
 const mapStateToProps = state => {
     return {
-        loginResult: state.Account.loginResult,
-        loginErrors: state.Account.loginErrors
+        loginResult: state.Authenticate.loginResult,
+        loginErrors: state.Authenticate.loginErrors
     };
 }
 

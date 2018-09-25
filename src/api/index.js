@@ -16,13 +16,17 @@ const contentTypes = {
     "standard": "application/x-www-form-urlencoded"
 }
 
-const dataExtractor = (requestType, path, payload, authorization, contentType) => {
+const dataExtractor = (requestType, path, payload, authorization, contentType, responseType) => {
     if(authorization){
         const token = getToken(store.getState());
         instance.defaults.headers.common['Authorization'] = "Bearer " + token;
     }
     if(contentType){
-        instance.defaults.headers['Content-Type'] = contentType;
+        instance.defaults.headers['Content-Type'] = contentTypes[contentType];
+    }
+
+    if(responseType){
+        instance.defaults.responseType = responseType;
     }
     return instance[requestType](endPoint + path, payload)
     .then(response => succParser(response))
@@ -30,14 +34,19 @@ const dataExtractor = (requestType, path, payload, authorization, contentType) =
 }
 
 const succParser = response => {
-    return response.data.successResult;
+    if(response.data.successResult){
+        return response.data.successResult;
+    }
+    if(response.data){
+        return response.data;
+    }
+   
 }
 
 const errorParser = error => {
     if(error.response === undefined){
         throw ["Ups, coś poszło nie tak"];
     }
-
     const errors = handleErrors(error);
     if(error.response.status === 401){
         store.dispatch(logoutActionCreator(history, "/login"));
@@ -55,7 +64,7 @@ export const Api = {
   User: {
     getUserData: () => { return dataExtractor("get", "/users/userdata", undefined, true) }
   },
-  Quiz: {
-    getZippedSounds: () => {}
+  Sounds: {
+    getSoundsByType: (type) => { return dataExtractor("get", `/Sounds/getsounds/${type}`, undefined, true, null, "blob")}
   }
 };

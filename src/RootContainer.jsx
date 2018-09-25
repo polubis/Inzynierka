@@ -1,27 +1,24 @@
 import React from 'react';
 import HomePage from './containers/HomePage/HomePage';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import Main from './containers/Main/Main';
 import { connect } from 'react-redux';
 import Quiz from './components/quiz/Quiz';
-import PrivateRoute from './containers/PrivateRoute/PrivateRoute';
 
 class RootContainer extends React.PureComponent {
   render() {
     const { loginResult } = this.props;
     return (
         <React.Fragment>
-            <PrivateRoute component={Main} 
-              isAuthenticated={loginResult} path="/main" pathToRedirect="/login" />
+            <Route component={Main} path="/main" />
 
-            <Route path="/quiz" render={() => {
-              return (
-                <Quiz path="/quiz" />
-              );
-            }} />
+            <Route path="/quiz/:type" component={Quiz} />
             
-            <PrivateRoute component={HomePage} 
-              isAuthenticated={!loginResult} path="/" pathToRedirect="/main" />
+            {loginResult || 
+              <Route component={HomePage} path="/" />
+            }
+            
+            <Redirect to={loginResult ? "/main" : "/login"} />
         </React.Fragment>
     );
   }

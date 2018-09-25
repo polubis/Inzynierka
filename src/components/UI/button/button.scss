@@ -140,3 +140,13 @@
       border-color: #FFFFFF;
   }
 }
+
+.white-btn {
+  color: white;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 37px;
+  &:hover{
+    border-color:white;
+  }
+}

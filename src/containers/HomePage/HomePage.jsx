@@ -4,7 +4,6 @@ import StartPage from "../../components/homePage/homePage";
 import Register from "../../components/Forms/Register/Register";
 import Login from "../../components/Forms/Login/Login";
 import ConfigureModal from "../../components/quiz/configureModal/configureModal";
-import TestQuiz from '../../components/quiz/testQuiz/testQuiz';
 import { withRouter } from 'react-router';
 import { Route } from 'react-router-dom';
 import ConfirmRegisterPage from '../../components/Forms/Register/confirmRegisterPage/confirmRegisterPage';
@@ -18,7 +17,7 @@ class HomePage extends React.PureComponent {
   }
   openQuiz = () => {
     this.setState({openConfigureModal: false});
-    this.pushIntoRoute("/quiz");
+    this.pushIntoRoute("/quiz/basic");
   }
   render() {
     const { openConfigureModal } = this.state;

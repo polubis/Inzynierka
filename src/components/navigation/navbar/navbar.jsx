@@ -31,16 +31,10 @@ class Navbar extends React.PureComponent {
     this.setState({oldScrollPosition: window.scrollY, shouldNavBeFixed});
   }
   closeSidebar = () => {
-    const { history } = this.props;
-    this.setState({showSidebar: false}, () => {
-      history.push("/main");
-    });
+    this.setState({showSidebar: false});
   }
   openSidebar = () => {
-    const { history } = this.props;
-    this.setState({showSidebar: true}, () => {
-      history.push("main/profile");
-    });
+    this.setState({showSidebar: true});
   }
   render() {
     const { getUserDataACreator, userData, getUserDataErrors, logout, history, match } = this.props;
@@ -71,7 +65,7 @@ class Navbar extends React.PureComponent {
           </div>
         </header>
 
-        <Sidebar userData={userData} getUserDataErrors={getUserDataErrors}
+        <Sidebar userData={userData} getUserDataErrors={getUserDataErrors} getUserDataACreator={getUserDataACreator}
         showSidebar={showSidebar} logout={logout} closeSidebar={this.closeSidebar} 
         history={history} match={match} userData={userData}/>
 
