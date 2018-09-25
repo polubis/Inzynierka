@@ -9,6 +9,7 @@ export const extractFilesFromZip = blobFile => {
             for(let key in zipFiles.files){
                 readedFiles.push({name: key, data: zipFiles.files[key]._data});
             }
+            console.log(zipFiles);
             resolve(readedFiles);
         });
     })

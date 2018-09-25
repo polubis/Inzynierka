@@ -79,19 +79,19 @@ class Quiz extends React.PureComponent{
         getSoundsByType([], [], null);
         history.push("/main");
     }
-
+    // Wyzerowac dodane dzwieki
     render(){
         const { didUserAcceptedPrompt, soundIsDownloading, isDownloadingSoundsAgain, levels, filesWasDecompresedBefore,
             decompresedSounds } = this.state;
         const { getSoundsErrors } = this.props;
         return(
             <div className="quiz-container">
-                {(soundIsDownloading ) && <OperationPrompt />}
+                {soundIsDownloading && <OperationPrompt />}
                 
                 <ErrorHoc errors={getSoundsErrors} isRefresingRequest={isDownloadingSoundsAgain} 
                     operation={this.downloadSoundsByTypeAgain}>
                         <aside className="side-stats-menu">
-                            <ul className={filesWasDecompresedBefore && "enable-result-list-animation"}>
+                            <ul className={filesWasDecompresedBefore ? "enable-result-list-animation" : ""}>
                                 {decompresedSounds.map(sound => (
                                     <li key={sound.name}>{sound.name}</li>
                                 ))}
