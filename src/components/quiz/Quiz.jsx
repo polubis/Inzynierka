@@ -120,7 +120,7 @@ class Quiz extends React.PureComponent{
                         </section>
                         
                         {decompresedSounds.length > 0 && 
-                        <audio controls autoPlay 
+                        <audio controls autoPlay
                         src="C:\Users\apolubinski\Desktop\Backend Inzynierka\Inzynierka.API\wwwroot\sounds\Fis_sound_3" type="audio/mpeg">
                         </audio>
                         }
