@@ -49,6 +49,7 @@ class Main extends Component {
         />
       
         <Switch>
+
           <Route path="/main/quiz/:type" component={Quiz} />
           
           {isUserDataLoadingAgain ? <OperationPrompt /> : 
@@ -81,6 +82,7 @@ const mapStateToProps = state => {
   return {
     userData: state.User.userData,
     getUserDataErrors: state.User.getUserDataErrors
+
   };
 };
 

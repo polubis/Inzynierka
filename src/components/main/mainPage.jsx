@@ -17,12 +17,12 @@ const mainPage = ({push, scrollRef}) => {
                     </article>
                 </div>
                 <ul>
-                    <li onClick={() => push("/main/quiz/basic")}>
-                        <i className="fa fa-photo"></i>
-                        <p>Samouczek</p>
-                        <p>Przejdź szybki quiz dla rozgrzania słychu.</p>
+                    <li onClick={() => push("/main/quiz/sounds")}>
+                        <i className="fa fa-signal"></i>
+                        <p>Dźwięki</p>
+                        <p>Rozegraj 10 pytaniowy quiz oraz zapisz wynik w rankingu</p>
                     </li>
-                    <li onClick={() => push("/main/quiz/advanced")}>
+                    <li onClick={() => push("/main/quiz/chords")}>
                         <i className="fa fa-photo"></i>
                         <p>Tryb domyślny</p>
                         <p>Wybierz odpowiedni rodzaj quizu, a następnie konkuruj z innymi graczami!</p>

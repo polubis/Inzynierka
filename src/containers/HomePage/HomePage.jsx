@@ -17,7 +17,7 @@ class HomePage extends React.PureComponent {
   }
   openQuiz = () => {
     this.setState({openConfigureModal: false});
-    this.pushIntoRoute("/quiz/basic");
+    this.pushIntoRoute("/quiz/sounds");
   }
   render() {
     const { openConfigureModal } = this.state;

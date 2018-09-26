@@ -6,6 +6,7 @@ import { getSoundsByTypeACreator, getSoundsByType } from '../../store/actions/So
 import ErrorHoc from '../../hoc/errorHoc';
 import { extractFilesFromZip } from '../../services/fileService.js';
 import OperationPrompt from '../UI/operationPrompt/operationPrompt';
+import Sound from '../../assets/testSounds/gtr-nylon22.mp3';
 const createStatsItems = setting => {
     if(setting === undefined)
         return [];
@@ -19,10 +20,10 @@ const createStatsItems = setting => {
     return createdStatsItems;
 }
 const settings = {
-    "basic": {
+    "sounds": {
         numberOfQuestions: 10, requestName: "sound"
     },
-    "advanced": {
+    "chords": {
         numberOfQuestions: 20, requestName: "chord"
     },
     "intervals": {
@@ -36,25 +37,39 @@ class Quiz extends React.PureComponent{
     state = {
         levels: createStatsItems(settings[this.props.match.params.type]),
         didUserAcceptedPrompt: false,
-        soundIsDownloading: true,
+        soundsAreDownloading: true,
         isDownloadingSoundsAgain: false,
         quizResult: {numberOfPositiveRates: 0, numberOfNegativeRates: 0},
         filesWasDecompresedBefore: false,
-        decompresedSounds: []
+        decompresedSounds: [],
+        isReadyToStartDownloadingSounds: false,
+        currentPlayingSoundIndex: 0
     }
     componentDidMount(){
-        const { type } = this.props.match.params;
-        if(type === "basic" || type === "advanced")
-            this.downloadSounds("soundIsDownloading");
+        const { loginResult, match, history } = this.props;
+        const { type } = match.params;
+        if(loginResult){
+            if(type !== "sounds" && type !== "chords")
+                history.push("/main");
+            else
+                this.setState({isReadyToStartDownloadingSounds: true});
+        }
         else{
-            this.props.history.push("/main");
+            if(type !== "sounds")
+                history.push("/login");
+            else
+                this.setState({isReadyToStartDownloadingSounds: true});
         }
     }
-    // Zabezpieczyc jakos ten durny request co powoduje podwoje sciagniecie danych
     componentDidUpdate(){
+        if(this.state.isReadyToStartDownloadingSounds){
+            this.setState({isReadyToStartDownloadingSounds: false});
+            this.downloadSounds("soundsAreDownloading");
+        }
         if(this.props.getSoundsStatus && !this.state.filesWasDecompresedBefore){
             const { sounds, getSoundsByType } = this.props;
             extractFilesFromZip(sounds).then(extractedFiles => {
+                console.log(extractedFiles);
                 this.setState({ decompresedSounds: extractedFiles, filesWasDecompresedBefore: true });
             });
         }
@@ -75,18 +90,19 @@ class Quiz extends React.PureComponent{
     }
 
     exitFromQuiz = () => {
-        const { getSoundsByType, history } = this.props;
-        getSoundsByType([], [], null);
-        history.push("/main");
+        this.props.history.push("/main");
+    }
+    componentWillUnmount(){
+        this.props.getSoundsByType([], [], null);
     }
     // Wyzerowac dodane dzwieki
     render(){
-        const { didUserAcceptedPrompt, soundIsDownloading, isDownloadingSoundsAgain, levels, filesWasDecompresedBefore,
-            decompresedSounds } = this.state;
+        const { didUserAcceptedPrompt, soundsAreDownloading, isDownloadingSoundsAgain, levels, filesWasDecompresedBefore,
+            decompresedSounds, currentPlayingSoundIndex } = this.state;
         const { getSoundsErrors } = this.props;
         return(
             <div className="quiz-container">
-                {soundIsDownloading && <OperationPrompt />}
+                {soundsAreDownloading && <OperationPrompt />}
                 
                 <ErrorHoc errors={getSoundsErrors} isRefresingRequest={isDownloadingSoundsAgain} 
                     operation={this.downloadSoundsByTypeAgain}>
@@ -102,6 +118,13 @@ class Quiz extends React.PureComponent{
                                 <div className="ready-to-play-prompt"></div>
                             }
                         </section>
+                        
+                        {decompresedSounds.length > 0 && 
+                        <audio controls autoPlay 
+                        src="C:\Users\apolubinski\Desktop\Backend Inzynierka\Inzynierka.API\wwwroot\sounds\Fis_sound_3" type="audio/mpeg">
+                        </audio>
+                        }
+                        
                 </ErrorHoc>    
             
                 <Button
@@ -118,7 +141,8 @@ const mapStateToProps = state => {
     return {
         sounds: state.Sounds.sounds,
         getSoundsErrors: state.Sounds.getSoundsErrors,
-        getSoundsStatus: state.Sounds.getSoundsStatus
+        getSoundsStatus: state.Sounds.getSoundsStatus,
+        loginResult: state.Authenticate.loginResult
     }
 }
 const mapDispatchToProps = dispatch => {

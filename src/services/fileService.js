@@ -7,9 +7,12 @@ export const extractFilesFromZip = blobFile => {
             const readedFiles = [];
         
             for(let key in zipFiles.files){
-                readedFiles.push({name: key, data: zipFiles.files[key]._data});
+                const binary = zipFiles.files[key]._data.compressedContent;
+                const blob = new Blob([binary], {type: 'audio/ogg'});
+                const blobUrl = URL.createObjectURL(blob);
+                readedFiles.push({name: key, blobUrl: blobUrl});
             }
-            console.log(zipFiles);
+
             resolve(readedFiles);
         });
     })
