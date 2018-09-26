@@ -1,0 +1,42 @@
+.quiz-instruction{
+    color: #FFFDFD;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+    & > div{
+        text-align: center;
+        header{
+            font-size: 26px;
+            font-weight: lighter;
+            span{
+             color: #7CB996;
+                &::after, &::before{
+                    content: '';
+                    width: 10.5px;
+                    height: 10.5px;
+                    background: #7CB996;
+                    border-radius: 50px;
+                    display: inline-block;
+                }
+                &::before{
+                     margin: -4px 10px;
+                }
+                &::after{
+                    margin: 10px;
+                }
+            }
+        }
+        article{
+            padding: 10px 0;
+            color: #B0B0B0;
+            letter-spacing: 1px;
+            span{
+                color: #F4BE5A;
+            }
+            button{
+                margin-top: 25px;
+            }
+        }
+    }
+}

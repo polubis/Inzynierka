@@ -65,6 +65,7 @@ export const Api = {
     getUserData: () => { return dataExtractor("get", "/users/userdata", undefined, true) }
   },
   Sounds: {
-    getSoundsByType: (type) => { return dataExtractor("get", `/Sounds/getsounds/${type}`, undefined, true, null, "blob")}
+    getSounds: () => { return dataExtractor("get", "/Sounds")},
+    getChords: () => { return dataExtractor("get", "/Sounds/chords")}
   }
 };

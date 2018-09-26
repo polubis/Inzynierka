@@ -1,0 +1,15 @@
+.timer{
+    animation: 2s animate-timer infinite;
+    font-size: 36px;
+    @keyframes animate-timer {
+        0%{
+            transform: scale(1.6);
+        }
+        50%{
+            transform: scale(1);
+        }
+        100%{
+            transform: scale(1.6);
+        }
+    }    
+}

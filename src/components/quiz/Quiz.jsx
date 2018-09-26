@@ -3,10 +3,8 @@ import './Quiz.scss';
 import Button from '../UI/button/button';
 import { connect } from 'react-redux';
 import { getSoundsByTypeACreator, getSoundsByType } from '../../store/actions/Sounds.js';
-import ErrorHoc from '../../hoc/errorHoc';
-import { extractFilesFromZip } from '../../services/fileService.js';
 import OperationPrompt from '../UI/operationPrompt/operationPrompt';
-import Sound from '../../assets/testSounds/gtr-nylon22.mp3';
+import QuizContent from './quizContent/quizContent';
 const createStatsItems = setting => {
     if(setting === undefined)
         return [];
@@ -39,11 +37,7 @@ class Quiz extends React.PureComponent{
         didUserAcceptedPrompt: false,
         soundsAreDownloading: true,
         isDownloadingSoundsAgain: false,
-        quizResult: {numberOfPositiveRates: 0, numberOfNegativeRates: 0},
-        filesWasDecompresedBefore: false,
-        decompresedSounds: [],
-        isReadyToStartDownloadingSounds: false,
-        currentPlayingSoundIndex: 0
+        isReadyToStartDownloadingSoundsNames: false
     }
     componentDidMount(){
         const { loginResult, match, history } = this.props;
@@ -52,26 +46,19 @@ class Quiz extends React.PureComponent{
             if(type !== "sounds" && type !== "chords")
                 history.push("/main");
             else
-                this.setState({isReadyToStartDownloadingSounds: true});
+                this.setState({isReadyToStartDownloadingSoundsNames: true});
         }
         else{
             if(type !== "sounds")
                 history.push("/login");
             else
-                this.setState({isReadyToStartDownloadingSounds: true});
+                this.setState({isReadyToStartDownloadingSoundsNames: true});
         }
     }
     componentDidUpdate(){
-        if(this.state.isReadyToStartDownloadingSounds){
-            this.setState({isReadyToStartDownloadingSounds: false});
+        if(this.state.isReadyToStartDownloadingSoundsNames){
+            this.setState({isReadyToStartDownloadingSoundsNames: false});
             this.downloadSounds("soundsAreDownloading");
-        }
-        if(this.props.getSoundsStatus && !this.state.filesWasDecompresedBefore){
-            const { sounds, getSoundsByType } = this.props;
-            extractFilesFromZip(sounds).then(extractedFiles => {
-                console.log(extractedFiles);
-                this.setState({ decompresedSounds: extractedFiles, filesWasDecompresedBefore: true });
-            });
         }
     }
 
@@ -95,37 +82,31 @@ class Quiz extends React.PureComponent{
     componentWillUnmount(){
         this.props.getSoundsByType([], [], null);
     }
-    // Wyzerowac dodane dzwieki
+
+    play = () => {
+        this.player.play().then(() => {
+            console.log("Siema")
+        }).catch(error => {
+            console.log(error);
+        })
+    
+    }
     render(){
-        const { didUserAcceptedPrompt, soundsAreDownloading, isDownloadingSoundsAgain, levels, filesWasDecompresedBefore,
-            decompresedSounds, currentPlayingSoundIndex } = this.state;
-        const { getSoundsErrors } = this.props;
+        const { didUserAcceptedPrompt, soundsAreDownloading, isDownloadingSoundsAgain, levels } = this.state;
+        const { getSoundsErrors, sounds, getSoundsStatus } = this.props;
+        
         return(
             <div className="quiz-container">
                 {soundsAreDownloading && <OperationPrompt />}
                 
-                <ErrorHoc errors={getSoundsErrors} isRefresingRequest={isDownloadingSoundsAgain} 
-                    operation={this.downloadSoundsByTypeAgain}>
-                        <aside className="side-stats-menu">
-                            <ul className={filesWasDecompresedBefore ? "enable-result-list-animation" : ""}>
-                                {decompresedSounds.map(sound => (
-                                    <li key={sound.name}>{sound.name}</li>
-                                ))}
-                            </ul>
-                        </aside>
-                        <section>
-                            {filesWasDecompresedBefore && 
-                                <div className="ready-to-play-prompt"></div>
-                            }
-                        </section>
-                        
-                        {decompresedSounds.length > 0 && 
-                        <audio controls autoPlay
-                        src="C:\Users\apolubinski\Desktop\Backend Inzynierka\Inzynierka.API\wwwroot\sounds\Fis_sound_3" type="audio/mpeg">
-                        </audio>
-                        }
-                        
-                </ErrorHoc>    
+                <QuizContent 
+                downloadSoundsByTypeAgain={this.downloadSoundsByTypeAgain}
+                getSoundsErrors={getSoundsErrors} 
+                sounds={sounds} 
+                getSoundsStatus={getSoundsStatus}
+                didUserAcceptedPrompt={didUserAcceptedPrompt} 
+                isDownloadingSoundsAgain={isDownloadingSoundsAgain} levels={levels} />
+                
             
                 <Button
                     onClick={this.exitFromQuiz}
@@ -136,6 +117,7 @@ class Quiz extends React.PureComponent{
         );
     }
 }
+{/* <img src="http://localhost:52535/pictures/avatars/2_download.jpg" /> */}
 
 const mapStateToProps = state => {
     return {
