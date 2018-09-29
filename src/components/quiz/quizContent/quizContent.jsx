@@ -59,7 +59,7 @@ class QuizContent extends React.PureComponent{
             </aside>            
             {currentPlayingSoundIndex === -1 ? 
                 <div className="quiz-content">
-                    <QuizInstruction startQuiz={this.startQuiz}/>
+                    <QuizInstruction startQuiz={this.startQuiz} timerEndFunction={() => this.setState({currentPlayingSoundIndex: 0})}/>
                 </div>
                 :
                 <React.Fragment>

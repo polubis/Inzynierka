@@ -47,11 +47,8 @@ class Main extends Component {
           logout={() => logoutActionCreator(history, "/")}
           getUserDataACreator={getUserDataACreator}
         />
-      
         <Switch>
-
           <Route path="/main/quiz/:type" component={Quiz} />
-          
           {isUserDataLoadingAgain ? <OperationPrompt /> : 
           <Route
             path="/main"

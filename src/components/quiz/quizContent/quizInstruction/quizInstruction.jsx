@@ -8,6 +8,7 @@ class QuizInstruction extends React.PureComponent{
     }
     putCartIntoDom = () => {
         const { currentCart } = this.state;
+        const { timerEndFunction } = this.props;
         if(currentCart === 0)
             return (
                 <div>
@@ -68,7 +69,7 @@ class QuizInstruction extends React.PureComponent{
                 </div>
             );
         if(currentCart === 4)
-            return <Timer startTime={3}/>;
+            return <Timer startTime={3} shouldDecrement pausePerChange={1000} timerEndFunction={timerEndFunction}/>;
     }
     goToNextCart = () => {
         const { currentCart } = this.state;
@@ -84,6 +85,5 @@ class QuizInstruction extends React.PureComponent{
         );
     }
 }
-
 
 export default QuizInstruction;
