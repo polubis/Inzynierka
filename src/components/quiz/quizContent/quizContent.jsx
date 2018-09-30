@@ -27,19 +27,20 @@ class QuizContent extends React.PureComponent{
     startQuiz = () => {
       this.setState({currentPlayingSoundIndex: 0});   
     }
-    togleQuizState = () => {
-        const { isQuizPaused, numberOfUsedPauses } = this.state;
-        if(!isQuizPaused){
-            this.setState({isQuizPaused: !isQuizPaused, numberOfUsedPauses: numberOfUsedPauses-1});
-        }
-        else{
-            this.setState({isQuizPaused: !isQuizPaused});
-        }
+
+    toglePauseState = () => {
+       const { isQuizPaused, numberOfUsedPauses } = this.state;
+       if(isQuizPaused){
+        this.setState({isQuizPaused: false, numberOfUsedPauses: numberOfUsedPauses-1});
+       }
+       else{
+        this.setState({isQuizPaused: true});
+       }
     }
+
     exitFromQuiz = () => {
         this.props.history.push("/main");
     }
-
 
     render(){
         const { currentPlayingSoundIndex, isQuizPaused, numberOfUsedPauses } = this.state;
@@ -71,7 +72,7 @@ class QuizContent extends React.PureComponent{
                     :
                     <React.Fragment>
                         <nav className="quiz-navigation">
-                            <Timer timeChangeValue={0.1} showPulseAnimation={false} shouldPause={isQuizPaused} label="cały czas trwania"/>
+                            <Timer showPulseAnimation={false} shouldPause={isQuizPaused} label="cały czas trwania"/>
                             <div className="nav-btns-container">
                             </div>
                         </nav>
@@ -81,7 +82,7 @@ class QuizContent extends React.PureComponent{
                             </div>
                             <footer>
                                 <div className="footer-icons">
-                                    <i onClick={numberOfUsedPauses !== 0 ? this.togleQuizState : null} 
+                                    <i onClick={numberOfUsedPauses !== 0 ? this.toglePauseState : null} 
                                     className={`fa fa-${isQuizPaused ? "play" : "pause"} ${numberOfUsedPauses === 0 ? "disabled-element" : ""}`}></i>
                                     </div>
                             </footer>
@@ -98,8 +99,10 @@ class QuizContent extends React.PureComponent{
                 <Button onClick={this.exitFromQuiz} name="Wyjdź" className="white-btn medium-btn" />
             }
            
-            <PausedQuizModal quizSetting={settings[quizType]} numberOfUsedPauses={numberOfUsedPauses}
-            isQuizPaused={isQuizPaused} togleQuizState={this.togleQuizState} />               
+           {isQuizPaused && 
+            <PausedQuizModal toglePauseState={this.toglePauseState} quizSetting={settings[quizType]} numberOfUsedPauses={numberOfUsedPauses} /> 
+           }
+                          
         </ErrorHoc>  
         );
     }

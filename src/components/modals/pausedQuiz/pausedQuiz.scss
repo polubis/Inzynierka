@@ -39,6 +39,16 @@
                 margin-right: 5px;
             }
         }
+        .column{
+            & > div{
+                display: flex;
+                color: #7e3131;
+                span{
+                    color: #808080;
+                    margin-right: 5px;
+                }
+            }
+        }
         .row{
            margin-top: 35px;
         }

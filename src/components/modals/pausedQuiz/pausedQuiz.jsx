@@ -3,8 +3,8 @@ import './pausedQuiz.scss';
 import Modal from '../../UI/modal/modal';
 import Button from '../../UI/button/button';
 import Timer from '../../quiz/timer/timer';
-const pausedQuiz = ({isQuizPaused, togleQuizState, quizSetting, numberOfUsedPauses}) => (
-    <Modal timeout={500} show={isQuizPaused} close={togleQuizState} showIcon 
+const pausedQuiz = ({quizSetting, numberOfUsedPauses, toglePauseState}) => (
+    <Modal timeout={500} show={true} close={toglePauseState} showIcon 
         animationIn="animation-opacity-in" animationOut="animation-opacity-out" backdropInAnimation="open-backdrop-short"
         backdropOutAnimation="hide-backdrop-short">
             <div className="pause-quiz-prompt">
@@ -27,13 +27,13 @@ const pausedQuiz = ({isQuizPaused, togleQuizState, quizSetting, numberOfUsedPaus
                         <p><span>Pozostałe przerwy:</span> {numberOfUsedPauses}</p>
                         <p><span>Ilość udzielonych odpowiedzi:</span> 4</p>
                         <p><span>Liczba pytań do zakończenia quizu:</span> 6</p>
-                        <p><span>Czas w momencie zatrzymania:</span>
-                        <Timer timeChangeValue={0.1} startTime={quizSetting.timeForPause} sizeClass="normal" style={{color: "#7e3131"}}
-                        shouldDecrement showPulseAnimation={false} timerEndFunction={togleQuizState} breakCountingValue={parseFloat(0)}/></p>
+                        <div><span>Czas w momencie zatrzymania:</span>
+                        <Timer startTime={quizSetting.timeForPause} sizeClass="normal" style={{color: "#7e3131"}}
+                        shouldDecrement showPulseAnimation={false} timerEndFunction={toglePauseState}/></div>
                     </div>
                     
                     <div className="row">
-                        <Button onClick={togleQuizState} style={{color: "#7e3131", borderColor: "#7e3131"}} name="Kontynuj" className="small-btn quiz-instruction-nt-main-btn"/>
+                        <Button onClick={toglePauseState} style={{color: "#7e3131", borderColor: "#7e3131"}} name="Kontynuj" className="small-btn quiz-instruction-nt-main-btn"/>
                     </div>
                 </div>
             </div>

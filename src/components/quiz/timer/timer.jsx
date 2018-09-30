@@ -1,39 +1,41 @@
 import React from 'react'
 import './timer.scss';
 
-class Timer extends React.PureComponent{
+class Timer extends React.Component{
     state = {
-        time: parseFloat(this.props.startTime)
+        time: this.props.startTime
     }
     componentDidMount(){
         this.addInterval();
     }
     addInterval = () => {
-        const { pausePerChange } = this.props;
-        this.intervalId = setInterval(() => {this.changeTime()}, pausePerChange);
+        this.intervalId = setInterval(() => {this.changeTime()}, 1200);
     }
     componentDidUpdate(prevProps){
-        const { timerEndFunction, breakCountingValue, shouldPause } = this.props;
+        const { timerEndFunction, shouldPause, breakCountingValue } = this.props;
         const { time } = this.state;
-        if(time <= breakCountingValue){
+        console.log(time, breakCountingValue, shouldPause)
+        if(time === breakCountingValue){
             timerEndFunction();
-            clearInterval(this.intervalId);
         }
-        if(prevProps.shouldPause !== shouldPause && shouldPause){
-            clearInterval(this.intervalId);
-        }
-        else if(prevProps.shouldPause !== shouldPause && !shouldPause){
-            this.addInterval();
+        else if(shouldPause !== undefined){
+            if(prevProps.shouldPause !== shouldPause && shouldPause){
+                clearInterval(this.intervalId);
+            }
+            else if(prevProps.shouldPause !== shouldPause && !shouldPause){
+                this.addInterval();
+            }    
         }
     }
+        
     changeTime = () => {
-        const { shouldDecrement, timeChangeValue } = this.props;
+        const { shouldDecrement } = this.props;
         const { time } = this.state;
         if(shouldDecrement){
-            this.setState({time: time - timeChangeValue});
+            this.setState({time: time - 1});
         }
         else{
-            this.setState({time: time + timeChangeValue});
+            this.setState({time: time + 1});
         }
     }
     componentWillUnmount(){
@@ -41,14 +43,12 @@ class Timer extends React.PureComponent{
     }
     render(){
         const { time } = this.state;
-        const { timeDivider, showPulseAnimation, sizeClass, label, shouldDecrement } = this.props;
+        const { timeDivider, showPulseAnimation, sizeClass, label } = this.props;
+       
         return (
             <div className={`${sizeClass} ${showPulseAnimation ? "pulse-timer" : ""}`}>
                 <div>
-                    {shouldDecrement ? 
-                    time > 0 && time.toFixed(timeDivider) : 
-                    time.toFixed(timeDivider)
-                    }
+                    {time.toFixed(timeDivider)}
                 </div>
                 {label && <span>{label}</span>}
             </div>
@@ -57,11 +57,8 @@ class Timer extends React.PureComponent{
 }
 Timer.defaultProps = {
     startTime: 0,
-    pausePerChange: 100,
     shouldDecrement: false,
-    timeChangeValue: 1,
     breakCountingValue: 0,
-    timeDivider: 1,
     showPulseAnimation: true,
     shouldPause: false,
     sizeClass: "timer"
