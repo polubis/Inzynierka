@@ -3,40 +3,48 @@ import './quizContent.scss';
 import ErrorHoc from '../../../hoc/errorHoc';
 import QuizInstruction from './quizInstruction/quizInstruction';
 import Timer from '../timer/timer';
+import Button from '../../UI/button/button';
+import PausedQuizModal from '../../modals/pausedQuiz/pausedQuiz';
+import { settings } from '../../../services/quizService.js';
 class AnswerModel {
-    constructor(timeForAnswer, wasAnswerCorrect, multiplier){
+    constructor(indexOfAnswer, timeForAnswer, wasAnswerCorrect, multiplier){
+        this.indexOfAnswer = indexOfAnswer;
         this.timeForAnswer = timeForAnswer;
         this.wasAnswerCorrect = wasAnswerCorrect;
         this.multiplier = multiplier;
     }
 }
 
-
 class QuizContent extends React.PureComponent{
     state = {
         currentPlayingSoundIndex: -1,
         quizResult: {numberOfPositiveRates: 0, numberOfNegativeRates: 0},
         answers: [],
-        isQuizStopped: false,
-        isQuizStarted: false
+        isQuizPaused: false,
+        numberOfUsedPauses: settings[this.props.quizType].numberOfPauses
     }
 
     startQuiz = () => {
       this.setState({currentPlayingSoundIndex: 0});   
     }
-
-    stopQuiz = () => {
-        this.setState({isQuizStopped: false});
+    togleQuizState = () => {
+        const { isQuizPaused, numberOfUsedPauses } = this.state;
+        if(!isQuizPaused){
+            this.setState({isQuizPaused: !isQuizPaused, numberOfUsedPauses: numberOfUsedPauses-1});
+        }
+        else{
+            this.setState({isQuizPaused: !isQuizPaused});
+        }
+    }
+    exitFromQuiz = () => {
+        this.props.history.push("/main");
     }
 
-    unStopQuiz = () => {
-        this.setState({isQuizStopped: true});
-    }
 
     render(){
-        const { currentPlayingSoundIndex } = this.state;
+        const { currentPlayingSoundIndex, isQuizPaused, numberOfUsedPauses } = this.state;
         const { downloadSoundsByTypeAgain, getSoundsErrors, sounds, getSoundsStatus, didUserAcceptedPrompt, 
-             isDownloadingSoundsAgain, levels } = this.props;
+             isDownloadingSoundsAgain, levels, quizType } = this.props;
         return (
             <ErrorHoc errors={getSoundsErrors} isRefresingRequest={isDownloadingSoundsAgain} 
             operation={downloadSoundsByTypeAgain}>
@@ -56,26 +64,42 @@ class QuizContent extends React.PureComponent{
                         </li>
                     ))}                             
               </ul>
-            </aside>            
-            {currentPlayingSoundIndex === -1 ? 
-                <div className="quiz-content">
+            </aside>      
+            <div className="quiz-content">
+                {currentPlayingSoundIndex === -1 ? 
                     <QuizInstruction startQuiz={this.startQuiz} timerEndFunction={() => this.setState({currentPlayingSoundIndex: 0})}/>
-                </div>
-                :
-                <React.Fragment>
-                    <nav className="quiz-navigation">
-                        <Timer />
-                    </nav>
-                    <section>
-                                
-                    </section>
-                        
-                    {getSoundsStatus && 
-                        <audio src="http://localhost:52535/sounds/G_sound_3.mp3" ref={el => { this.player = el; }} type="audio/ogg">
-                        </audio>
-                    }
-                </React.Fragment>
+                    :
+                    <React.Fragment>
+                        <nav className="quiz-navigation">
+                            <Timer timeChangeValue={0.1} showPulseAnimation={false} shouldPause={isQuizPaused} label="cały czas trwania"/>
+                            <div className="nav-btns-container">
+                            </div>
+                        </nav>
+                        <section>
+                            <div className="section-content">
+                                dssad
+                            </div>
+                            <footer>
+                                <div className="footer-icons">
+                                    <i onClick={numberOfUsedPauses !== 0 ? this.togleQuizState : null} 
+                                    className={`fa fa-${isQuizPaused ? "play" : "pause"} ${numberOfUsedPauses === 0 ? "disabled-element" : ""}`}></i>
+                                    </div>
+                            </footer>
+                        </section>
+                        {getSoundsStatus && 
+                            <audio src="http://localhost:52535/sounds/G_sound_3.mp3" ref={el => { this.player = el; }} type="audio/ogg">
+                            </audio>
+                        }
+                    </React.Fragment>
+                }
+            </div>
+ 
+            {currentPlayingSoundIndex === -1 && 
+                <Button onClick={this.exitFromQuiz} name="Wyjdź" className="white-btn medium-btn" />
             }
+           
+            <PausedQuizModal quizSetting={settings[quizType]} numberOfUsedPauses={numberOfUsedPauses}
+            isQuizPaused={isQuizPaused} togleQuizState={this.togleQuizState} />               
         </ErrorHoc>  
         );
     }

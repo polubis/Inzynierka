@@ -5,35 +5,11 @@ import { connect } from 'react-redux';
 import { getSoundsByTypeACreator, getSoundsByType } from '../../store/actions/Sounds.js';
 import OperationPrompt from '../UI/operationPrompt/operationPrompt';
 import QuizContent from './quizContent/quizContent';
-const createStatsItems = setting => {
-    if(setting === undefined)
-        return [];
+import { createLevels, settings } from '../../services/quizService.js';
 
-    const { numberOfQuestions } = setting;
-    const createdStatsItems = [];
-    for(let i = 0; i < numberOfQuestions; i++){
-        createdStatsItems.push({ id: i, isQuestionAnswered: false, answer: "", question: "" });
-    }
-
-    return createdStatsItems;
-}
-const settings = {
-    "sounds": {
-        numberOfQuestions: 10, requestName: "sound"
-    },
-    "chords": {
-        numberOfQuestions: 20, requestName: "chord"
-    },
-    "intervals": {
-
-    },
-    "mixed": {
-
-    }
-}
 class Quiz extends React.PureComponent{
     state = {
-        levels: createStatsItems(settings[this.props.match.params.type]),
+        levels: createLevels(this.props.match.params.type),
         didUserAcceptedPrompt: false,
         soundsAreDownloading: true,
         isDownloadingSoundsAgain: false,
@@ -75,10 +51,7 @@ class Quiz extends React.PureComponent{
     downloadSoundsByTypeAgain = () => {
         this.setState({isDownloadingSoundsAgain: true}, () => { this.downloadSounds("isDownloadingSoundsAgain"); });
     }
-
-    exitFromQuiz = () => {
-        this.props.history.push("/main");
-    }
+  
     componentWillUnmount(){
         this.props.getSoundsByType([], [], null);
     }
@@ -89,12 +62,12 @@ class Quiz extends React.PureComponent{
         }).catch(error => {
             console.log(error);
         })
-    
     }
     render(){
         const { didUserAcceptedPrompt, soundsAreDownloading, isDownloadingSoundsAgain, levels } = this.state;
-        const { getSoundsErrors, sounds, getSoundsStatus } = this.props;
-        
+        const { getSoundsErrors, sounds, getSoundsStatus, history, match } = this.props;
+        const { type: quizType } = match.params;
+        console.log(quizType);
         return(
             <div className="quiz-container">
                 {soundsAreDownloading && <OperationPrompt />}
@@ -102,17 +75,12 @@ class Quiz extends React.PureComponent{
                 <QuizContent 
                 downloadSoundsByTypeAgain={this.downloadSoundsByTypeAgain}
                 getSoundsErrors={getSoundsErrors} 
-                sounds={sounds} 
+                sounds={sounds} quizType={quizType}
+                history={history}
                 getSoundsStatus={getSoundsStatus}
                 didUserAcceptedPrompt={didUserAcceptedPrompt} 
                 isDownloadingSoundsAgain={isDownloadingSoundsAgain} levels={levels} />
                 
-            
-                <Button
-                    onClick={this.exitFromQuiz}
-                    name="Wyjdź"
-                    className="white-btn medium-btn"
-                />
             </div>
         );
     }

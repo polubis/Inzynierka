@@ -65,3 +65,29 @@ ul{
   margin: 0;
   padding: 0;
 }
+.row-column{
+display: flex;
+flex-flow: column;
+align-items: center;
+justify-content: center;
+}
+
+.dots{
+  &::after, &::before{
+    content: '';
+    width: 10.5px;
+    height: 10.5px;
+    border-radius: 50px;
+    display: inline-block;
+}
+&::before{
+     margin: -4px 10px;
+}
+&::after{
+    margin: 10px;
+}
+}
+.disabled-element{
+  color: grey !important;
+  cursor: unset !important;
+}

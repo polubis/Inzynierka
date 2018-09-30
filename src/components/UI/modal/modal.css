@@ -21,6 +21,12 @@
 .hide-backdrop{
     animation: 1.5s animate-back-out ease-in-out forwards;
 }
+.open-backdrop-short{
+    animation: .5s animate-back-in ease-in-out forwards;
+}
+.hide-backdrop-short{
+    animation: .5s animate-back-out ease-in-out forwards;
+}
 @keyframes animate-back-in{
     0%{
         opacity: 0;
@@ -37,20 +43,22 @@
         opacity: 0;
     }
 }
-.modal-container{
+.modal-container-base{
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
     background-color: #ffffff;
     transition: 1s all ease-in-out;
+    box-shadow: -1px 1px 38px -2px rgba(0,0,0,0.42);
+    left: 50%;
 }
-.modal-container-open{
-    animation: 1.5s modal-in ease-in-out forwards;
+.animation-from-left-to-right{
+    animation: 1.5s basic-animation-in ease-in-out forwards;
 }
-.modal-container-close{
-    animation: 1.5s modal-out ease-in-out forwards;
+.animation-from-right-to-left{
+    animation: 1.5s basic-animation-out ease-in-out forwards;
 }
-@keyframes modal-in{
+@keyframes basic-animation-in{
    0%{
        left: -100vw;
    }
@@ -61,7 +69,7 @@
        left: 50%;
    }
 }
-@keyframes modal-out{
+@keyframes basic-animation-out{
     0%{
         left: 50%;
     }
@@ -70,5 +78,32 @@
     }
     100%{
         left: -100vw;
+    }
+}
+
+.animation-opacity-in{
+    animation: .5s modal-op-in forwards;
+}
+.animation-opacity-out{
+    animation: .5s modal-op-out forwards;
+}
+@keyframes modal-op-in{
+   0%{
+       opacity: 0;
+       top: 51%;
+   }
+   100%{
+       opacity: 1;
+       top: 50%;
+   }
+}
+@keyframes modal-op-out{
+    0%{
+        opacity: 1;
+        top: 50%;
+    }
+    100%{
+        opacity: 0;
+        top: 51%;
     }
 }

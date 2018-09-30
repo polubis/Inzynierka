@@ -11,6 +11,10 @@
   font-size: 22px;
   width: 170px;
 }
+.small-btn{
+  font-size: 16px;
+  padding: 10px 30px;
+}
 @media(max-width: 550px){
     .big-btn {
         width: 270px;
@@ -89,21 +93,6 @@
   font-size: 15px;
   letter-spacing: 1.2px;
 }
-.small-btn{
-  width: 125px;
-  padding: 10px 0; 
-  background: orangered;
-  color: white;
-  border-radius: 10px;
-}
-.btn-abs-center{
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  position: absolute;
-}
-
-
 .navbar-btn{
   padding: 12.5px;
   margin: 0 10px;
@@ -161,4 +150,9 @@
     color: black;
     box-shadow: -1px 1px 38px -2px rgba(0,0,0,0.42);
   }
+}
+.quiz-instruction-nt-main-btn{
+  background: transparent;
+  color: #FFFDFD;
+  border-radius: 37px;
 }

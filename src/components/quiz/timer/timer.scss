@@ -1,7 +1,18 @@
 .timer{
-    animation: 1s animate-timer infinite;
     font-size: 36px;
     color: #7CB996;
+    display: flex;
+    flex-flow: column;
+    div{
+        width: 125px;
+    }
+    span{
+        font-size: 15px;
+        color: #B0B0B0;
+    }
+}
+.pulse-timer{
+    animation: 1s animate-timer infinite;
     @keyframes animate-timer {
         0%{
             opacity: 1;
@@ -12,5 +23,8 @@
         100%{
             opacity: 1;
         }
-    }    
+    }  
+}
+.normal{
+
 }

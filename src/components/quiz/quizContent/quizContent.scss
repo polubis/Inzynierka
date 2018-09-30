@@ -83,10 +83,35 @@
   .quiz-content{
         width: 100%;
       .quiz-navigation{
-
+        padding: 15px 20px;
+        display: flex;
+        .nav-btns-container{
+          width: 100%;
+          margin-left: 25px;
+        }
       }
-
       section{
-
+        height: 100%;
+        .section-content{
+          background: white;
+          padding: 15px 20px;
+          display: flex;
+        }
+        footer{
+          padding: 25px;
+          position: fixed;
+          bottom: 0;
+          width: 100%;
+          i{
+            cursor: pointer;
+            font-size: 24px;
+          }
+          .fa-play{
+            color: #7CB996;
+          }
+          .fa-pause{
+            color: #BD7B7B;
+          }
+        }
       }
   }

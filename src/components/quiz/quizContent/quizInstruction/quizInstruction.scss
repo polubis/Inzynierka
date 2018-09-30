@@ -11,20 +11,9 @@
             font-weight: lighter;
             span{
              color: #7CB996;
-                &::after, &::before{
-                    content: '';
-                    width: 10.5px;
-                    height: 10.5px;
-                    background: #7CB996;
-                    border-radius: 50px;
-                    display: inline-block;
-                }
-                &::before{
-                     margin: -4px 10px;
-                }
-                &::after{
-                    margin: 10px;
-                }
+             &::before, &::after{
+                 background: #7CB996
+             }
             }
         }
         article{
@@ -34,8 +23,11 @@
             span{
                 color: #F4BE5A;
             }
-            button{
+            button:first-of-type{
                 margin-top: 25px;
+            }
+            button:last-of-type{
+                margin-top: 15px;
             }
         }
     }

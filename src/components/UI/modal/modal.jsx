@@ -7,14 +7,14 @@ const modal = props => (
             mountOnEnter 
             unmountOnExit
             in={props.show}
-            timeout={1500}>
+            timeout={props.timeout}>
                 {state => (
-                <div className={`backdrop ${props.show ? "open-backdrop" : "hide-backdrop"}`}>
+                <div className={`backdrop ${props.show ? props.backdropInAnimation : props.backdropOutAnimation}`}>
                     {props.showIcon && 
                         <i onClick={props.close} className="fa fa-times"></i>
                     }
-                    <div className={`modal-container ${props.show ? "modal-container-open" 
-                    : "modal-container-close"}`}>
+                    <div className={`modal-container-base ${props.show ? props.animationIn 
+                    : props.animationOut}`}>
                         {props.children}
                     </div>
                 </div>
@@ -22,5 +22,11 @@ const modal = props => (
         </Transition>
     
 );
-
+modal.defaultProps = {
+    animationIn: "animation-from-left-to-right",
+    animationOut: "animation-from-right-to-left",
+    backdropInAnimation: "open-backdrop",
+    backdropOutAnimation: "hide-backdrop",
+    timeout: 1500
+}
 export default modal;

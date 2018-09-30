@@ -8,17 +8,20 @@ class QuizInstruction extends React.PureComponent{
     }
     putCartIntoDom = () => {
         const { currentCart } = this.state;
-        const { timerEndFunction } = this.props;
+        const { startQuiz } = this.props;
         if(currentCart === 0)
             return (
                 <div>
                     <header>
-                        Witaj w <span>Quizie</span>, który zweryfikuje twój słuch muzyczny
+                        Witaj w <span className="dots">Quizie</span>, który zweryfikuje twój słuch muzyczny
                     </header>
                     <article>
                         <p>Wybrany przez Ciebie tryb pozwala na przejście quizu składającego się z <span>dziesięciu pytań</span></p>
                         <p>W<span> panelu bocznym</span> przedstawiony jest Twój progres dotyczący obecnego quizu</p>
-                        <Button onClick={this.goToNextCart} name="Dalej" className="medium-btn quiz-cart-btn" />
+                        <div className="row-column">
+                            <Button onClick={this.goToNextCart} name="Dalej" className="medium-btn quiz-cart-btn" />
+                            <Button onClick={() => this.setState({currentCart: 4})} name="Pomiń i graj" className="medium-btn quiz-instruction-nt-main-btn" />
+                        </div>
                     </article>
                 </div>
               
@@ -28,7 +31,7 @@ class QuizInstruction extends React.PureComponent{
             return (
                 <div>
                     <header>
-                        Zasady gry w trybie <span>Dźwięków</span>
+                        Zasady gry w trybie <span className="dots">Dźwięków</span>
                     </header>
                     <article>
                         <p>Podczas odpowiadania pytań przez pierwsze kilka sekund będziesz miał możliwość wpisania <span>własnej odpowiedzi</span> </p>
@@ -43,7 +46,7 @@ class QuizInstruction extends React.PureComponent{
             return (
                 <div>
                     <header>
-                        Po zakończeniu rozgrywki twój wynik zostanie umieszczony w <span>rankingu</span>
+                        Po zakończeniu rozgrywki twój wynik zostanie umieszczony w <span className="dots">rankingu</span>
                     </header>
                     <article>
                         <p>Po każdym zakończonym Quizie system wyświetli podsumowanie rozgrywki w postaci <span>szczegółowych statystyk</span></p>
@@ -57,7 +60,7 @@ class QuizInstruction extends React.PureComponent{
             return (
                 <div>
                     <header>
-                        Podczas gry dostępne są <span>dwie pauzy</span>, które trwają <span>15 sekund</span>
+                        Podczas gry dostępne są <span className="dots">dwie pauzy</span>, które trwają <span>15 sekund</span>
                     </header>
                     <article>
                         <p>Podczas skorzystania z pauzy w <span>menu nawigacyjnym</span> pojawi się odliczanie</p>
@@ -69,7 +72,7 @@ class QuizInstruction extends React.PureComponent{
                 </div>
             );
         if(currentCart === 4)
-            return <Timer startTime={3} shouldDecrement pausePerChange={1000} timerEndFunction={timerEndFunction}/>;
+            return <Timer startTime={3} timeDivider={0} shouldDecrement pausePerChange={1000} timerEndFunction={startQuiz} />;
     }
     goToNextCart = () => {
         const { currentCart } = this.state;
