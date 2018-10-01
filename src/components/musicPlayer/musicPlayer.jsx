@@ -37,9 +37,8 @@ class MusicPlayer extends React.PureComponent{
             this.play();
     }
 
-    componentDidUpdate(prevProps){
+    componentDidUpdate(){
         const { playerState } = this.props;
-        console.log(playerState);
   
         switch(playerState){
             case "play":
