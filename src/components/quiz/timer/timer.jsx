@@ -9,13 +9,14 @@ class Timer extends React.PureComponent{
         this.addInterval();
     }
     addInterval = () => {
-        this.intervalId = setInterval(() => {this.changeTime()}, 1200);
+        const { frequency } = this.props;
+        this.intervalId = setInterval(() => {this.changeTime()}, frequency);
     }
     componentDidUpdate(prevProps){
         const { timerEndFunction, shouldPause, breakCountingValue } = this.props;
         const { time } = this.state;
-        if(time === breakCountingValue && timerEndFunction !== undefined){
-            timerEndFunction();
+        if(time <= breakCountingValue && timerEndFunction !== undefined){
+            timerEndFunction(time);
         }
         else if(shouldPause !== undefined){
             if(prevProps.shouldPause !== shouldPause && shouldPause){
@@ -28,13 +29,14 @@ class Timer extends React.PureComponent{
     }
         
     changeTime = () => {
-        const { shouldDecrement } = this.props;
+        const { shouldDecrement, accuracy } = this.props;
         const { time } = this.state;
+        
         if(shouldDecrement){
-            this.setState({time: time - 1});
+            this.setState({time: time - accuracy});
         }
         else{
-            this.setState({time: time + 1});
+            this.setState({time: time + accuracy});
         }
     }
     componentWillUnmount(){
@@ -42,12 +44,13 @@ class Timer extends React.PureComponent{
     }
     render(){
         const { time } = this.state;
-        const { timeDivider, showPulseAnimation, sizeClass, label } = this.props;
+        const { showPulseAnimation, sizeClass, label, numberOfDigitsToShow } = this.props;
        
+        const fixedTime = time.toFixed(numberOfDigitsToShow);
         return (
             <div className={`${sizeClass} ${showPulseAnimation ? "pulse-timer" : ""}`}>
                 <div>
-                    {time.toFixed(timeDivider)}
+                    {(fixedTime !== "0" && fixedTime !== "0.0") ? fixedTime : "0"}
                 </div>
                 {label && <span>{label}</span>}
             </div>
@@ -60,6 +63,10 @@ Timer.defaultProps = {
     breakCountingValue: 0,
     showPulseAnimation: true,
     shouldPause: false,
-    sizeClass: "timer"
+    sizeClass: "timer",
+    accuracy: 0.1,
+    frequency: 120,
+    numberOfDigitsToShow: 1
+
 };
 export default Timer;

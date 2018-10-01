@@ -25,3 +25,7 @@ export const settings = {
 
     }
 }
+
+export const translatedIndexesInWords = ["Pierwsze", "Drugie", "Trzecie", "Czwarte", "Piąte", "Szóste", "Siódme", "Ósme", "Dziewiąte", "Dziesiąte", "Jedynaste", "Dwunaste", "Trzynaste", "Czternaste", "Piętnaste", "Szesnaste", "Siedemnaste", "Osiemnaste", "Dziewietnaste", "Dwudzieste"];
+
+export const pathToGetSounds = "http://localhost:52535/sounds/";

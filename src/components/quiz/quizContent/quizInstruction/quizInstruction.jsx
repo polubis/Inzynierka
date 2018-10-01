@@ -72,7 +72,7 @@ class QuizInstruction extends React.PureComponent{
                 </div>
             );
         if(currentCart === 4)
-            return <Timer startTime={3} shouldDecrement pausePerChange={1000} timerEndFunction={startQuiz} />;
+            return <Timer numberOfDigitsToShow={0} frequency={1200} accuracy={1} startTime={3} shouldDecrement timerEndFunction={startQuiz} />;
     }
     goToNextCart = () => {
         const { currentCart } = this.state;
