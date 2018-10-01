@@ -5,11 +5,10 @@ import { connect } from 'react-redux';
 import { getSoundsByTypeACreator, getSoundsByType } from '../../store/actions/Sounds.js';
 import OperationPrompt from '../UI/operationPrompt/operationPrompt';
 import QuizContent from './quizContent/quizContent';
-import { createLevels, settings } from '../../services/quizService.js';
+import { createAnswers, settings } from '../../services/quizService.js';
 
 class Quiz extends React.PureComponent{
     state = {
-        levels: createLevels(this.props.match.params.type),
         didUserAcceptedPrompt: false,
         soundsAreDownloading: true,
         isDownloadingSoundsAgain: false,
@@ -64,7 +63,7 @@ class Quiz extends React.PureComponent{
         })
     }
     render(){
-        const { didUserAcceptedPrompt, soundsAreDownloading, isDownloadingSoundsAgain, levels } = this.state;
+        const { didUserAcceptedPrompt, soundsAreDownloading, isDownloadingSoundsAgain } = this.state;
         const { getSoundsErrors, sounds, getSoundsStatus, history, match } = this.props;
         const { type: quizType } = match.params;
         console.log(quizType);
@@ -79,7 +78,7 @@ class Quiz extends React.PureComponent{
                 history={history}
                 getSoundsStatus={getSoundsStatus}
                 didUserAcceptedPrompt={didUserAcceptedPrompt} 
-                isDownloadingSoundsAgain={isDownloadingSoundsAgain} levels={levels} />
+                isDownloadingSoundsAgain={isDownloadingSoundsAgain} />
                 
             </div>
         );

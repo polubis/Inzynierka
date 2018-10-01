@@ -1,7 +1,7 @@
 import React from 'react'
 import './timer.scss';
 
-class Timer extends React.Component{
+class Timer extends React.PureComponent{
     state = {
         time: this.props.startTime
     }
@@ -14,8 +14,7 @@ class Timer extends React.Component{
     componentDidUpdate(prevProps){
         const { timerEndFunction, shouldPause, breakCountingValue } = this.props;
         const { time } = this.state;
-        console.log(time, breakCountingValue, shouldPause)
-        if(time === breakCountingValue){
+        if(time === breakCountingValue && timerEndFunction !== undefined){
             timerEndFunction();
         }
         else if(shouldPause !== undefined){
