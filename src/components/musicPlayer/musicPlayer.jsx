@@ -4,9 +4,7 @@ import './musicPlayer.scss';
 
 class MusicPlayer extends React.PureComponent{
     state = {
-        isPlaying: false,
-        isPaused: false,
-        isStopped: false
+        playState: ""
     }
 
     play = () => {
@@ -14,21 +12,21 @@ class MusicPlayer extends React.PureComponent{
         this.musicPlayer.src = musicSource;
         
         this.musicPlayer.play().then(() => {
-            this.setState({isPlaying: true});
+            this.setState({playState: "playing"});
         }).catch(error => console.log(error));
     }
     stop = () => {
-        this.setState({isPlaying: false, isStopped: true});
+        this.setState({playState: "stopped"});
         this.musicPlayer.pause();
         this.musicPlayer.src = "";
     }
     pause = () => {
         this.musicPlayer.pause();
-        this.setState({isPaused: true, isPlaying: false});
+        this.setState({playState: "paused"});
     }
     unpause = () => {
         this.musicPlayer.play().then(() => {
-            this.setState({isPaused: false, isPlaying: true});
+            this.setState({playState: "playing"});
         });
     }
     componentDidMount(){
@@ -37,37 +35,54 @@ class MusicPlayer extends React.PureComponent{
             this.play();
     }
 
-    componentDidUpdate(){
-        const { playerState } = this.props;
-  
-        switch(playerState){
-            case "play":
-                this.play();
-                break;
-            case "pause":
-                this.pause();
-                break;
-            case "unpause":
-                this.unpause();
-                break;
-            case "stop":
-                this.stop();
-                break;
+    componentDidUpdate(prevProps){
+        const { playerState, musicSource } = this.props;
+        if(musicSource !== prevProps.musicSource){
+            this.play();
+        }
+        else if(prevProps.playerState !== playerState){
+            switch(playerState){
+                case "play":
+                    this.play();
+                    break;
+                case "pause":        
+                    this.pause();
+                    break;
+                case "unpause":
+                    this.unpause();
+                    break;
+                case "stop":
+                    this.stop();
+                    break;
+            }
         }
     }
 
     render(){
+        const { playState } = this.state;
+        const { showControls } = this.props;
         return (
             <React.Fragment>
-                <audio src="" ref={el => { this.musicPlayer = el; }} type="audio/ogg">
+                <audio onEnded={this.stop} src="" ref={el => { this.musicPlayer = el; }} type="audio/ogg">
                 </audio>
+                {showControls && 
+                    <div className="player-controls">
+                        <button onClick={playState === "stopped" ? this.play : playState === "paused" ? this.unpause : playState === "playing" ? this.pause : this.play }>
+                            <i className={`fa fa-${playState === "playing" ? "pause" : "play"}`}></i>
+                        </button>
+                        <button onClick={playState === "playing" ? this.stop : null}>
+                            <i className="fa fa-stop"></i>
+                        </button>
+                    </div>
+                }
+                
             </React.Fragment>
         );
     }
 }
 MusicPlayer.defaultProps = {
     musicSource: "",
-    autoplay: false
-
+    autoplay: false,
+    showControls: true
 }
 export default MusicPlayer;

@@ -16,7 +16,7 @@ class QuizContent extends React.PureComponent{
         isQuizPaused: false,
         numberOfUsedPauses: settings[this.props.quizType].numberOfPauses,
         isQuizFinished: false,
-        currentQuizProbeStateName: ""
+        functionToUseForProbeInMusicPlayer: ""
     }
 
     componentDidMount(){
@@ -25,16 +25,16 @@ class QuizContent extends React.PureComponent{
     }
 
     startQuiz = () => {
-      this.setState({currentPlayingSoundIndex: 0, currentQuizProbeStateName: "play"});
+      this.setState({currentPlayingSoundIndex: 0, functionToUseForProbeInMusicPlayer: "play"});
     }
 
     toglePauseState = () => {
        const { isQuizPaused, numberOfUsedPauses } = this.state;
        if(isQuizPaused){
-        this.setState({isQuizPaused: false, currentQuizProbeStateName: "unpause"});
+        this.setState({isQuizPaused: false, functionToUseForProbeInMusicPlayer: "unpause"});
        }
        else{
-        this.setState({isQuizPaused: true, numberOfUsedPauses: numberOfUsedPauses-1, currentQuizProbeStateName: "pause"});
+        this.setState({isQuizPaused: true, numberOfUsedPauses: numberOfUsedPauses-1, functionToUseForProbeInMusicPlayer: "pause"});
        }
     }
 
@@ -58,7 +58,7 @@ class QuizContent extends React.PureComponent{
     }
 
     render(){
-        const { currentPlayingSoundIndex, isQuizPaused, numberOfUsedPauses, answers, isQuizFinished, currentQuizProbeStateName } = this.state;
+        const { currentPlayingSoundIndex, isQuizPaused, numberOfUsedPauses, answers, isQuizFinished, functionToUseForProbeInMusicPlayer } = this.state;
         const { downloadSoundsByTypeAgain, getSoundsErrors, getSoundsStatus, sounds, didUserAcceptedPrompt, 
              isDownloadingSoundsAgain, quizType } = this.props;
         return (
@@ -105,6 +105,9 @@ class QuizContent extends React.PureComponent{
                                     <div className="section-content">
                                         <h2><span className="dots">Pytanie {translatedIndexesInWords[currentPlayingSoundIndex]}</span></h2>
                                         <article>Jaką nazwe nosi aktualnie odtwarzany dźwięk?</article>
+                                        {getSoundsStatus && 
+                                            <MusicPlayer playerState={functionToUseForProbeInMusicPlayer} musicSource={pathToGetSounds + sounds[currentPlayingSoundIndex]} />
+                                        }
                                     </div>
                                     <footer>
                                         <div className="footer-icons">
@@ -113,9 +116,6 @@ class QuizContent extends React.PureComponent{
                                         </div>
                                     </footer>
                                 </section>
-                                {getSoundsStatus && 
-                                    <MusicPlayer playerState={currentQuizProbeStateName} musicSource={pathToGetSounds + sounds[currentPlayingSoundIndex]} />
-                                }
                             </React.Fragment>
                         }
     
