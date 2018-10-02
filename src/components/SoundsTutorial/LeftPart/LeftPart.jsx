@@ -1,7 +1,6 @@
 import React from 'react';
 import './LeftPart.css';
 import Image from '../../../assets/pictures/pic.jpg';
-import Player from '../../Player/Player';
 
 const leftPart = props => (
     <div className="left-tutorial-container">
@@ -25,7 +24,6 @@ const leftPart = props => (
            </article>
         </div>
     </div>
-    <Player tune={props.tune}/>
 
 </div>   
 );
