@@ -16,12 +16,19 @@ class QuizContent extends React.PureComponent{
         isQuizPaused: false,
         numberOfUsedPauses: settings[this.props.quizType].numberOfPauses,
         isQuizFinished: false,
-        functionToUseForProbeInMusicPlayer: ""
+        functionToUseForProbeInMusicPlayer: "",
+        shouldResetQuestionsTimer: false
     }
 
     componentDidMount(){
         if(this.state.answers.length === 0)
             this.setState({answers: createAnswers(this.props.quizType)});
+    }
+
+    componentDidUpdate(){
+        if(this.state.shouldResetQuestionsTimer){
+            this.setState({shouldResetQuestionsTimer: false});
+        }
     }
 
     startQuiz = () => {
@@ -42,9 +49,9 @@ class QuizContent extends React.PureComponent{
         this.props.history.push("/main");
     }
 
-    handleAnswer = () => {
+    handleAnswerAutomaticly = () => {
         const { sounds, quizType } = this.props;
-        const { currentPlayingSoundIndex } = this.state;
+        const { currentPlayingSoundIndex, shouldResetQuestionsTimer } = this.state;
         if(currentPlayingSoundIndex === -1){
             this.startQuiz();
         }
@@ -53,18 +60,28 @@ class QuizContent extends React.PureComponent{
             const isQuizFinished = currentPlayingSoundIndex === settings[quizType].numberOfQuestions-1;
 
             answers[currentPlayingSoundIndex].answerValue = currentPlayingSoundIndex % 2 === 0;    
-            this.setState({answers, isQuizFinished, currentPlayingSoundIndex: currentPlayingSoundIndex+1});
+            this.setState({answers, isQuizFinished, currentPlayingSoundIndex: currentPlayingSoundIndex+1, shouldResetQuestionsTimer: true });
         }
     }
 
+    putTimeIntoAnswer = time => {
+        // Dodac obsluge dodawania czasu przy kliknieciu, 
+        // Dodac dodawanie czasu automatyczne
+        // timeForAnswer settings[quizType]
+        const copiedAnswers = [...this.state.answers];
+
+        console.log(time, copiedAnswers);
+    }
+
     render(){
-        const { currentPlayingSoundIndex, isQuizPaused, numberOfUsedPauses, answers, isQuizFinished, functionToUseForProbeInMusicPlayer } = this.state;
+        const { currentPlayingSoundIndex, isQuizPaused, numberOfUsedPauses, answers, isQuizFinished, 
+            functionToUseForProbeInMusicPlayer, shouldResetQuestionsTimer } = this.state;
         const { downloadSoundsByTypeAgain, getSoundsErrors, getSoundsStatus, sounds, didUserAcceptedPrompt, 
              isDownloadingSoundsAgain, quizType } = this.props;
         return (
             <ErrorHoc errors={getSoundsErrors} isRefresingRequest={isDownloadingSoundsAgain} 
             operation={downloadSoundsByTypeAgain}>
-                <aside onClick={this.handleAnswer} className="side-stats-menu">
+                <aside onClick={this.handleAnswerAutomaticly} className="side-stats-menu">
                     <ul className={getSoundsStatus ? "enable-result-list-animation" : ""}>
                         {answers.map(answer => (
                             <li key={answer.id} className={`${currentPlayingSoundIndex === answer.id ? "active-question" : ""} ${answer.answerValue !== null ? answer.answerValue ? "correct-answer" : "incorrect-answer" : ""}`}>
@@ -105,6 +122,12 @@ class QuizContent extends React.PureComponent{
                                     <div className="section-content">
                                         <h2><span className="dots">Pytanie {translatedIndexesInWords[currentPlayingSoundIndex]}</span></h2>
                                         <article>Jaką nazwe nosi aktualnie odtwarzany dźwięk?</article>
+                                        
+
+                                        <Timer resetTimerFunction={this.putTimeIntoAnswer} shouldResetTimer={shouldResetQuestionsTimer} timerEndFunction={this.handleAnswerAutomaticly} shouldDecrement shouldReset 
+                                        startTime={settings[quizType].timeForAnswer} accuracy={0.1} showPulseAnimation={false} 
+                                        shouldPause={isQuizPaused} />
+                                        
                                         {getSoundsStatus && 
                                             <MusicPlayer playerState={functionToUseForProbeInMusicPlayer} musicSource={pathToGetSounds + sounds[currentPlayingSoundIndex]} />
                                         }

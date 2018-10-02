@@ -55,31 +55,22 @@ class Quiz extends React.PureComponent{
         this.props.getSoundsByType([], [], null);
     }
 
-    play = () => {
-        this.player.play().then(() => {
-            console.log("Siema")
-        }).catch(error => {
-            console.log(error);
-        })
-    }
     render(){
         const { didUserAcceptedPrompt, soundsAreDownloading, isDownloadingSoundsAgain } = this.state;
         const { getSoundsErrors, sounds, getSoundsStatus, history, match } = this.props;
         const { type: quizType } = match.params;
-        console.log(quizType);
         return(
             <div className="quiz-container">
-                {soundsAreDownloading && <OperationPrompt />}
-                
-                <QuizContent 
-                downloadSoundsByTypeAgain={this.downloadSoundsByTypeAgain}
-                getSoundsErrors={getSoundsErrors} 
-                sounds={sounds} quizType={quizType}
-                history={history}
-                getSoundsStatus={getSoundsStatus}
-                didUserAcceptedPrompt={didUserAcceptedPrompt} 
-                isDownloadingSoundsAgain={isDownloadingSoundsAgain} />
-                
+                {soundsAreDownloading ? <OperationPrompt /> : 
+                    <QuizContent 
+                    downloadSoundsByTypeAgain={this.downloadSoundsByTypeAgain}
+                    getSoundsErrors={getSoundsErrors} 
+                    sounds={sounds} quizType={quizType}
+                    history={history}
+                    getSoundsStatus={getSoundsStatus}
+                    didUserAcceptedPrompt={didUserAcceptedPrompt} 
+                    isDownloadingSoundsAgain={isDownloadingSoundsAgain} />
+                }
             </div>
         );
     }

@@ -70,7 +70,7 @@ class MusicPlayer extends React.PureComponent{
                         <button onClick={playState === "stopped" ? this.play : playState === "paused" ? this.unpause : playState === "playing" ? this.pause : this.play }>
                             <i className={`fa fa-${playState === "playing" ? "pause" : "play"}`}></i>
                         </button>
-                        <button onClick={playState === "playing" ? this.stop : null}>
+                        <button onClick={this.stop}>
                             <i className="fa fa-stop"></i>
                         </button>
                     </div>

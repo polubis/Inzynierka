@@ -13,10 +13,13 @@ class Timer extends React.PureComponent{
         this.intervalId = setInterval(() => {this.changeTime()}, frequency);
     }
     componentDidUpdate(prevProps){
-        const { timerEndFunction, shouldPause, breakCountingValue } = this.props;
+        const { timerEndFunction, shouldPause, breakCountingValue, shouldResetTimer, resetTimerFunction } = this.props;
         const { time } = this.state;
         if(time <= breakCountingValue && timerEndFunction !== undefined){
-            timerEndFunction(time);
+            this.endCounting(time, timerEndFunction);
+        }
+        else if(prevProps.shouldResetTimer !== shouldResetTimer && shouldResetTimer){
+            this.endCounting(time, resetTimerFunction);
         }
         else if(shouldPause !== undefined){
             if(prevProps.shouldPause !== shouldPause && shouldPause){
@@ -28,6 +31,15 @@ class Timer extends React.PureComponent{
         }
     }
         
+    endCounting = (time, operationAfterEndCounting) => {
+        const { shouldReset, startTime } = this.props;
+        if(shouldReset){
+            this.setState({time: startTime});
+        }
+        if(operationAfterEndCounting)
+            operationAfterEndCounting(time);
+    }
+
     changeTime = () => {
         const { shouldDecrement, accuracy } = this.props;
         const { time } = this.state;
