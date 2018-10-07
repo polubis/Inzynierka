@@ -6,7 +6,9 @@ class Timer extends React.PureComponent{
         time: this.props.startTime
     }
     componentDidMount(){
-        this.addInterval();
+        const { shouldAddIntervalOnMount } = this.props;
+        if(shouldAddIntervalOnMount)
+            this.addInterval();
     }
     addInterval = () => {
         const { frequency } = this.props;
@@ -80,7 +82,8 @@ Timer.defaultProps = {
     sizeClass: "timer",
     accuracy: 0.1,
     frequency: 120,
-    numberOfDigitsToShow: 1
+    numberOfDigitsToShow: 1,
+    shouldAddIntervalOnMount: true
 
 };
 export default Timer;

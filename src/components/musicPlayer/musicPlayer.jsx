@@ -12,6 +12,7 @@ class MusicPlayer extends React.PureComponent{
         this.musicPlayer.src = musicSource;
         
         this.musicPlayer.play().then(() => {
+            console.log("Jest grane");
             this.setState({playState: "playing"});
         }).catch(error => console.log(error));
     }

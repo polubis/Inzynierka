@@ -20,7 +20,7 @@ class QuizContent extends React.PureComponent{
         isQuizFinished: false,
         functionToUseForProbeInMusicPlayer: "",
         shouldResetQuestionsTimer: false,
-        sugestions: [], pausedAt: [],
+        sugestions: [], isBufferingSound: true,
         answerCounters: {correct: 0, negative: 0}
     }
 
