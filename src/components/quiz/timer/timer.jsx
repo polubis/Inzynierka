@@ -31,13 +31,15 @@ class Timer extends React.PureComponent{
         }
     }
         
-    endCounting = (time, operationAfterEndCounting) => {
-        const { shouldReset, startTime } = this.props;
+    endCounting = (time, operationAfterEndCounting, isResetFunc) => {
+        const { shouldReset, startTime, accuracy, numberOfDigitsToShow } = this.props;
         if(shouldReset){
             this.setState({time: startTime});
         }
-        if(operationAfterEndCounting)
-            operationAfterEndCounting(time);
+        
+        if(operationAfterEndCounting){
+            operationAfterEndCounting(time.toFixed(numberOfDigitsToShow));
+        }
     }
 
     changeTime = () => {

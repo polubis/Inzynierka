@@ -2,6 +2,16 @@
     display: flex;
     flex-flow: column;
     padding: 10px 0;
+    .quiz-input{
+        border: none;
+        border-bottom: 1px solid white;
+        padding: 10px;
+        color: white;
+        background: transparent;
+    }
+}
+.input-container input:focus{
+    outline: none;
 }
 .input-container label{
     padding-bottom: 4px;
@@ -9,11 +19,11 @@
     letter-spacing: 1.2px;
     font-size: 16px;
 }
-.input-container input[type="date"]{
+.input-container input.normal-input[type="date"]{
     height: 21px;
     cursor: pointer;
 }
-.input-container select{
+.input-container select.normal-input{
     height: 36px;
     background-color: #F3F3C4;
     margin-top: 5px;
@@ -27,7 +37,7 @@
 .input-container select option{
     cursor: pointer;
 }
-.input-container input{
+.input-container .normal-input{
     padding: 7.5px;
     font-size: 15px;
     margin-top: 5px;
@@ -36,8 +46,8 @@
     border: 1px solid transparent;    
     transition: 0.5s all ease-in-out;
 }
-.input-container input:focus, 
-.input-container select:focus{
+.input-container input.normal-input:focus, 
+.input-container select.normal-input:focus{
     outline: none;
     transform: scale(1.02);
 }
@@ -76,7 +86,7 @@
         height: 16px;
         font-size: 16px;
     }
-    .input-container input{
+    .input-container input.normal-input{
         padding: 12.5px;
         font-size: 18px;
     }

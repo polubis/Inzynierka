@@ -1,86 +1,4 @@
-.side-stats-menu {
-    color: white;
-    padding-bottom: 25px;
-    .enable-result-list-animation {
-      overflow-y: auto;
-      max-height: 100vh;
-      padding: 0 15px;
-      .correct-answer{
-        background: #7CB996;
-        &:hover{
-            background: #69B98B;
-        }
-      }
-      .incorrect-answer{
-        background: #C08787;
-        &:hover{
-            background: #BD7B7B;
-        }
-      }
-      .active-question{
-          background: #F4BE5A;
-          color: #36393f;
-          width: 35px;
-          height: 35px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin: 25px auto;
-          border-radius: 50%;
-          i{
-            font-size: 22px;
-          }
-          &:hover{
-              background: #F5BB4E
-          }
-      }
-      li {
-        cursor: pointer;
-        box-shadow: -1px 1px 38px -2px rgba(0,0,0,0.42);
-        opacity: 0;
-        animation: 0.5s animate-in forwards;
-        padding: 10px;
-        margin: 10px 0;
-        transition: .5s margin;
-        will-change: margin;
-        width: 150px;
-        height: 80px;
-        display: flex;
-        @for $i from 2 through 20 {
-          & {
-            &:nth-child(#{$i}) {
-              animation-delay: $i * (1s / 18);
-            }
-          }
-        }
-        @keyframes animate-in {
-          0% {
-            opacity: 0;
-            transform: translateX(-15px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-        .lock-status-container{
-            display: flex;
-            flex-flow: column;
-            align-items: center;
-            width: 100%;
-            color: #B0B0B0;
-            justify-content: center;
-            i{
-                font-size: 24px;
-            }
-            p{
-                margin: 5px 0;
-                font-size: 15px;
-            }
-        }
-      }
-    }
-  }
+
   .quiz-content{
         width: 100%;
       .quiz-navigation{
@@ -110,9 +28,23 @@
         height: 100%;
         .section-content{
           padding: 15px 20px;
-          display: flex;
           color: white;
-          flex-flow: column;
+          height: 100%;
+          .quiz-panel{
+            display: flex;
+            flex-flow: column;
+            & > div{
+              width: 450px;
+              .sugestions{
+                span{
+                  cursor: pointer;
+                  color: #F4BE59;
+                  margin: 0 15px;
+                  font-size: 20px;
+                }
+              }
+            }
+          }
           h2{
             margin-top: 0;
             span{
@@ -121,10 +53,6 @@
             span::before, span::after{
               background: #B0B0B0;
             }
-          }
-          article{
-            padding: 0 10px;
-            font-size: 18px;
           }
         }
         footer{

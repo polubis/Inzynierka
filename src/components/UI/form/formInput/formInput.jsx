@@ -1,9 +1,9 @@
 import React from "react";
-import "./formInput.css";
+import "./formInput.scss";
 
-const formInput = ({ type, error, title, selectItems, nullable, ...props }) => {
+const formInput = ({ type, error, title, selectItems, nullable, additionalInputClass, shouldShowLabel, ...props }) => {
 
-  const inputClass = error ? "invalid-input" : "valid-input";
+  const inputClass = additionalInputClass + " " + (error !== undefined && error ? "invalid-input" : "valid-input");
   let input = null;
   switch (type) {
     case "textarea":
@@ -24,11 +24,19 @@ const formInput = ({ type, error, title, selectItems, nullable, ...props }) => {
   }
   return (
     <section className="input-container">
-      <label htmlFor={title}>{title}{nullable || "*"}</label>
+      {shouldShowLabel && 
+        <label htmlFor={title}>{title}{nullable || "*"}</label>
+      }
       {input}
-      <p className="u-form-validation">{error && <span>{error}</span>}</p>
+      {error !== undefined && 
+        <p className="u-form-validation">{error && <span>{error}</span>}</p>
+      }
     </section>
   );
 };
+formInput.defaultProps = {
+  additionalInputClass: "normal-input",
+  shouldShowLabel: true
+}
 
 export default formInput;

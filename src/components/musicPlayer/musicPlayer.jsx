@@ -66,7 +66,7 @@ class MusicPlayer extends React.PureComponent{
                 <audio onEnded={this.stop} src="" ref={el => { this.musicPlayer = el; }} type="audio/ogg">
                 </audio>
                 {showControls && 
-                    <div className="player-controls">
+                    <div className="player-controls row">
                         <button onClick={playState === "stopped" ? this.play : playState === "paused" ? this.unpause : playState === "playing" ? this.pause : this.play }>
                             <i className={`fa fa-${playState === "playing" ? "pause" : "play"}`}></i>
                         </button>
