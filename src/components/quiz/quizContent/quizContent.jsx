@@ -9,6 +9,9 @@ import { settings, createAnswers, translatedIndexesInWords, pathToGetSounds, ran
 import MusicPlayer from '../../musicPlayer/musicPlayer';
 import FormInput from '../../UI/form/formInput/formInput';
 import StatsMenu from '../statsMenu/statsMenu';
+import Sugestions from '../sugestions/sugestions';
+import QuizNavigation from '../../navigation/quizNavigation/quizNavigation';
+import QuizEndStatistics from '../quizEndStatistics/quizEndStatistics';
 
 class QuizContent extends React.PureComponent{
     state = {
@@ -20,8 +23,7 @@ class QuizContent extends React.PureComponent{
         isQuizFinished: false,
         functionToUseForProbeInMusicPlayer: "",
         shouldResetQuestionsTimer: false,
-        sugestions: [], isBufferingSound: true,
-        answerCounters: {correct: 0, negative: 0}
+        sugestions: [], answerCounters: {correct: 0, negative: 0}
     }
 
     componentDidMount(){
@@ -36,8 +38,9 @@ class QuizContent extends React.PureComponent{
     }
 
     startQuiz = () => {
+      const { quizType } = this.props;
       this.setState({currentPlayingSoundIndex: 0, functionToUseForProbeInMusicPlayer: "play", 
-        sugestions: this.createSugestions(4)});
+        sugestions: this.createSugestions(settings[quizType].numberOfStartSugestions)});
     }
 
     createSugestions = numberOfSugestionsToTake => {
@@ -86,6 +89,7 @@ class QuizContent extends React.PureComponent{
     }
 
     handleAnswer = answer => {
+        const { quizType } = this.props;
         const answers = [...this.state.answers];
         const answerCounters = {...this.state.answerCounters};
         const { currentPlayingSoundIndex } = this.state;
@@ -97,7 +101,7 @@ class QuizContent extends React.PureComponent{
         else
             answerCounters.negative = answerCounters.negative + 1;
         
-        this.setState({answerCounters, answers, sugestions: this.createSugestions(4), shouldResetQuestionsTimer: true});
+        this.setState({answerCounters, answers, sugestions: this.createSugestions(settings[quizType].numberOfStartSugestions), shouldResetQuestionsTimer: true});
     }
 
     handleAnswerAutomaticly = () => {
@@ -108,7 +112,7 @@ class QuizContent extends React.PureComponent{
         answerCounters.negative = answerCounters.negative+1;
         answers[currentPlayingSoundIndex].answerValue = "Brak odpowiedzi";  
         answers[currentPlayingSoundIndex].isAnswerCorrect = false;
-        this.setState({answerCounters, answers, shouldResetQuestionsTimer: true, sugestions: this.createSugestions(4)});
+        this.setState({answerCounters, answers, shouldResetQuestionsTimer: true, sugestions: this.createSugestions(settings[quizType].numberOfStartSugestions)});
     }
 
     putTimeIntoAnswer = time => {
@@ -116,6 +120,14 @@ class QuizContent extends React.PureComponent{
         const copiedAnswers = [...answers];
         copiedAnswers[currentPlayingSoundIndex].timeForAnswer = time;
         this.setState({answers: copiedAnswers, currentPlayingSoundIndex: currentPlayingSoundIndex + 1});
+    }
+
+    handleCutSugestions = () => {
+        const { quizType } = this.props;
+        const { currentPlayingSoundIndex } = this.state;
+        const answers = [...this.state.answers];
+        answers[currentPlayingSoundIndex].sugestionsWasRemoved = true;
+        this.setState({answers, sugestions: this.createSugestions(settings[quizType].numberOfStartSugestions/2)});
     }
 
     render(){
@@ -130,48 +142,33 @@ class QuizContent extends React.PureComponent{
                 <StatsMenu answers={answers} currentPlayingSoundIndex={currentPlayingSoundIndex} getSoundsStatus={getSoundsStatus} />  
                 
                 <div className="quiz-content">
-                    {isQuizFinished ? <div>Gratulacje udało Ci się ukończyć quiz</div>
+                    {isQuizFinished ? <QuizEndStatistics />
                     :
                     <React.Fragment>
                         {currentPlayingSoundIndex === -1 ? 
-                            <QuizInstruction startQuiz={this.startQuiz} />
-                            :
+                            <QuizInstruction startQuiz={this.startQuiz} settings={settings[quizType]}/>
+                            : 
                             <React.Fragment>
-                                <nav className="quiz-navigation">
-                                    <Timer accuracy={0.1} showPulseAnimation={false} shouldPause={isQuizPaused} label="cały czas trwania"/>
-                                    <div className="nav-btns-container">
-                                        <div className="nav-quiz-item"><div>{currentPlayingSoundIndex}/{settings[quizType].numberOfQuestions}</div><span>numer pytania</span></div>
-                                        {numberOfUsedPauses > 0 && 
-                                            <div className="nav-quiz-item"><div>{numberOfUsedPauses}</div><span>pozostałe pauzy</span></div>
-                                        }
-                                        <div className="nav-quiz-item"><div style={{color: '#7CB996'}}>{answerCounters.correct}</div><span>poprawne odpowiedzi</span></div>
-                                        <div className="nav-quiz-item"><div style={{color: '#BD7B7B'}}>{answerCounters.negative}</div><span>negatywne odpowiedzi</span></div>
-                                        
-                                    </div>
-                                </nav>
-                                <section>
-                                  <div className="section-content">
-                                        <h2><span className="dots">Pytanie {translatedIndexesInWords[currentPlayingSoundIndex]}</span></h2>
+                                <QuizNavigation answerCounters={answerCounters} currentPlayingSoundIndex={currentPlayingSoundIndex}
+                                numberOfUsedPauses={numberOfUsedPauses} numberOfQuestions={settings[quizType].numberOfQuestions}
+                                accuracy={0.1} showPulseAnimation={false} shouldPause={isQuizPaused} label="cały czas trwania" />
+                                <div className="footer-content-container">
+                                    <div className="section-content">
+                                        <h1><span className="dots">Pytanie {translatedIndexesInWords[currentPlayingSoundIndex]}</span></h1>
                                         <div className="quiz-panel">
-                                            <div>
-                                                <Timer resetTimerFunction={this.putTimeIntoAnswer} 
-                                                shouldResetTimer={shouldResetQuestionsTimer} 
-                                                timerEndFunction={this.handleAnswerAutomaticly} 
-                                                shouldDecrement shouldReset 
-                                                startTime={settings[quizType].timeForAnswer} accuracy={0.1} showPulseAnimation={false} 
-                                                shouldPause={isQuizPaused} />
+                                            <Timer executeOtherFunctionTime={settings[quizType].sugestionsWillBeCutAfter}
+                                            otherFunction={this.handleCutSugestions}
+                                            resetTimerFunction={this.putTimeIntoAnswer} 
+                                            shouldResetTimer={shouldResetQuestionsTimer} 
+                                            timerEndFunction={this.handleAnswerAutomaticly} 
+                                            shouldDecrement shouldReset 
+                                            startTime={settings[quizType].timeForAnswer} accuracy={0.1} showPulseAnimation={false} 
+                                            shouldPause={isQuizPaused} />
 
-                                                <p>Sugerowane odpowiedzi</p>
-                                                <div className="sugestions">
-                                                    {sugestions.map((sugestion, index) => (
-                                                        <span onClick={() => this.handleAnswer(sugestion)} key={index}>{sugestion}</span>
-                                                    ))}
-                                                </div>
-                                                {getSoundsStatus && 
-                                                    <MusicPlayer playerState={functionToUseForProbeInMusicPlayer} musicSource={pathToGetSounds + sounds[currentPlayingSoundIndex]} />
-                                                }
-                                            </div>
-                                          
+                                            <Sugestions handleAnswer={this.handleAnswer} sugestions={sugestions} />
+                                            {getSoundsStatus && 
+                                                <MusicPlayer playerState={functionToUseForProbeInMusicPlayer} musicSource={pathToGetSounds + sounds[currentPlayingSoundIndex]} />
+                                            }
                                         </div>                                       
                                     </div>
                                     <footer>
@@ -180,7 +177,8 @@ class QuizContent extends React.PureComponent{
                                             className={`fa fa-${isQuizPaused ? "play" : "pause"} ${numberOfUsedPauses === 0 ? "disabled-element" : ""}`}></i>
                                         </div>
                                     </footer>
-                                </section>
+                                </div>    
+                                    
                             </React.Fragment>
                         }
                     </React.Fragment>

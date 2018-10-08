@@ -1,0 +1,23 @@
+.quiz-navigation{
+    padding: 15px 20px 22.5px 20px;
+    display: flex;
+    margin: 0 15px;
+    border-bottom: 1px solid white;
+    .nav-btns-container{
+      width: 100%;
+      margin-left: 25px;
+      display: flex;
+      align-items: center;
+      .nav-quiz-item{
+        font-size: 24px;
+        margin: 0 15px;
+        color: #B0B0B0;
+        display: flex;
+        flex-flow: column;
+      
+        span{
+            font-size: 12px;
+        }
+      }
+    }
+  }

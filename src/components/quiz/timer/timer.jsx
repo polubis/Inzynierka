@@ -3,7 +3,8 @@ import './timer.scss';
 
 class Timer extends React.PureComponent{
     state = {
-        time: this.props.startTime
+        time: this.props.startTime,
+        otherFunctionWasExecuted: false
     }
     componentDidMount(){
         const { shouldAddIntervalOnMount } = this.props;
@@ -15,30 +16,37 @@ class Timer extends React.PureComponent{
         this.intervalId = setInterval(() => {this.changeTime()}, frequency);
     }
     componentDidUpdate(prevProps){
-        const { timerEndFunction, shouldPause, breakCountingValue, shouldResetTimer, resetTimerFunction } = this.props;
-        const { time } = this.state;
+        const { timerEndFunction, shouldPause, breakCountingValue, shouldResetTimer, resetTimerFunction, otherFunction, 
+            executeOtherFunctionTime } = this.props;
+        const { time, otherFunctionWasExecuted } = this.state;
         if(time <= breakCountingValue && timerEndFunction !== undefined){
             this.endCounting(time, timerEndFunction);
         }
         else if(prevProps.shouldResetTimer !== shouldResetTimer && shouldResetTimer){
             this.endCounting(time, resetTimerFunction);
         }
-        else if(shouldPause !== undefined){
-            if(prevProps.shouldPause !== shouldPause && shouldPause){
+        else if(shouldPause !== undefined && prevProps.shouldPause !== shouldPause){
+            if(shouldPause){
                 clearInterval(this.intervalId);
             }
-            else if(prevProps.shouldPause !== shouldPause && !shouldPause){
+            else if(!shouldPause){
                 this.addInterval();
             }    
+        }
+        else if(executeOtherFunctionTime !== undefined && !otherFunctionWasExecuted){
+            if(time <= executeOtherFunctionTime){
+                this.setState({otherFunctionWasExecuted: true}, () => {
+                    otherFunction();
+                })
+            }
         }
     }
         
     endCounting = (time, operationAfterEndCounting, isResetFunc) => {
         const { shouldReset, startTime, accuracy, numberOfDigitsToShow } = this.props;
         if(shouldReset){
-            this.setState({time: startTime});
+            this.setState({time: startTime, otherFunctionWasExecuted: false});
         }
-        
         if(operationAfterEndCounting){
             operationAfterEndCounting(time.toFixed(numberOfDigitsToShow));
         }

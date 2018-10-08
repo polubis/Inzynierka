@@ -1,5 +1,4 @@
 import { LOGIN } from '../actionTypes.js';
-import { handleErrors } from '../utility/handleErrors';
 import { Api } from '../../api/index.js';
 import { getUserData } from './User.js';
 

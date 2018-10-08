@@ -13,8 +13,10 @@ const statsMenu = ({answers, getSoundsStatus, currentPlayingSoundIndex}) => {
                         answer.answerValue === null ? 
                         <StatusBlock classes="lock-status-container" icon="lock" status="zablokowane" /> : 
                         answer.isAnswerCorrect ? 
-                        <StatusBlock wasPaused={answer.wasPaused} icon="check" status="dobra odpowiedź" time={answer.timeForAnswer} status={answer.answerValue}/> :
-                        <StatusBlock wasPaused={answer.wasPaused} icon="times" status="błędna odpowiedź" time={answer.timeForAnswer} status={answer.answerValue}/>                        
+                        <StatusBlock sugestionsWasRemoved={answer.sugestionsWasRemoved} wasPaused={answer.wasPaused} icon="check" status="dobra odpowiedź" 
+                            time={answer.timeForAnswer} status={answer.answerValue}/> :
+                        <StatusBlock sugestionsWasRemoved={answer.sugestionsWasRemoved} wasPaused={answer.wasPaused} icon="times" status="błędna odpowiedź" 
+                            time={answer.timeForAnswer} status={answer.answerValue}/>                        
                     }
                 </li>
             ))}                             

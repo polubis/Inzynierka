@@ -1,6 +1,6 @@
 import React from 'react';
 
-const statusBlock = ({status, icon, classes, time, wasPaused}) => (
+const statusBlock = ({status, icon, classes, time, wasPaused, sugestionsWasRemoved}) => (
     <div className={`status-block ${classes ? classes : ""}`}>
         <i className={`fa fa-${icon}`}></i>
         <p>{status}</p>
@@ -10,7 +10,9 @@ const statusBlock = ({status, icon, classes, time, wasPaused}) => (
                 {wasPaused && 
                     <span><i className="fa fa-pause-circle"></i></span>
                 }
-                <span><i className="fa fa-medkit"></i></span>
+                {sugestionsWasRemoved &&
+                    <span><i className="fa fa-medkit"></i></span>
+                }
                 
             </p>
         }

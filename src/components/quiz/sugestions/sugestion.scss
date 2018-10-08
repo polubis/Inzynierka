@@ -1,0 +1,28 @@
+.sugestions{
+  padding: 10px 0;
+    span{
+      cursor: pointer;
+      color: #F4BE59;
+      margin: 0 15px;
+      font-size: 26px;
+      animation: .5s animate-in forwards;
+      opacity: 0;
+      @for $i from 2 through 20 {
+        & {
+          &:nth-child(#{$i}) {
+            animation-delay: $i * (1s / 18);
+          }
+        }
+      }
+      @keyframes animate-in {
+        0% {
+          opacity: 0;
+          transform: translateX(-15px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }  
+    }
+  }

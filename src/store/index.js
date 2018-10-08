@@ -5,6 +5,7 @@ import Authenticate from './reducers/Authenticate';
 import User from './reducers/User';
 import Account from './reducers/Account';
 import Sounds from './reducers/Sounds';
+import Quiz from './reducers/Quiz';
 import createHistory from 'history/createBrowserHistory';
 import storage from "redux-persist/lib/storage";
 import { persistStore, persistReducer } from "redux-persist";
@@ -18,7 +19,7 @@ const persistConfig = {
 const storeCreator = () => {
     const history = createHistory();
 
-    const rootReducer = combineReducers({Authenticate, User, Account, Sounds});
+    const rootReducer = combineReducers({Authenticate, User, Account, Sounds, Quiz});
 
     const persistedReducer = persistReducer(
         persistConfig,
