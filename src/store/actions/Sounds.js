@@ -9,6 +9,7 @@ export const getSoundsByTypeACreator = type => dispatch => {
     return new Promise((resolve, reject) => {
         if(type === "sound"){
             Api.Sounds.getSounds().then(response => {
+                console.log(response.soundNames);
                 dispatch(getSoundsByType(response.soundNames, [], true));
                 resolve(response.soundNames);
             }).catch(errors => {
@@ -18,6 +19,7 @@ export const getSoundsByTypeACreator = type => dispatch => {
         }
         else{
             Api.Sounds.getChords().then(response => {
+                console.log(response.soundNames);
                 dispatch(getSoundsByType(response.soundNames, [], true));
                 resolve(response.soundNames);
             }).catch(errors => {

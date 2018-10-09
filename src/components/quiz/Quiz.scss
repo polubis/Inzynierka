@@ -1,8 +1,8 @@
 .quiz-container {
   position: fixed;
-  width: 100%;
+  width: 100%;  
   height: 100%;
-  background: #36393f;
+  background: linear-gradient(-35deg, #7e3131, #36393f, #36393f, #36393f, #36393f);
   z-index: 4;
   animation: 0.5s animate-quiz-in forwards;
   will-change: bottom;

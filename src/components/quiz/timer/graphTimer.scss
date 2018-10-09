@@ -1,0 +1,56 @@
+.stats-circle-container{
+    position: relative;
+    border: 3px solid transparent;
+    height: 65px;
+    width: 65px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    div{
+        height: 65px;
+        border-radius: 50%;
+        width: 65px;
+        position: absolute;
+        border: 3px solid #747474;
+        animation: 2s animate-border ease-in-out infinite;
+        @keyframes animate-border{
+            0%{
+                transform: rotate(0);
+            }
+            100%{
+                transform: rotate(360deg);
+            }
+        }
+    }
+    .animate-all-borders{
+        background: #7e3131;
+        z-index: -2;
+        animation: 2s animate-background ease-in-out infinite;
+        
+        @keyframes animate-background{
+            0%{
+                opacity: .6;
+            }
+            50%{
+                opacity: 1;
+            }
+            100%{
+                opacity: .6;
+            }
+        }
+    }
+    .circle-right-top{
+        border-top-color: #7e3131;
+    }
+    .circle-right-bottom{
+        border-right-color: #7e3131;
+    }
+    .circle-left-bottom{
+        border-bottom-color: #7e3131;
+    }
+    .circle-left-top{
+        border-left-color: #7e3131;
+    }
+}
+

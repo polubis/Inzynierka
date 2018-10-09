@@ -68,16 +68,22 @@ class Timer extends React.PureComponent{
     }
     render(){
         const { time } = this.state;
-        const { showPulseAnimation, sizeClass, label, numberOfDigitsToShow } = this.props;
-       
+        const { showPulseAnimation, sizeClass, label, numberOfDigitsToShow, showGraphTimer, startTime, component: Component } = this.props;
+        
         const fixedTime = time.toFixed(numberOfDigitsToShow);
+        const timeToShow = (fixedTime !== "0" && fixedTime !== "0.0") ? fixedTime : "0";
         return (
-            <div className={`${sizeClass} ${showPulseAnimation ? "pulse-timer" : ""}`}>
-                <div>
-                    {(fixedTime !== "0" && fixedTime !== "0.0") ? fixedTime : "0"}
-                </div>
-                {label && <span>{label}</span>}
-            </div>
+            <React.Fragment>
+                {!showGraphTimer ? 
+                    <div className={`${sizeClass} ${showPulseAnimation ? "pulse-timer" : ""}`}>
+                        <div className="normal-timer">
+                            {timeToShow}
+                        </div>
+                        {label && <span>{label}</span>}
+                    </div> :
+                    <Component value={time} divider={startTime} valueToShow={timeToShow} /> 
+                }
+            </React.Fragment>
         );
     }
 }
@@ -91,7 +97,8 @@ Timer.defaultProps = {
     accuracy: 0.1,
     frequency: 120,
     numberOfDigitsToShow: 1,
-    shouldAddIntervalOnMount: true
+    shouldAddIntervalOnMount: true,
+    showGraphTimer: false
 
 };
 export default Timer;

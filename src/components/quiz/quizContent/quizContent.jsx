@@ -12,6 +12,7 @@ import StatsMenu from '../statsMenu/statsMenu';
 import Sugestions from '../sugestions/sugestions';
 import QuizNavigation from '../../navigation/quizNavigation/quizNavigation';
 import QuizEndStatistics from '../quizEndStatistics/quizEndStatistics';
+import GraphTimer from '../timer/graphTimer';
 
 class QuizContent extends React.PureComponent{
     state = {
@@ -39,30 +40,32 @@ class QuizContent extends React.PureComponent{
 
     startQuiz = () => {
       const { quizType } = this.props;
-      this.setState({currentPlayingSoundIndex: 0, functionToUseForProbeInMusicPlayer: "play", 
-        sugestions: this.createSugestions(settings[quizType].numberOfStartSugestions)});
+      this.setState({currentPlayingSoundIndex: 0, functionToUseForProbeInMusicPlayer: "play"}, () => {
+          this.setState({sugestions: this.createSugestions(settings[quizType].numberOfStartSugestions)});
+      });
     }
 
     createSugestions = numberOfSugestionsToTake => {
-        const { sounds } = this.props;
         const { currentPlayingSoundIndex } = this.state;
+        const { sounds } = this.props;
         const sugestions = [];
-        const answer = sounds[currentPlayingSoundIndex === -1 ? 0 : currentPlayingSoundIndex];
         const copiedSoundNames = [...soundNames];
 
         for(let i = 0; i < numberOfSugestionsToTake; i++){
             const randomizedIndex = randomize(copiedSoundNames.length-1, i);
-            sugestions.push(copiedSoundNames[randomizedIndex]);
-            copiedSoundNames.splice(randomizedIndex, 1);
+            if(copiedSoundNames[randomizedIndex]){
+                sugestions.push(copiedSoundNames[randomizedIndex]);
+                copiedSoundNames.splice(randomizedIndex, 1);
+            }
         }
+        const answer = sounds[currentPlayingSoundIndex];
         const placeToPutCorrectAnswer = randomize(numberOfSugestionsToTake-1, 0);
         const probeName = sliceProbeName(answer, "_");
-
         const isAlreadyAnswerInArray = sugestions.findIndex(i => i === probeName);
-
         if(isAlreadyAnswerInArray === -1){
             sugestions.splice(placeToPutCorrectAnswer, 1, probeName);
         }
+
         return sugestions;
     }
 
@@ -93,7 +96,6 @@ class QuizContent extends React.PureComponent{
         const answers = [...this.state.answers];
         const answerCounters = {...this.state.answerCounters};
         const { currentPlayingSoundIndex } = this.state;
-
         answers[currentPlayingSoundIndex].answerValue = answer;
         answers[currentPlayingSoundIndex].isAnswerCorrect = this.checkIsAnswerCorrect(currentPlayingSoundIndex, answer);
         if(answers[currentPlayingSoundIndex].isAnswerCorrect)
@@ -101,7 +103,7 @@ class QuizContent extends React.PureComponent{
         else
             answerCounters.negative = answerCounters.negative + 1;
         
-        this.setState({answerCounters, answers, sugestions: this.createSugestions(settings[quizType].numberOfStartSugestions), shouldResetQuestionsTimer: true});
+        this.setState({answerCounters, answers, shouldResetQuestionsTimer: true});
     }
 
     handleAnswerAutomaticly = () => {
@@ -112,14 +114,18 @@ class QuizContent extends React.PureComponent{
         answerCounters.negative = answerCounters.negative+1;
         answers[currentPlayingSoundIndex].answerValue = "Brak odpowiedzi";  
         answers[currentPlayingSoundIndex].isAnswerCorrect = false;
-        this.setState({answerCounters, answers, shouldResetQuestionsTimer: true, sugestions: this.createSugestions(settings[quizType].numberOfStartSugestions)});
+        this.setState({answerCounters, answers, shouldResetQuestionsTimer: true});
     }
 
     putTimeIntoAnswer = time => {
         const { answers, currentPlayingSoundIndex } = this.state;
+        const { quizType } = this.props;
         const copiedAnswers = [...answers];
         copiedAnswers[currentPlayingSoundIndex].timeForAnswer = time;
-        this.setState({answers: copiedAnswers, currentPlayingSoundIndex: currentPlayingSoundIndex + 1});
+        this.setState({answers: copiedAnswers, currentPlayingSoundIndex: currentPlayingSoundIndex + 1 }, () => {
+            if(currentPlayingSoundIndex < settings[quizType].numberOfQuestions-1)
+                this.setState({sugestions: this.createSugestions(settings[quizType].numberOfStartSugestions)})
+        });
     }
 
     handleCutSugestions = () => {
@@ -156,12 +162,13 @@ class QuizContent extends React.PureComponent{
                                     <div className="section-content">
                                         <h1><span className="dots">Pytanie {translatedIndexesInWords[currentPlayingSoundIndex]}</span></h1>
                                         <div className="quiz-panel">
-                                            <Timer executeOtherFunctionTime={settings[quizType].sugestionsWillBeCutAfter}
+                                            <Timer component={GraphTimer}
+                                            executeOtherFunctionTime={settings[quizType].sugestionsWillBeCutAfter}
                                             otherFunction={this.handleCutSugestions}
                                             resetTimerFunction={this.putTimeIntoAnswer} 
                                             shouldResetTimer={shouldResetQuestionsTimer} 
                                             timerEndFunction={this.handleAnswerAutomaticly} 
-                                            shouldDecrement shouldReset 
+                                            shouldDecrement shouldReset showGraphTimer 
                                             startTime={settings[quizType].timeForAnswer} accuracy={0.1} showPulseAnimation={false} 
                                             shouldPause={isQuizPaused} />
 

@@ -14,9 +14,10 @@ export const createAnswers = type => {
 export const settings = {
     "sounds": {
         numberOfQuestions: 10, requestName: "sound", numberOfPauses: 2, numberOfStartSugestions: 6,
-        timeForPause: 15, translation: "Dźwięki", timeForAnswer: 10, sugestionsWillBeCutAfter: 5, 
+            timeForPause: 15, translation: "Dźwięki", timeForAnswer: 10, sugestionsWillBeCutAfter: 5, 
     },
-    "chords": { numberOfStartSugestions: 8, numberOfQuestions: 20, requestName: "chord", numberOfPauses: 3, timeForPause: 20, translation: "Akordy", timeForAnswer: 12.5, sugestionsWillBeCutAfter: 6.2
+    "chords": { numberOfStartSugestions: 8, numberOfQuestions: 20, requestName: "chord", numberOfPauses: 3, timeForPause: 20, 
+        translation: "Akordy", timeForAnswer: 12.5, sugestionsWillBeCutAfter: 6.2
     },
     "mixed": {
 
