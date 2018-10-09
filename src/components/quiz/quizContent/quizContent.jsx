@@ -50,7 +50,7 @@ class QuizContent extends React.PureComponent{
         const { sounds } = this.props;
         const sugestions = [];
         const copiedSoundNames = [...soundNames];
-
+        // Check this function after a litle bit bugged in some cases
         for(let i = 0; i < numberOfSugestionsToTake; i++){
             const randomizedIndex = randomize(copiedSoundNames.length-1, i);
             if(copiedSoundNames[randomizedIndex]){
