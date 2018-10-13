@@ -141,7 +141,7 @@ class QuizContent extends React.PureComponent{
             functionToUseForProbeInMusicPlayer, shouldResetQuestionsTimer, sugestions, answerCounters} = this.state;
         const { downloadSoundsByTypeAgain, getSoundsErrors, getSoundsStatus, sounds, didUserAcceptedPrompt, 
              isDownloadingSoundsAgain, quizType } = this.props;
-
+        console.log(quizType);
         const isQuizFinished = currentPlayingSoundIndex === settings[quizType].numberOfQuestions;
         return (
             <ErrorHoc errors={getSoundsErrors} isRefresingRequest={isDownloadingSoundsAgain} operation={downloadSoundsByTypeAgain}>

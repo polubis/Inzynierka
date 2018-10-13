@@ -66,7 +66,8 @@ export const Api = {
   },
   Sounds: {
     getSounds: () => { return dataExtractor("get", "/Sounds")},
-    getChords: () => { return dataExtractor("get", "/Sounds/chords", undefined, true)}
+    getChords: () => { return dataExtractor("get", "/Sounds/chords", undefined, true)},
+    getSoundsChords: () => { return dataExtractor("get", "/Sounds/getsoundsmixed", undefined, true)}
   },
   Quiz: {
     createResult: (resultModel) => { return dataExtractor("post", "/Quiz/createresult", resultModel, true) } 

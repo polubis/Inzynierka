@@ -7,28 +7,36 @@ export const getSoundsByType = (sounds, getSoundsErrors, getSoundsStatus) => {
 
 export const getSoundsByTypeACreator = type => dispatch => {
     return new Promise((resolve, reject) => {
-        if(type === "sound"){
-            Api.Sounds.getSounds().then(response => {
-                console.log(response.soundNames);
-                dispatch(getSoundsByType(response.soundNames, [], true));
-                resolve(response.soundNames);
-            }).catch(errors => {
-                dispatch(getSoundsByType([], errors, false));
-                reject();
-            });
-        }
-        else{
-            Api.Sounds.getChords().then(response => {
-                console.log(response.soundNames);
-                dispatch(getSoundsByType(response.soundNames, [], true));
-                resolve(response.soundNames);
-            }).catch(errors => {
-                dispatch(getSoundsByType([], errors, false));
-                reject();
-            });
-        }
-
-
-
+        switch(type){
+            case "sound":
+                Api.Sounds.getSounds().then(response => {
+                    dispatch(getSoundsByType(response.soundNames, [], true));
+                    resolve(response.soundNames);
+                }).catch(errors => {
+                    dispatch(getSoundsByType([], errors, false));
+                    reject();
+                });
+                break;
+            case "chord":
+                Api.Sounds.getChords().then(response => {
+                    dispatch(getSoundsByType(response.soundNames, [], true));
+                    resolve(response.soundNames);
+                }).catch(errors => {
+                    dispatch(getSoundsByType([], errors, false));
+                    reject();
+                });
+                break;
+            case "mixed":
+                Api.Sounds.getSoundsChords().then(response => {
+                    dispatch(getSoundsByType(response.soundNames, [], true));
+                    resolve(response.soundNames);
+                }).catch(errors => {
+                    dispatch(getSoundsByType([], errors, false));
+                    reject();
+                });
+                break;
+            default:
+                break;
+        }        
     })
 }   

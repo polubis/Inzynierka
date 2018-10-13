@@ -18,7 +18,7 @@ class Quiz extends React.PureComponent{
         const { loginResult, match, history } = this.props;
         const { type } = match.params;
         if(loginResult){
-            if(type !== "sounds" && type !== "chords")
+            if(type !== "sounds" && type !== "chords" && type !== "mixed")
                 history.push("/main");
             else
                 this.setState({isReadyToStartDownloadingSoundsNames: true});

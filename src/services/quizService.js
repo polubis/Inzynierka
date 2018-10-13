@@ -20,7 +20,8 @@ export const settings = {
         translation: "Akordy", timeForAnswer: 12.5, sugestionsWillBeCutAfter: 6.2
     },
     "mixed": {
-
+        numberOfQuestions: 25, requestName: "mixed", numberOfPauses: 4, numberOfStartSugestions: 10, timeForPause: 30, 
+            translation: "Dźwięki oraz akordy", timeForAnswer: 15, sugestionsWillBeCutAfter: 7.5 
     }
 }
 

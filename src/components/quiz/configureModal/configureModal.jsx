@@ -14,27 +14,30 @@ class ConfigureModal extends React.PureComponent {
       case 1:
         return (
           <article>
-            <h2>Mistrz akordów</h2>
-            Rozpoznawaj akordy i wchodzące w ich skład dźwięki. Odtworzona próbka dźwiękowa z akordem
-            będzie trwała określony czas. Twoim zadaniem będzie ustalić jego nazwę zanim będzie za późno.
+            <h2>Samouczek</h2>
+            Podstawowa funkcja systemu MCompose. Polega na przechodzeniu 
+            ustalonej liczby pytań przez użytkownika oraz obejmuje wybrane typy próbek dźwiękowych. 
+            Niestety bez posiadania konta funkcja tego trybu jest ograniczona.
           </article>
         );
       case 2:
         return (
           <article>
-            <h2>Interwałowy król</h2>
-            Wykrywaj różnice pomiędzy akordami na podstawie interwałów. Każdy akord zostanie puszczony wraz
-            z jego odpowiednikiem powiększonym lub zwiększonym o losowy interwał. 
+            <h2>Tryby dźwięków i akordów</h2>
+            Tryby pozwalają na przejście quizu składającego się z 10 oraz 20 pytań. 
+            Wynik rozgrywki zapisywany jest w rankingu. Niestety bez posiadania konta funkcja tego trybu jest 
+            niedostępna.
           </article>
         );
       default:
         return (
           <article>
-            <h2>Adept dźwięków</h2>
-            Ten tryb pozwoli Ci przetestować podstawowe możliwości naszego
-            serwisu. W prosty sposób możesz wybrać interesującą Cię gamę, a
-            następnie rozpocząć rozpoznawanie dźwięków, które będą puszczane po
-            sobie po kolei.
+            <h2>Tryb dynamiczny oraz tryb interwałów</h2>
+            Tryby dynamiczny pozwala na dostosowanie zasad quizu pod konkretnego użytkownika. 
+            Wynik rozgrywki nie jest zapisywany w rankingu. 
+            Tryb interwałów pozwala na rozegranie quizu składającego się z puszczonych kolejno po 
+            sobie próbek dźwiękowych. Jego wynik jest zapisywany w rankingu.
+            Niestety bez posiadania konta oba tryby są niedostępne.
           </article>
         );
     }

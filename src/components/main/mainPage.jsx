@@ -24,13 +24,15 @@ const mainPage = ({push, scrollRef}) => {
                     </li>
                     <li onClick={() => push("/main/quiz/chords")}>
                         <i className="fa fa-photo"></i>
-                        <p>Tryb domyślny</p>
-                        <p>Wybierz odpowiedni rodzaj quizu, a następnie konkuruj z innymi graczami!</p>
+                        <p>Akordy</p>
+                        <p>Rozegraj 20 pytaniowy quiz dotyczący znajmości akordów i zapisz wynik w rankingu</p>
                     </li>
-                    <li onClick={() => push("/main/quiz/expert")}>
+                    <li onClick={() => push("/main/quiz/mixed")}>
                         <i className="fa fa-photo"></i>
-                        <p>Tryb weterana</p>
-                        <p>Zgaduj dźwięki dotyczące różnych aspektów teorii muzyki</p>
+                        <p>Akordy oraz dźwięki</p>
+                        <p>W tym trybie odtwarzane będą kolejno 
+                            dźwięki wraz z akordami. Wynik zostanie zapisany w rankingu.
+                        </p>
                     </li>
                 </ul>
             </section>
