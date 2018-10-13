@@ -20,7 +20,7 @@ class QuizContent extends React.PureComponent{
         quizResult: {numberOfPositiveRates: 0, numberOfNegativeRates: 0},
         answers: [],
         isQuizPaused: false,
-        numberOfUsedPauses: settings[this.props.quizType].numberOfPauses,
+        numberOfUsedPauses: this.props.quizSetting.numberOfPauses,
         isQuizFinished: false,
         functionToUseForProbeInMusicPlayer: "",
         shouldResetQuestionsTimer: false,
@@ -28,6 +28,7 @@ class QuizContent extends React.PureComponent{
     }
 
     componentDidMount(){
+        console.log(this.props.quizSetting)
         if(this.state.answers.length === 0)
             this.setState({answers: createAnswers(this.props.quizType)});
     }
@@ -48,24 +49,19 @@ class QuizContent extends React.PureComponent{
     createSugestions = numberOfSugestionsToTake => {
         const { currentPlayingSoundIndex } = this.state;
         const { sounds } = this.props;
+        const copyOfSoundsNames = [...soundNames];
         const sugestions = [];
-        const copiedSoundNames = [...soundNames];
-        // Check this function after a litle bit bugged in some cases
         for(let i = 0; i < numberOfSugestionsToTake; i++){
-            const randomizedIndex = randomize(copiedSoundNames.length-1, i);
-            if(copiedSoundNames[randomizedIndex]){
-                sugestions.push(copiedSoundNames[randomizedIndex]);
-                copiedSoundNames.splice(randomizedIndex, 1);
-            }
-        }
-        const answer = sounds[currentPlayingSoundIndex];
-        const placeToPutCorrectAnswer = randomize(numberOfSugestionsToTake-1, 0);
-        const probeName = sliceProbeName(answer, "_");
-        const isAlreadyAnswerInArray = sugestions.findIndex(i => i === probeName);
-        if(isAlreadyAnswerInArray === -1){
-            sugestions.splice(placeToPutCorrectAnswer, 1, probeName);
+            const random = randomize(copyOfSoundsNames.length-1, 0);
+            sugestions.push(copyOfSoundsNames[random]);
+            copyOfSoundsNames.splice(random, 1);
         }
 
+        const answer = sliceProbeName(sounds[currentPlayingSoundIndex], "_");
+        const placeToPutCorrectAnswer = randomize(numberOfSugestionsToTake-1, 0);
+        const isAnswerAlreadyInArray = sugestions.findIndex(i => i === answer);
+        if(isAnswerAlreadyInArray === -1)
+            sugestions.splice(placeToPutCorrectAnswer, 1, answer);
         return sugestions;
     }
 
@@ -141,7 +137,7 @@ class QuizContent extends React.PureComponent{
             functionToUseForProbeInMusicPlayer, shouldResetQuestionsTimer, sugestions, answerCounters} = this.state;
         const { downloadSoundsByTypeAgain, getSoundsErrors, getSoundsStatus, sounds, didUserAcceptedPrompt, 
              isDownloadingSoundsAgain, quizType } = this.props;
-        console.log(quizType);
+             
         const isQuizFinished = currentPlayingSoundIndex === settings[quizType].numberOfQuestions;
         return (
             <ErrorHoc errors={getSoundsErrors} isRefresingRequest={isDownloadingSoundsAgain} operation={downloadSoundsByTypeAgain}>
