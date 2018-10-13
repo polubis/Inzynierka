@@ -9,11 +9,11 @@
         header{
             font-size: 26px;
             font-weight: lighter;
+            &::before, &::after{
+                background: #7CB996
+            }
             span{
              color: #7CB996;
-             &::before, &::after{
-                 background: #7CB996
-             }
             }
         }
         article{

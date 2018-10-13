@@ -12,33 +12,38 @@ export const createAnswers = type => {
 }
 
 export const settings = {
-    "sounds": {
-        numberOfQuestions: 10, requestName: "sound", numberOfPauses: 2, numberOfStartSugestions: 6,
+    "test": {instructionType: "standard",
+        numberOfQuestions: 10, requestName: "sound", numberOfPauses: 1, numberOfStartSugestions: 10, 
+            timeForPause: 15, translation: "Quiz testowy", timeForAnswer: 20, sugestionsWillBeCutAfter: 10, 
+    },
+    "sounds": {instructionType: "standard",
+        numberOfQuestions: 10, requestName: "sound", numberOfPauses: 2, numberOfStartSugestions: 6, isRankTypeQuiz: true, 
             timeForPause: 15, translation: "Dźwięki", timeForAnswer: 10, sugestionsWillBeCutAfter: 5, 
     },
-    "chords": { numberOfStartSugestions: 8, numberOfQuestions: 20, requestName: "chord", numberOfPauses: 3, timeForPause: 20, 
+    "chords": { instructionType: "standard",
+        numberOfStartSugestions: 8, numberOfQuestions: 20, requestName: "chord", numberOfPauses: 3, timeForPause: 20, isRankTypeQuiz: true,
         translation: "Akordy", timeForAnswer: 12.5, sugestionsWillBeCutAfter: 6.2
     },
-    "mixed": {
-        numberOfQuestions: 25, requestName: "mixed", numberOfPauses: 4, numberOfStartSugestions: 10, timeForPause: 30, 
+    "mixed": { instructionType: "standard",
+        numberOfQuestions: 25, requestName: "mixed", numberOfPauses: 4, numberOfStartSugestions: 10, timeForPause: 30, isRankTypeQuiz: true, 
             translation: "Dźwięki oraz akordy", timeForAnswer: 15, sugestionsWillBeCutAfter: 7.5 
     },
-    "training": { havePermisionsToEditSettings: true, 
+    "training": { havePermisionsToEditSettings: true, instructionType: "training",
         numberOfQuestions: 15, requestName: "mixed", numberOfPauses: 100, numberOfStartSugestions: 10, timeForPause: 120, 
             translation: "Tryb treningowy", timeForAnswer: 60, sugestionsWillBeCutAfter: 30
     }
 }
 
+
+
 export const getSettingsForType = type => {
     const copiedSettings = {...settings};
     const copiedType = {...copiedSettings[type]};
-    console.log(copiedType);
     return copiedType;    
 }
 export const checkQuizTypeIsCorrect = type => {
     const keys = Object.keys(settings);
     for(let key in settings){
-        console.log(key);
         if(key === type)
             return true;
     }
@@ -46,7 +51,10 @@ export const checkQuizTypeIsCorrect = type => {
 }
 
 
-export const translatedIndexesInWords = ["Pierwsze", "Drugie", "Trzecie", "Czwarte", "Piąte", "Szóste", "Siódme", "Ósme", "Dziewiąte", "Dziesiąte", "Jedynaste", "Dwunaste", "Trzynaste", "Czternaste", "Piętnaste", "Szesnaste", "Siedemnaste", "Osiemnaste", "Dziewietnaste", "Dwudzieste"];
+export const translatedIndexesInWords = ["Pierwsze", "Drugie", "Trzecie", "Czwarte", "Piąte", "Szóste", "Siódme", "Ósme", "Dziewiąte", 
+    "Dziesiąte", "Jedynaste", "Dwunaste", "Trzynaste", "Czternaste", "Piętnaste", "Szesnaste", "Siedemnaste", 
+    "Osiemnaste", "Dziewietnaste", "Dwudzieste", "Dwudzieste pierwsze", "Dwudzieste drugie", "Dwudzieste trzecie", 
+    "Dwudzieste czwarte", "Dwudzieste piąte"];
 
 export const pathToGetSounds = "http://localhost:52535/sounds/";
 

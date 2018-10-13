@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { getSoundsByTypeACreator, getSoundsByType } from '../../store/actions/Sounds.js';
 import OperationPrompt from '../UI/operationPrompt/operationPrompt';
 import QuizContent from './quizContent/quizContent';
-import { createAnswers, settings } from '../../services/quizService.js';
 import { getSettingsForType, checkQuizTypeIsCorrect } from '../../services/quizService.js';
 class Quiz extends React.PureComponent{
     state = {
@@ -35,9 +34,9 @@ class Quiz extends React.PureComponent{
     }
 
     downloadSounds = stateToChange => {
-        const { type } = this.props.match.params;
+        const { quizSetting } = this.state;
         const { getSoundsByTypeACreator } = this.props;
-        getSoundsByTypeACreator(settings[type].requestName).then(() => {
+        getSoundsByTypeACreator(quizSetting.requestName).then(() => {
             this.setState({[stateToChange]: false});
         }).catch(() => {
             this.setState({[stateToChange]: false});
@@ -52,6 +51,10 @@ class Quiz extends React.PureComponent{
         this.props.getSoundsByType([], [], null);
     }
 
+    changeSettingHandler = quizSetting => {
+        this.setState({quizSetting});
+    }
+
     render(){
         const { didUserAcceptedPrompt, soundsAreDownloading, isDownloadingSoundsAgain, quizSetting } = this.state;
         const { getSoundsErrors, sounds, getSoundsStatus, history, match } = this.props;
@@ -60,7 +63,7 @@ class Quiz extends React.PureComponent{
             <div className="quiz-container">
                 {soundsAreDownloading ? <OperationPrompt /> : 
                     quizSetting !== null &&
-                    <QuizContent 
+                    <QuizContent changeSettingHandler={this.changeSettingHandler}
                     quizSetting={quizSetting}
                     downloadSoundsByTypeAgain={this.downloadSoundsByTypeAgain}
                     getSoundsErrors={getSoundsErrors} 

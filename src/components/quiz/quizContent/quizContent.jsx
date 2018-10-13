@@ -24,11 +24,11 @@ class QuizContent extends React.PureComponent{
         isQuizFinished: false,
         functionToUseForProbeInMusicPlayer: "",
         shouldResetQuestionsTimer: false,
-        sugestions: [], answerCounters: {correct: 0, negative: 0}
+        sugestions: [], answerCounters: {correct: 0, negative: 0}, 
+        isSettingsModalOpen: false
     }
 
     componentDidMount(){
-        console.log(this.props.quizSetting)
         if(this.state.answers.length === 0)
             this.setState({answers: createAnswers(this.props.quizType)});
     }
@@ -40,9 +40,9 @@ class QuizContent extends React.PureComponent{
     }
 
     startQuiz = () => {
-      const { quizType } = this.props;
+      const { quizSetting } = this.props;
       this.setState({currentPlayingSoundIndex: 0, functionToUseForProbeInMusicPlayer: "play"}, () => {
-          this.setState({sugestions: this.createSugestions(settings[quizType].numberOfStartSugestions)});
+          this.setState({sugestions: this.createSugestions(quizSetting.numberOfStartSugestions)});
       });
     }
 
@@ -88,7 +88,6 @@ class QuizContent extends React.PureComponent{
     }
 
     handleAnswer = answer => {
-        const { quizType } = this.props;
         const answers = [...this.state.answers];
         const answerCounters = {...this.state.answerCounters};
         const { currentPlayingSoundIndex } = this.state;
@@ -103,7 +102,7 @@ class QuizContent extends React.PureComponent{
     }
 
     handleAnswerAutomaticly = () => {
-        const { sounds, quizType } = this.props;
+        const { sounds } = this.props;
         const { currentPlayingSoundIndex } = this.state;
         const answers = [...this.state.answers];
         const answerCounters = {...this.state.answerCounters};
@@ -115,30 +114,38 @@ class QuizContent extends React.PureComponent{
 
     putTimeIntoAnswer = time => {
         const { answers, currentPlayingSoundIndex } = this.state;
-        const { quizType } = this.props;
+        const { quizSetting } = this.props;
         const copiedAnswers = [...answers];
         copiedAnswers[currentPlayingSoundIndex].timeForAnswer = time;
         this.setState({answers: copiedAnswers, currentPlayingSoundIndex: currentPlayingSoundIndex + 1 }, () => {
-            if(currentPlayingSoundIndex < settings[quizType].numberOfQuestions-1)
-                this.setState({sugestions: this.createSugestions(settings[quizType].numberOfStartSugestions)})
+            if(currentPlayingSoundIndex < quizSetting.numberOfQuestions-1)
+                this.setState({sugestions: this.createSugestions(quizSetting.numberOfStartSugestions)})
         });
     }
 
     handleCutSugestions = () => {
-        const { quizType } = this.props;
+        const { quizSetting } = this.props;
         const { currentPlayingSoundIndex } = this.state;
         const answers = [...this.state.answers];
         answers[currentPlayingSoundIndex].sugestionsWasRemoved = true;
-        this.setState({answers, sugestions: this.createSugestions(settings[quizType].numberOfStartSugestions/2)});
+        this.setState({answers, sugestions: this.createSugestions(quizSetting.numberOfStartSugestions/2)});
+    }
+
+    changeQuizSetting = () => {
+        this.props.changeSettingHandler();
+    }
+
+    openSettingsModal = () => {
+        this.setState({isSettingsModalOpen: true});
     }
 
     render(){
         const { currentPlayingSoundIndex, isQuizPaused, numberOfUsedPauses, answers, 
-            functionToUseForProbeInMusicPlayer, shouldResetQuestionsTimer, sugestions, answerCounters} = this.state;
+            functionToUseForProbeInMusicPlayer, shouldResetQuestionsTimer, sugestions, answerCounters, isSettingsModalOpen} = this.state;
         const { downloadSoundsByTypeAgain, getSoundsErrors, getSoundsStatus, sounds, didUserAcceptedPrompt, 
-             isDownloadingSoundsAgain, quizType } = this.props;
+             isDownloadingSoundsAgain, quizSetting } = this.props;
              
-        const isQuizFinished = currentPlayingSoundIndex === settings[quizType].numberOfQuestions;
+        const isQuizFinished = currentPlayingSoundIndex === quizSetting.numberOfQuestions;
         return (
             <ErrorHoc errors={getSoundsErrors} isRefresingRequest={isDownloadingSoundsAgain} operation={downloadSoundsByTypeAgain}>
                 <StatsMenu answers={answers} currentPlayingSoundIndex={currentPlayingSoundIndex} getSoundsStatus={getSoundsStatus} />  
@@ -148,24 +155,26 @@ class QuizContent extends React.PureComponent{
                     :
                     <React.Fragment>
                         {currentPlayingSoundIndex === -1 ? 
-                            <QuizInstruction startQuiz={this.startQuiz} settings={settings[quizType]}/>
+                            <QuizInstruction openSettingsModal={this.openSettingsModal} isSettingsModalOpen={isSettingsModalOpen} 
+                            closeSettingsModal={() => this.setState({isSettingsModalOpen: false})}
+                            startQuiz={this.startQuiz} settings={quizSetting} />
                             : 
                             <React.Fragment>
                                 <QuizNavigation answerCounters={answerCounters} currentPlayingSoundIndex={currentPlayingSoundIndex}
-                                numberOfUsedPauses={numberOfUsedPauses} numberOfQuestions={settings[quizType].numberOfQuestions}
+                                numberOfUsedPauses={numberOfUsedPauses} numberOfQuestions={quizSetting.numberOfQuestions}
                                 accuracy={0.1} showPulseAnimation={false} shouldPause={isQuizPaused} label="cały czas trwania" />
                                 <div className="footer-content-container">
                                     <div className="section-content">
                                         <h1><span className="dots">Pytanie {translatedIndexesInWords[currentPlayingSoundIndex]}</span></h1>
                                         <div className="quiz-panel">
                                             <Timer component={GraphTimer}
-                                            executeOtherFunctionTime={settings[quizType].sugestionsWillBeCutAfter}
+                                            executeOtherFunctionTime={quizSetting.sugestionsWillBeCutAfter}
                                             otherFunction={this.handleCutSugestions}
                                             resetTimerFunction={this.putTimeIntoAnswer} 
                                             shouldResetTimer={shouldResetQuestionsTimer} 
                                             timerEndFunction={this.handleAnswerAutomaticly} 
                                             shouldDecrement shouldReset showGraphTimer 
-                                            startTime={settings[quizType].timeForAnswer} accuracy={0.1} showPulseAnimation={false} 
+                                            startTime={quizSetting.timeForAnswer} accuracy={0.1} showPulseAnimation={false} 
                                             shouldPause={isQuizPaused} />
 
                                             <Sugestions handleAnswer={this.handleAnswer} sugestions={sugestions} />
@@ -188,9 +197,10 @@ class QuizContent extends React.PureComponent{
                     }
                     </div>
                     {isQuizPaused && 
-                        <PausedQuizModal toglePauseState={this.toglePauseState} quizSetting={settings[quizType]} 
+                        <PausedQuizModal toglePauseState={this.toglePauseState} quizSetting={quizSetting} 
                         numberOfUsedPauses={numberOfUsedPauses} currentPlayingSoundIndex={currentPlayingSoundIndex} /> 
                     }
+
                     <Button onClick={this.exitFromQuiz} name="Wyjdź" className="white-btn medium-btn" />
         </ErrorHoc>  
         );

@@ -25,8 +25,8 @@ export const getSoundsByTypeACreator = type => dispatch => {
                     dispatch(getSoundsByType([], errors, false));
                     reject();
                 });
-                break;
-            case "mixed":
+            break;
+            default:
                 Api.Sounds.getSoundsChords().then(response => {
                     dispatch(getSoundsByType(response.soundNames, [], true));
                     resolve(response.soundNames);
@@ -34,9 +34,7 @@ export const getSoundsByTypeACreator = type => dispatch => {
                     dispatch(getSoundsByType([], errors, false));
                     reject();
                 });
-                break;
-            default:
-                break;
+            break;
         }        
     })
 }   

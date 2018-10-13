@@ -38,7 +38,7 @@ const mainPage = ({push, scrollRef}) => {
             </section>
 
             <div className="row" ref={scrollRef} >
-                <Button name="Samouczek" className="medium-btn go-next-btn"/>
+                <Button onClick={() => push("/main/quiz/training")} name="Samouczek" className="medium-btn go-next-btn"/>
             </div>
             <figure className="slider">
                 <div style={{ backgroundImage: `url(${Guitar})` }} />
