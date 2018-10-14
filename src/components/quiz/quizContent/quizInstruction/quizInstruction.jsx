@@ -31,9 +31,9 @@ class QuizInstruction extends React.PureComponent{
             [`Podczas skorzystania z pauzy w pokaże się <span>okienko z informacjami</span> oraz czas pauzy`, `Po ukończeniu odliczania gra zostanie <span>wznowiona automatycznie</span>`, `Wyjście ze strony lub zmiana zakładki podczas trwania quizu skutkuje otrzymaniem <span>zerowej oceny</span>`, `Jeżeli jesteś gotowy klikni w przycisk <span>Rozpocznij</span>`]
         ],
         "training": [
-            [`Wybrany przez Ciebie tryb pozwala na przejście quizu składającego się z <span>ustawionej przez Ciebie liczby pytań</span>`, `W <span> panelu bocznym</span> przedstawiony jest Twój progres dotyczący obecnego quizu`],
+            [`Wybrany przez Ciebie tryb pozwala na przejście quizu składającego się z <span>ustawionych przez Ciebie parametrów</span>`, `W <span> panelu bocznym</span> przedstawiony jest Twój progres dotyczący obecnego quizu`],
             [`Ten tryb został stworzony w celu trenowania słuchu muzycznego <span>według preferencji użytkownika</span>`, `W trakcie rozgrywki lub przed jej rozpoczęciem można zmieniać <span>parametry gry</span>`, `Stan rozgrywki nie jest zapisywany <span>do rankingu</span>`],
-            [`Domyślnie tryb ten posiada <span>domyślnie ustawione parametry</span>`, `Przed rozpoczęciem rozgrywki <span>pojawi się</span> okno parametryzacji rozgrywki`, `Rozgrywka rozpocznie się <span>po potwierdzeniu</span> parametrów`, `Podczas modyfikacji parametrów <span>w trakcie rozgrywki</span> gra zostanię wstrzymana`]
+            [`Domyślnie tryb ten posiada <span>domyślnie ustawione parametry</span>`, `Przed rozpoczęciem rozgrywki <span>pojawi się</span> okno parametryzacji rozgrywki`, `Rozgrywka rozpocznie się <span>po potwierdzeniu</span> parametrów`]
         ]
     }
 
