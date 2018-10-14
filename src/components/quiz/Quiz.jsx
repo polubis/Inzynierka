@@ -51,7 +51,13 @@ class Quiz extends React.PureComponent{
         this.props.getSoundsByType([], [], null);
     }
 
-    changeSettingHandler = quizSetting => {
+    changeSettingHandler = settingsFormData => {
+        const quizSetting = {...this.state.quizSetting};
+        
+        for(let key in settingsFormData){
+            quizSetting[settingsFormData[key].recognizeKey] = Number(settingsFormData[key].value);
+        }
+        
         this.setState({quizSetting});
     }
 
@@ -63,7 +69,8 @@ class Quiz extends React.PureComponent{
             <div className="quiz-container">
                 {soundsAreDownloading ? <OperationPrompt /> : 
                     quizSetting !== null &&
-                    <QuizContent changeSettingHandler={this.changeSettingHandler}
+                    <QuizContent
+                    changeSettings={this.changeSettingHandler}
                     quizSetting={quizSetting}
                     downloadSoundsByTypeAgain={this.downloadSoundsByTypeAgain}
                     getSoundsErrors={getSoundsErrors} 

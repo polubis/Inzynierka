@@ -2,23 +2,6 @@
     width: 500px;
     height: 600px;
     color: #36393f;
-    & > p:first-of-type{
-        margin: 0;
-        box-shadow: -1px 1px 38px -2px rgba(0,0,0,0.42);
-        padding: 15px;
-        background: #7e3131;
-        display: flex;
-        color: white;
-        flex-flow: column;
-        align-items: center;
-        span{
-            margin: 15px 0;
-        }
-        i{
-            margin-top: 10px;
-            font-size: 32px;
-        }
-    }
     article{
         font-size: 14px;
         border-bottom: 1px solid #D3D3D3;

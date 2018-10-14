@@ -1,8 +1,4 @@
-export const createAnswers = type => {
-    if(settings[type] === undefined)
-        return [];
-
-    const { numberOfQuestions } = settings[type];
+export const createAnswers = numberOfQuestions => {
     const createdStatsItems = [];
     for(let i = 0; i < numberOfQuestions; i++){
         createdStatsItems.push({id: i, timeForAnswer: 0, answerValue: null, isAnswerCorrect: null});

@@ -29,8 +29,8 @@ class QuizContent extends React.PureComponent{
     }
 
     componentDidMount(){
-        if(this.state.answers.length === 0)
-            this.setState({answers: createAnswers(this.props.quizType)});
+        const { quizSetting } = this.props;
+        this.setState({answers: createAnswers(quizSetting.numberOfQuestions)});
     }
 
     componentDidUpdate(){
@@ -139,6 +139,12 @@ class QuizContent extends React.PureComponent{
         this.setState({isSettingsModalOpen: true});
     }
 
+    changeSettingsHandler = formItems => {
+        this.setState({numberOfUsedPauses: formItems[0].value});
+        this.props.changeSettings(formItems);
+    }
+
+
     render(){
         const { currentPlayingSoundIndex, isQuizPaused, numberOfUsedPauses, answers, 
             functionToUseForProbeInMusicPlayer, shouldResetQuestionsTimer, sugestions, answerCounters, isSettingsModalOpen} = this.state;
@@ -155,7 +161,7 @@ class QuizContent extends React.PureComponent{
                     :
                     <React.Fragment>
                         {currentPlayingSoundIndex === -1 ? 
-                            <QuizInstruction openSettingsModal={this.openSettingsModal} isSettingsModalOpen={isSettingsModalOpen} 
+                            <QuizInstruction changeSettings={this.changeSettingsHandler} openSettingsModal={this.openSettingsModal} isSettingsModalOpen={isSettingsModalOpen} 
                             closeSettingsModal={() => this.setState({isSettingsModalOpen: false})}
                             startQuiz={this.startQuiz} settings={quizSetting} />
                             : 

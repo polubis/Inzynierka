@@ -1,7 +1,7 @@
 import React from "react";
 import "./formInput.scss";
 
-const formInput = ({ type, error, title, selectItems, nullable, additionalInputClass, shouldShowLabel, ...props }) => {
+const formInput = ({ type, error, title, selectItems, nullable, additionalInputClass, shouldShowLabel, inputContainerClass, ...props }) => {
 
   const inputClass = additionalInputClass + " " + (error !== undefined && error ? "invalid-input" : "valid-input");
   let input = null;
@@ -23,9 +23,9 @@ const formInput = ({ type, error, title, selectItems, nullable, additionalInputC
       break;
   }
   return (
-    <section className="input-container">
+    <section className={inputContainerClass}>
       {shouldShowLabel && 
-        <label htmlFor={title}>{title}{nullable || "*"}</label>
+        <label htmlFor={title}>{title}{nullable || " *"}</label>
       }
       {input}
       {error !== undefined && 
@@ -36,7 +36,8 @@ const formInput = ({ type, error, title, selectItems, nullable, additionalInputC
 };
 formInput.defaultProps = {
   additionalInputClass: "normal-input",
-  shouldShowLabel: true
+  shouldShowLabel: true,
+  inputContainerClass: "input-container"
 }
 
 export default formInput;

@@ -8,7 +8,7 @@ const pausedQuiz = ({quizSetting, numberOfUsedPauses, toglePauseState, currentPl
         animationIn="animation-opacity-in" animationOut="animation-opacity-out" backdropInAnimation="open-backdrop-short"
         backdropOutAnimation="hide-backdrop-short">
             <div className="pause-quiz-prompt">
-                <p>
+                <p className="modal-header">
                     <i className="fa fa-exclamation-triangle"></i>
                     <span>
                         Gra została wstrzymana

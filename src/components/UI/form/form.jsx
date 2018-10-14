@@ -1,5 +1,5 @@
 import React from 'react';
-import './form.css';
+import './form.scss';
 import * as Types from '../../../constants/inputsTypes';
 import FormInput from './formInput/formInput';
 import { validateInput, checkPasswordsAreTheSame } from '../../../services/inputValidator';
@@ -12,12 +12,19 @@ class Form extends React.PureComponent{
         ableToSubmit: null
     }
     componentDidMount(){
-        if(this.props.formItems.length === 0){
+        const { defaultValues, type, formItems, arrayName, setFields } = this.props;
+        if(formItems.length === 0){
             const items = [];
-            for(let i = 0; i < Types[this.props.type].length; i++){
-                items.push({value: Types[this.props.type][i].type === "select" ? "wybierz pole" : "", error: ""});
+            for(let i = 0; i < Types[type].length; i++){
+                if(defaultValues){
+                    items.push({ value: defaultValues[Types[type][i].serverName], error: "", 
+                        recognizeKey: Types[type][i].serverName });
+                }
+                else{
+                    items.push({value: Types[type][i].type === "select" ? "wybierz pole" : "", error: ""});
+                }
             }
-            this.props.setFields(this.props.arrayName, items);
+            setFields(arrayName, items);
         }
     }
     componentWillReceiveProps(nextProps){
@@ -57,6 +64,7 @@ class Form extends React.PureComponent{
         return newItems;
     }
     onSubmit = e => {
+        const { shouldShowLoadingAnimation } = this.props;
         e.preventDefault();
         const items = this.validateBeforeSubmit();
         const ableToSubmit = isSomethingExists(items, "error").result;
@@ -65,25 +73,29 @@ class Form extends React.PureComponent{
             this.props.setFields(this.props.arrayName, items);
         }
         else{
-           this.setState({isSubmiting: true, ableToSubmit: true});
+           this.setState({isSubmiting: shouldShowLoadingAnimation, ableToSubmit: true});
            this.props.onSubmit();
         }
        
     }
     render(){
-        const { formItems } = this.props;
-        const { additionalClasses } = this.props;
-        const { submitResult } = this.props;
-        const { submitErrors } = this.props;
+        const { submitResult, submitErrors, additionalClasses, formItems, shouldShowHeader, inputContainerClass } = this.props;
         return (
             <form onSubmit={e => this.onSubmit(e)} className={`u-form-container ${additionalClasses}`}>
-                <header>
-                    <h1>{this.props.formTitle} {this.props.subHeader && <span>{this.props.subHeader}</span>}</h1>
-                </header>
+                {shouldShowHeader && 
+                    <header>
+                        <h1>{this.props.formTitle} {this.props.subHeader && <span>{this.props.subHeader}</span>}</h1>
+                    </header>
+                }
+                
                 {formItems.length > 0 && 
                     Types[this.props.type].map((i, index) => {
                     return (
                         <FormInput
+                        step={i.step}
+                        min={i.min}
+                        max={i.max}
+                        inputContainerClass={inputContainerClass}
                         nullable={Types[this.props.requirements][index].nullable} 
                         selectItems={i.selectItems}
                         onChange={e => this.onChange(e.target.value, index)}
@@ -123,4 +135,10 @@ class Form extends React.PureComponent{
     }
 }
 
+Form.defaultProps = {
+    shouldShowHeader: true,
+    shouldShowLoadingAnimation: true
+}
+
 export default Form;
+

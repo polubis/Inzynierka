@@ -35,3 +35,19 @@ export const registerDetailsRequirements = [
     {inputName: "Data urodzenia", nullable: true},
     {inputName: "Sex", nullable: true}
 ];
+
+export const quizSettingsTypes = [
+    {title: "Liczba dozwolnych przerw", serverName: "numberOfPauses", type: "number", min: "2", max: "300"},
+    {title: "Czas pojedyńczej przerwy (w sekundach)", serverName: "timeForPause", type: "number", min: "15", max: "150"}, 
+    {title: "Liczba startowych podpowiedzi", serverName: "numberOfStartSugestions", type: "number", type: "number", min: "4", max: "12"},
+    {title: "Moment zabrania podpowiedzi", serverName: "sugestionsWillBeCutAfter", type: "number", step: "0.1", min: "3.5" },
+    {title: "Czas na odpowiedź (w sekundach)", serverName: "timeForAnswer", type: "number", min: "7", max: "10000"},
+];
+
+export const quizSettingsRequirements = [
+    {inputName: "Liczba dozwolnych przerw"},
+    {inputName: "Czas pojedyńczej przerwy"},
+    {inputName: "Liczba startowych podpowiedzi"},
+    {inputName: "Moment zabrania podpowiedzi"},
+    {inputName: "Czas na odpowiedź"}
+];

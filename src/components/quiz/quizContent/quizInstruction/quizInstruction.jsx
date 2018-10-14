@@ -65,6 +65,11 @@ class QuizInstruction extends React.PureComponent{
         this.setState({currentCart: this.quizHeaders[settings.instructionType].length});
         this.props.closeSettingsModal();
     }
+
+    onChangeSettingsHandler = formItems => {
+        this.props.changeSettings(formItems);
+        this.onCloseSettingsModal();
+    }
     
     render(){
         const { isOpenedFirstTime, currentCart } = this.state;
@@ -99,7 +104,7 @@ class QuizInstruction extends React.PureComponent{
             }
 
             {isSettingsModalOpen && 
-                <ChangeQuizSettingsModal closeSettings={this.onCloseSettingsModal} />
+                <ChangeQuizSettingsModal changeSettings={this.onChangeSettingsHandler} settings={settings} closeSettings={this.onCloseSettingsModal} />
             }
         </div>
         );
