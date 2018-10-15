@@ -74,7 +74,7 @@ class Quiz extends React.PureComponent{
                     quizSetting={quizSetting}
                     downloadSoundsByTypeAgain={this.downloadSoundsByTypeAgain}
                     getSoundsErrors={getSoundsErrors} 
-                    sounds={sounds} quizType={quizType}
+                    sounds={sounds} 
                     history={history}
                     getSoundsStatus={getSoundsStatus}
                     didUserAcceptedPrompt={didUserAcceptedPrompt} 

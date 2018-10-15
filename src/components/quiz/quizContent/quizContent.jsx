@@ -17,11 +17,9 @@ import GraphTimer from '../timer/graphTimer';
 class QuizContent extends React.PureComponent{
     state = {
         currentPlayingSoundIndex: -1,
-        quizResult: {numberOfPositiveRates: 0, numberOfNegativeRates: 0},
         answers: [],
         isQuizPaused: false,
         numberOfUsedPauses: this.props.quizSetting.numberOfPauses,
-        isQuizFinished: false,
         functionToUseForProbeInMusicPlayer: "",
         shouldResetQuestionsTimer: false,
         sugestions: [], answerCounters: {correct: 0, negative: 0}, 
@@ -149,15 +147,16 @@ class QuizContent extends React.PureComponent{
         const { currentPlayingSoundIndex, isQuizPaused, numberOfUsedPauses, answers, 
             functionToUseForProbeInMusicPlayer, shouldResetQuestionsTimer, sugestions, answerCounters, isSettingsModalOpen} = this.state;
         const { downloadSoundsByTypeAgain, getSoundsErrors, getSoundsStatus, sounds, didUserAcceptedPrompt, 
-             isDownloadingSoundsAgain, quizSetting } = this.props;
-             
+             isDownloadingSoundsAgain, quizSetting} = this.props;
+        
         const isQuizFinished = currentPlayingSoundIndex === quizSetting.numberOfQuestions;
         return (
             <ErrorHoc errors={getSoundsErrors} isRefresingRequest={isDownloadingSoundsAgain} operation={downloadSoundsByTypeAgain}>
                 <StatsMenu answers={answers} currentPlayingSoundIndex={currentPlayingSoundIndex} getSoundsStatus={getSoundsStatus} />  
                 
                 <div className="quiz-content">
-                    {isQuizFinished ? <QuizEndStatistics />
+                    {isQuizFinished ? <QuizEndStatistics answerCounters={answerCounters} quizSetting={quizSetting}
+                        answers={answers} sounds={sounds}/>
                     :
                     <React.Fragment>
                         {currentPlayingSoundIndex === -1 ? 

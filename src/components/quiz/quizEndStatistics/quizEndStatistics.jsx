@@ -3,22 +3,36 @@ import './quizEndStatistics.scss';
 import OperationPrompt from '../../UI/operationPrompt/operationPrompt';
 import { connect } from 'react-redux';
 import { createResultACreator } from '../../../store/actions/Quiz.js';
+import ErrorHoc from '../../../hoc/errorHoc';
 class QuizEndStatistics extends React.PureComponent{
     state = {
-        isSavingQuizResult: true
+        isSavingQuizResult: false, isSavingQuizResultAgain: false
     }
     componentDidMount(){
-        const { createResultACreator } = this.props;
-        createResultACreator().then(() => {
-            this.setState({isSavingQuizResult: false});
-        }).catch(() => this.setState({isSavingQuizResult: false}));
+        this.saveResults("isSavingQuizResult");
+    }
+
+    saveResults = stateItem => {
+        this.setState({[stateItem]: true});
+        const { createResultACreator, answers, sounds, answerCounters, quizSetting } = this.props;
+        createResultACreator(answers, sounds, answerCounters, quizSetting).then(() => {
+            this.setState({[stateItem]: false});
+        }).catch(() => this.setState({[stateItem]: false}));
     }
 
     render(){
-        const { isSavingQuizResult } = this.state;
+        const { isSavingQuizResult, isSavingQuizResultAgain } = this.state;
+        const { createResultErrors } = this.props;
         return (
             <div className="quiz-end-statistics">
-                {isSavingQuizResult && <OperationPrompt positionClass="operation-prompt-tright"/>}
+                {isSavingQuizResult ? <OperationPrompt positionClass="operation-prompt-tright"/> :
+                    <ErrorHoc errors={createResultErrors} isRefresingRequest={isSavingQuizResultAgain} 
+                        operation={() => this.saveResults("isSavingQuizResultAgain")}>
+
+                        <span>siema</span>
+                        
+                    </ErrorHoc>
+                }
             </div>
         );
     }
@@ -26,12 +40,13 @@ class QuizEndStatistics extends React.PureComponent{
 
 const mapStateToProps = state => {
     return {
-        
+        createResultStatus: state.Quiz.createResultStatus,
+        createResultErrors: state.Quiz.createResultErrors
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
-        createResultACreator: () => dispatch(createResultACreator())
+        createResultACreator: (answers, sounds, answerCounters, quizSetting) => dispatch(createResultACreator(answers, sounds, answerCounters, quizSetting))
     }
 }
 

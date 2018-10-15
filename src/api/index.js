@@ -28,7 +28,9 @@ const dataExtractor = (requestType, path, payload, authorization, contentType, r
     if(responseType){
         instance.defaults.responseType = responseType;
     }
-    return instance[requestType](endPoint + path, payload)
+
+    console.log(payload);
+    return instance({method: requestType, url: endPoint + path, data: payload})
     .then(response => succParser(response))
     .catch(error => errorParser(error));
 }
@@ -70,6 +72,6 @@ export const Api = {
     getSoundsChords: () => { return dataExtractor("get", "/Sounds/getsoundsmixed", undefined, true)}
   },
   Quiz: {
-    createResult: (resultModel) => { return dataExtractor("post", "/Quiz/createresult", resultModel, true) } 
+    createResult: resultModel => { return dataExtractor("post", "/Quiz/createresult", resultModel) } 
   }
 };

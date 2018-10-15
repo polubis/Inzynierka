@@ -64,3 +64,7 @@ export const sliceProbeName = (fullName, charToSlice) => {
     const indexOfChar = fullName.indexOf(charToSlice);
     return fullName.slice(0, indexOfChar);
 }
+
+export const calculatePoints = () => {
+    
+}
