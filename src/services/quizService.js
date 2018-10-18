@@ -54,7 +54,7 @@ export const translatedIndexesInWords = ["Pierwsze", "Drugie", "Trzecie", "Czwar
 
 export const pathToGetSounds = "http://localhost:52535/sounds/";
 
-export const soundNames = ["A", "Ais", "B", "C", "Cis", "D", "Dis", "E", "F", "Fis", "G", "Gis"];
+export const soundNames = ["A", "B", "C", "Cis", "D", "Dis", "E", "F", "Fis", "G", "Gis", "H"];
 
 export const randomize = (max, min) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
