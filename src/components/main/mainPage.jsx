@@ -3,7 +3,7 @@ import './mainPage.scss';
 import Guitar from '../../assets/bgs/guitar.jpg';
 import Button from '../UI/button/button';
 
-const mainPage = ({push, scrollRef}) => {
+const mainPage = ({push}) => {
     return(
         <div className="main-start-page">
             <section className="main-advise">
@@ -37,7 +37,7 @@ const mainPage = ({push, scrollRef}) => {
                 </ul>
             </section>
 
-            <div className="row" ref={scrollRef} >
+            <div className="row">
                 <Button onClick={() => push("/main/quiz/training")} name="Samouczek" className="medium-btn go-next-btn"/>
             </div>
             <figure className="slider">
@@ -45,9 +45,6 @@ const mainPage = ({push, scrollRef}) => {
                 
             </figure>
 
-            <div className="big-container">
-                <div id="bg2"></div>
-            </div>
         </div>
     );
 }

@@ -25,16 +25,9 @@ class Main extends Component {
   loadUserData = (shouldScroll, operationName) => {
     this.setState({[operationName]: true});
       this.props.getUserDataACreator().then(() => {
-        this.setState({[operationName]: false}, () => {
-          if(shouldScroll) this.scrollToBottomHandler();
-        })
+        this.setState({[operationName]: false});
       });
   }
-  
-  scrollToBottomHandler = () => {
-      if (this.scrollRef) scrollBottom(this.scrollRef); 
-  }
-
   render() {
     const { isUserDataLoadingAgain, isUserLoadingDataAfterError } = this.state;
     const { push } = this.props.history;
@@ -56,9 +49,6 @@ class Main extends Component {
               return (
                 <MainStartPage
                   push={push}
-                  scrollRef={el => {
-                    this.scrollRef = el;
-                  }}
                 />
               );
             }}

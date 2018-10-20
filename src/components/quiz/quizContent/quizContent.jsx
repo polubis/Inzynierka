@@ -5,7 +5,8 @@ import QuizInstruction from './quizInstruction/quizInstruction';
 import Timer from '../timer/timer';
 import Button from '../../UI/button/button';
 import PausedQuizModal from '../../modals/pausedQuiz/pausedQuiz';
-import { settings, createAnswers, translatedIndexesInWords, pathToGetSounds, randomize, sliceProbeName, soundNames } from '../../../services/quizService.js';
+import { settings, createAnswers, translatedIndexesInWords, pathToGetSounds, 
+    randomize, sliceProbeName } from '../../../services/quizService.js';
 import MusicPlayer from '../../musicPlayer/musicPlayer';
 import FormInput from '../../UI/form/formInput/formInput';
 import StatsMenu from '../statsMenu/statsMenu';
@@ -46,8 +47,8 @@ class QuizContent extends React.PureComponent{
 
     createSugestions = numberOfSugestionsToTake => {
         const { currentPlayingSoundIndex } = this.state;
-        const { sounds } = this.props;
-        const copyOfSoundsNames = [...soundNames];
+        const { sounds, quizSetting } = this.props;
+        const copyOfSoundsNames = [...quizSetting.sugestionsArray];
         const sugestions = [];
         for(let i = 0; i < numberOfSugestionsToTake; i++){
             const random = randomize(copyOfSoundsNames.length-1, 0);
@@ -55,11 +56,16 @@ class QuizContent extends React.PureComponent{
             copyOfSoundsNames.splice(random, 1);
         }
 
-        const answer = sliceProbeName(sounds[currentPlayingSoundIndex], "_");
+        const source = sounds[currentPlayingSoundIndex].source;
+        const isChord = source.search("chords") !== -1;
+        let answer = sliceProbeName(sounds[currentPlayingSoundIndex].name, isChord ? "." : "_");
+        answer = isChord ? answer.replace("_", "") : answer;
+
         const placeToPutCorrectAnswer = randomize(numberOfSugestionsToTake-1, 0);
         const isAnswerAlreadyInArray = sugestions.findIndex(i => i === answer);
         if(isAnswerAlreadyInArray === -1)
             sugestions.splice(placeToPutCorrectAnswer, 1, answer);
+
         return sugestions;
     }
 
@@ -82,7 +88,10 @@ class QuizContent extends React.PureComponent{
 
     checkIsAnswerCorrect = (index, userAnswer) => {
         const { sounds } = this.props;
-        return sliceProbeName(sounds[index], "_") === userAnswer;
+        const isChord = sounds[index].source.search("chords") !== -1;
+        let answerInArray = sliceProbeName(sounds[index].name, isChord ? "." : "_");
+        answerInArray = isChord ? answerInArray.replace("_", "") : answerInArray;
+        return answerInArray === userAnswer;
     }
 
     handleAnswer = answer => {
@@ -184,7 +193,8 @@ class QuizContent extends React.PureComponent{
 
                                             <Sugestions handleAnswer={this.handleAnswer} sugestions={sugestions} />
                                             {getSoundsStatus && 
-                                                <MusicPlayer playerState={functionToUseForProbeInMusicPlayer} musicSource={pathToGetSounds + sounds[currentPlayingSoundIndex]} />
+                                                <MusicPlayer playerState={functionToUseForProbeInMusicPlayer} 
+                                                musicSource={sounds[currentPlayingSoundIndex].source + sounds[currentPlayingSoundIndex].name} />
                                             }
                                         </div>                                       
                                     </div>

@@ -29,7 +29,6 @@ const dataExtractor = (requestType, path, payload, authorization, contentType, r
         instance.defaults.responseType = responseType;
     }
 
-    console.log(payload);
     return instance({method: requestType, url: endPoint + path, data: payload})
     .then(response => succParser(response))
     .catch(error => errorParser(error));
