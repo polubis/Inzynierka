@@ -36,8 +36,8 @@ class MusicPlayer extends React.PureComponent{
     }
 
     componentDidUpdate(prevProps){
-        const { playerState, musicSource } = this.props;
-        if(musicSource !== prevProps.musicSource){
+        const { playerState, soundIndex } = this.props;
+        if(soundIndex !== prevProps.soundIndex){
             this.play();
         }
         else if(prevProps.playerState !== playerState){

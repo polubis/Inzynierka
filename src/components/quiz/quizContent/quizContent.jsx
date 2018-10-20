@@ -193,7 +193,8 @@ class QuizContent extends React.PureComponent{
 
                                             <Sugestions handleAnswer={this.handleAnswer} sugestions={sugestions} />
                                             {getSoundsStatus && 
-                                                <MusicPlayer playerState={functionToUseForProbeInMusicPlayer} 
+                                                <MusicPlayer soundIndex={currentPlayingSoundIndex}
+                                                playerState={functionToUseForProbeInMusicPlayer} 
                                                 musicSource={sounds[currentPlayingSoundIndex].source + sounds[currentPlayingSoundIndex].name} />
                                             }
                                         </div>                                       
