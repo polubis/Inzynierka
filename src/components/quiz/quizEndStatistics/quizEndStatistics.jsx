@@ -6,7 +6,7 @@ import { createResultACreator } from '../../../store/actions/Quiz.js';
 import ErrorHoc from '../../../hoc/errorHoc';
 class QuizEndStatistics extends React.PureComponent{
     state = {
-        isSavingQuizResult: false, isSavingQuizResultAgain: false
+        isSavingQuizResult: true, isSavingQuizResultAgain: false
     }
     componentDidMount(){
         this.saveResults("isSavingQuizResult");
@@ -18,6 +18,10 @@ class QuizEndStatistics extends React.PureComponent{
         createResultACreator(answers, sounds, answerCounters, quizSetting).then(() => {
             this.setState({[stateItem]: false});
         }).catch(() => this.setState({[stateItem]: false}));
+    }
+
+    componentWillUnmount(){
+        console.log("Zegnaj");
     }
 
     render(){

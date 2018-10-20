@@ -9,17 +9,25 @@ export const createResult = (createResultStatus, createResultErrors) => {
 
 export const createResultACreator = (answers, sounds, answerCounters, quizSetting) => dispatch => {
     return new Promise((resolve, reject) => {
-        const soundNames = sounds.map(i => sliceProbeName(i, "_"));
-
-        const questions = answers.map((i, index) => {
-            return { correctAnswer: soundNames[index], answer: i.answerValue, 
-                timeForAnswerInSeconds: i.timeForAnswer, answeredBeforeSugestion: i.sugestionsWasRemoved ? false : true,
-                calculatedPoints: 120 }
+        
+        const names = sounds.map(i => {
+            const isChord = i.source.search("chords") !== -1;
+            let slicedName = sliceProbeName(i.name, isChord ? "." : "_");
+            slicedName = isChord ? i.name.replace("_", "") : slicedName;
+            if(isChord){
+                slicedName = sliceProbeName(slicedName, ".");
+            }
+            
+            return slicedName;
         });
-
+        const questions = answers.map((i, index) => {
+            return { correctAnswer: names[index], answer: i.answerValue, 
+                timeForAnswerInSeconds: quizSetting.timeForAnswer - i.timeForAnswer, answeredBeforeSugestion: i.sugestionsWasRemoved ? false : true }
+        });
+        
         const resultModel = { "quizType": quizSetting.requestName, "numberOfPositiveRates": answerCounters.correct, 
             "numberOfNegativeRates": answerCounters.negative, "questions": questions };
-
+        
         Api.Quiz.createResult(resultModel).then(response => {
             dispatch(createResult(true, []));
             resolve();
