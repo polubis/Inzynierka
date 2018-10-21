@@ -1,3 +1,102 @@
 .quiz-end-statistics{
+    padding: 0 15px;
     color: #B0B0B0;
+    .end-stats-container{
+        display: flex;
+        flex-flow: wrap;
+        .stats-caffel{
+            display: flex;
+            min-height: 250px;
+            min-width: 250px;
+            margin: 15px;
+            padding: 10px;
+            background: #2A2B2C;
+        }
+    }
+}
+
+
+.timers-ratio{
+    width: 500px;
+    & > div{
+        padding: 15px;
+        height: 50%;
+        box-sizing: border-box;
+    }
+    & > div:first-of-type{
+        i{
+            margin-right: 30px;
+            font-size: 92px;
+            float: left;
+        }
+        article{
+            p{
+                padding: 0;
+            }
+            p:first-of-type{
+                font-weight: lighter;
+            }
+            p:nth-of-type(2){
+                b{
+                    color: rgb(124, 185, 150);
+                }
+            }
+        }
+    }
+    .time-line-container{
+        display: flex;
+        div{
+            margin: auto;
+            padding: 5px;
+            display: flex;
+            flex-flow: wrap;
+        }
+        span{
+            margin: 5px;
+            padding: 2.5px;
+            color: white;
+        }
+        .greeny{
+            background: rgb(124, 185, 150);
+        }
+        .reddy{
+            background: rgb(189, 123, 123);
+        }
+    }
+  
+}
+
+.answers-ratio{
+    display: flex;
+    align-items: center;
+    margin: auto;
+    span{
+        font-size: 62px;
+        margin: 0 2px;
+        position: relative;
+        &::before{
+            font-size: 12px;
+            position: absolute;
+        }
+    }
+    span:first-of-type{
+        color: rgb(124, 185, 150);
+        &::before{
+            content: "poprawne";
+            top: -15px;
+            left: -25px;
+        }
+    }
+    span:nth-of-type(2){
+        font-size: 102px;
+        font-weight: lighter;
+    }
+    span:last-of-type{
+        color: rgb(189, 123, 123);
+        &::before{
+            bottom: -15px;
+            content: "negatywne";
+            right: -25px;
+        }
+    }
 }
