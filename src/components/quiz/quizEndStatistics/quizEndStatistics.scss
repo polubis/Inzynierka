@@ -4,23 +4,59 @@
     .end-stats-container{
         display: flex;
         flex-flow: wrap;
+        align-items: center;
         .stats-caffel{
             display: flex;
+            position: relative;
             min-height: 250px;
             min-width: 250px;
             margin: 15px;
             padding: 10px;
             background: #2A2B2C;
+            .abs-paragraph{
+                position: absolute;
+                width: 100%;
+                top: -5px;
+            }
+            h3{
+                margin: 0;
+                font-weight: lighter;
+            }
+        }
+        .column-caffel{
+            flex-flow: column;
+            & > div{
+                margin-top: auto;
+                p{
+                    margin: 5px 0;
+                    i{
+                        margin: 0 5px;
+                    }
+                }
+                p:last-of-type{
+                    margin-top: 50px;
+                }
+            }
         }
     }
 }
-
+.greeny-font{
+    color: rgb(124, 185, 150);
+}
+.reddy-font{
+    color: rgb(189, 123, 123);
+}
+.greeny{
+    background: rgb(124, 185, 150);
+}
+.reddy{
+    background: rgb(189, 123, 123);
+}
 
 .timers-ratio{
     width: 500px;
     & > div{
         padding: 15px;
-        height: 50%;
         box-sizing: border-box;
     }
     & > div:first-of-type{
@@ -50,17 +86,15 @@
             padding: 5px;
             display: flex;
             flex-flow: wrap;
-        }
-        span{
-            margin: 5px;
-            padding: 2.5px;
-            color: white;
-        }
-        .greeny{
-            background: rgb(124, 185, 150);
-        }
-        .reddy{
-            background: rgb(189, 123, 123);
+            span{
+                margin: 5px;
+                padding: 2.5px;
+                color: white;
+                border-radius: 5px;
+                b{
+                    margin: 0 5px;
+                }
+            }
         }
     }
   
@@ -79,7 +113,7 @@
             position: absolute;
         }
     }
-    span:first-of-type{
+    .greeny-span{
         color: rgb(124, 185, 150);
         &::before{
             content: "poprawne";
@@ -91,12 +125,89 @@
         font-size: 102px;
         font-weight: lighter;
     }
-    span:last-of-type{
+    .reddy-span{
         color: rgb(189, 123, 123);
         &::before{
             bottom: -15px;
             content: "negatywne";
             right: -25px;
+        }
+    }
+    .yellow-span{
+        color: #F4BE59;
+        &::before{
+            content: "pominięte";
+            top: -15px;
+            left: -25px;
+        }
+    }
+    .count-all-span{
+        &::before{
+            content: "ilość pytań";
+            width: 60px;
+            bottom: -15px;
+            right: -30px;
+        }
+    }
+}
+.place-in-rank{
+    font-size: 42px;
+    color: rgb(124, 185, 150);
+    border-radius: 50%;
+    border: 4px solid rgb(124, 185, 150);
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+.users-with-similar-rates{
+    margin: 15px;
+    padding: 10px;
+    height: 250px;
+    width: 500px;
+    border: 2px solid #2A2B2C;
+    p{
+        font-weight: lighter;
+        margin: 0;
+        padding: 10px;
+    }
+    .users-carts{
+        display: flex;
+        flex-flow: wrap;
+        .user-cart{
+            cursor: pointer;
+            margin: 10px;
+            display: flex;
+            align-items: center;
+            .username{
+                margin-left: 10px;
+                max-width: 100px;
+                font-size: 14px;
+                word-break: break-all;
+            }
+            .avatar{
+                position: relative;
+                height: 50px;
+                width: 50px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50%;
+                background: #2A2B2C;
+                & > div:first-of-type{
+                    height: 50px;
+                    width: 50px;
+                    border-radius: 50%;
+                    position: absolute;
+                    background-position: center;
+                    background-size: contain;
+                }
+                .user-icon{
+                    font-size: 24px;
+                }
+            }
         }
     }
 }
