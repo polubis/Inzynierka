@@ -9,8 +9,8 @@ const { store } = storeCreator;
 const getToken = state => state.Authenticate.token;
 
 const endPoint = "http://localhost:52535/api";
-
 const instance = axios.create({baseURL: endPoint});
+export const pathToUsersAvatar = "http://localhost:52535/pictures/avatars/";
 
 const contentTypes = {
     "standard": "application/x-www-form-urlencoded"
@@ -71,6 +71,6 @@ export const Api = {
     getSoundsChords: () => { return dataExtractor("get", "/Sounds/getsoundsmixed", undefined, true)}
   },
   Quiz: {
-    createResult: resultModel => { return dataExtractor("post", "/Quiz/createresult", resultModel) } 
+    createResult: resultModel => { return dataExtractor("post", "/Quiz/createresult", resultModel, true) } 
   }
 };

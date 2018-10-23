@@ -161,63 +161,63 @@ class QuizContent extends React.PureComponent{
         const isQuizFinished = currentPlayingSoundIndex === quizSetting.numberOfQuestions;
         return (
             <ErrorHoc errors={getSoundsErrors} isRefresingRequest={isDownloadingSoundsAgain} operation={downloadSoundsByTypeAgain}>
-                <StatsMenu answers={answers} currentPlayingSoundIndex={currentPlayingSoundIndex} getSoundsStatus={getSoundsStatus} />  
-                
-                <div className="quiz-content">
-                    {isQuizFinished ? <QuizEndStatistics answerCounters={answerCounters} quizSetting={quizSetting}
-                        answers={answers} sounds={sounds}/>
-                    :
-                    <React.Fragment>
-                        {currentPlayingSoundIndex === -1 ? 
-                            <QuizInstruction changeSettings={this.changeSettingsHandler} openSettingsModal={this.openSettingsModal} isSettingsModalOpen={isSettingsModalOpen} 
-                            closeSettingsModal={() => this.setState({isSettingsModalOpen: false})}
-                            startQuiz={this.startQuiz} settings={quizSetting} />
-                            : 
-                            <React.Fragment>
-                                <QuizNavigation answerCounters={answerCounters} currentPlayingSoundIndex={currentPlayingSoundIndex}
-                                numberOfUsedPauses={numberOfUsedPauses} numberOfQuestions={quizSetting.numberOfQuestions}
-                                accuracy={0.1} showPulseAnimation={false} shouldPause={isQuizPaused} label="cały czas trwania" />
-                                <div className="footer-content-container">
-                                    <div className="section-content">
-                                        <h1><span className="dots">Pytanie {translatedIndexesInWords[currentPlayingSoundIndex]}</span></h1>
-                                        <div className="quiz-panel">
-                                            <Timer component={GraphTimer}
-                                            executeOtherFunctionTime={quizSetting.sugestionsWillBeCutAfter}
-                                            otherFunction={this.handleCutSugestions}
-                                            resetTimerFunction={this.putTimeIntoAnswer} 
-                                            shouldResetTimer={shouldResetQuestionsTimer} 
-                                            timerEndFunction={this.handleAnswerAutomaticly} 
-                                            shouldDecrement shouldReset showGraphTimer 
-                                            startTime={quizSetting.timeForAnswer} accuracy={0.1} showPulseAnimation={false} 
-                                            shouldPause={isQuizPaused} />
+            <StatsMenu answers={answers} currentPlayingSoundIndex={currentPlayingSoundIndex} getSoundsStatus={getSoundsStatus} />  
+            
+            <div className="quiz-content">
+                {isQuizFinished ? <QuizEndStatistics answerCounters={answerCounters} quizSetting={quizSetting}
+                    answers={answers} sounds={sounds}/>
+                :
+                <React.Fragment>
+                    {currentPlayingSoundIndex === -1 ? 
+                        <QuizInstruction changeSettings={this.changeSettingsHandler} openSettingsModal={this.openSettingsModal} isSettingsModalOpen={isSettingsModalOpen} 
+                        closeSettingsModal={() => this.setState({isSettingsModalOpen: false})}
+                        startQuiz={this.startQuiz} settings={quizSetting} />
+                        : 
+                        <React.Fragment>
+                            <QuizNavigation answerCounters={answerCounters} currentPlayingSoundIndex={currentPlayingSoundIndex}
+                            numberOfUsedPauses={numberOfUsedPauses} numberOfQuestions={quizSetting.numberOfQuestions}
+                            accuracy={0.1} showPulseAnimation={false} shouldPause={isQuizPaused} label="cały czas trwania" />
+                            <div className="footer-content-container">
+                                <div className="section-content">
+                                    <h1><span className="dots">Pytanie {translatedIndexesInWords[currentPlayingSoundIndex]}</span></h1>
+                                    <div className="quiz-panel">
+                                        <Timer component={GraphTimer}
+                                        executeOtherFunctionTime={quizSetting.sugestionsWillBeCutAfter}
+                                        otherFunction={this.handleCutSugestions}
+                                        resetTimerFunction={this.putTimeIntoAnswer} 
+                                        shouldResetTimer={shouldResetQuestionsTimer} 
+                                        timerEndFunction={this.handleAnswerAutomaticly} 
+                                        shouldDecrement shouldReset showGraphTimer 
+                                        startTime={quizSetting.timeForAnswer} accuracy={0.1} showPulseAnimation={false} 
+                                        shouldPause={isQuizPaused} />
 
-                                            <Sugestions handleAnswer={this.handleAnswer} sugestions={sugestions} />
-                                            {getSoundsStatus && 
-                                                <MusicPlayer soundIndex={currentPlayingSoundIndex}
-                                                playerState={functionToUseForProbeInMusicPlayer} 
-                                                musicSource={sounds[currentPlayingSoundIndex].source + sounds[currentPlayingSoundIndex].name} />
-                                            }
-                                        </div>                                       
+                                        <Sugestions handleAnswer={this.handleAnswer} sugestions={sugestions} />
+                                        {getSoundsStatus && 
+                                            <MusicPlayer soundIndex={currentPlayingSoundIndex}
+                                            playerState={functionToUseForProbeInMusicPlayer} 
+                                            musicSource={sounds[currentPlayingSoundIndex].source + sounds[currentPlayingSoundIndex].name} />
+                                        }
+                                    </div>                                       
+                                </div>
+                                <footer>
+                                    <div className="footer-icons">
+                                        <i onClick={numberOfUsedPauses !== 0 ? this.toglePauseState : null} 
+                                        className={`fa fa-${isQuizPaused ? "play" : "pause"} ${numberOfUsedPauses === 0 ? "disabled-element" : ""}`}></i>
                                     </div>
-                                    <footer>
-                                        <div className="footer-icons">
-                                            <i onClick={numberOfUsedPauses !== 0 ? this.toglePauseState : null} 
-                                            className={`fa fa-${isQuizPaused ? "play" : "pause"} ${numberOfUsedPauses === 0 ? "disabled-element" : ""}`}></i>
-                                        </div>
-                                    </footer>
-                                </div>    
-                                    
-                            </React.Fragment>
-                        }
-                    </React.Fragment>
+                                </footer>
+                            </div>    
+                                
+                        </React.Fragment>
                     }
-                    </div>
-                    {isQuizPaused && 
-                        <PausedQuizModal toglePauseState={this.toglePauseState} quizSetting={quizSetting} 
-                        numberOfUsedPauses={numberOfUsedPauses} currentPlayingSoundIndex={currentPlayingSoundIndex} /> 
-                    }
+                </React.Fragment>
+                }
+                </div>
+                {isQuizPaused && 
+                    <PausedQuizModal toglePauseState={this.toglePauseState} quizSetting={quizSetting} 
+                    numberOfUsedPauses={numberOfUsedPauses} currentPlayingSoundIndex={currentPlayingSoundIndex} /> 
+                }
 
-                    <Button onClick={this.exitFromQuiz} name="Wyjdź" className="white-btn medium-btn" />
+                <Button onClick={this.exitFromQuiz} name="Wyjdź" className="white-btn medium-btn" />
         </ErrorHoc>  
         );
     }

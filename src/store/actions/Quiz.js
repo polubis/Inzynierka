@@ -7,14 +7,6 @@ export const createResult = (resultData, createResultStatus, createResultErrors)
     return { type: CREATE_RESULT, resultData, createResultStatus, createResultErrors }
 }
 
-const mockedUsers = [
-        {id: 0, username: "piotr", img: MockPicture, sex: "mężczyzna" },
-        {id: 1, username: "pamela_siemanero", img: MockPicture, sex: "kobieta" },
-        {id: 2, username: "jaro17", img: null, sex: "mężczyzna" },
-        {id: 3, username: "jaro17", img: null, sex: "mężczyzna" },
-        {id: 4, username: "jaro17", img: null, sex: "mężczyzna" },
-        {id: 5, username: "jaro17", img: null, sex: "kobieta" }
-    ];
 export const createResultACreator = (answers, sounds, answerCounters, quizSetting) => dispatch => {
     return new Promise((resolve, reject) => {
         
@@ -54,11 +46,18 @@ export const createResultACreator = (answers, sounds, answerCounters, quizSettin
                     question.timeForAnswerInSeconds.toFixed(1)),
                 limit: quizSetting.numberOfQuestions,
                 sumTime: sumTime.toFixed(1),
+                actualPoints: response.actualPoints,
                 correctAnswers: names,
                 numberOfIgnoredQuestions,
-                numberInRank: 10,
-                similarUsers: mockedUsers,
-                decentTimeForQuiz: 15
+                numberInRank: response.placeInRank,
+                similarUsers: response.similarUsers,
+                decentTimeForQuiz: response.timeAverage,
+                numberOfPlayedGames: response.numberOfPlayedGames,
+                effectiveness: response.effectiveness,
+                percentageRatio: answerCounters.correct === 0 ? 0 : ((answerCounters.correct / quizSetting.numberOfQuestions) * 100),
+                timeRatioMessage: checkIsTimeRatioNearAverage(sumTime, response.timeAverage),
+                numberOfAllPositiveAnswers: response.numberOfAllPositiveAnswers,
+                numberOfAllNegativeAnswers: response.numberOfAllNegativeAnswers
             }
             dispatch(createResult(resultData, true, []));
             resolve();
@@ -67,4 +66,14 @@ export const createResultACreator = (answers, sounds, answerCounters, quizSettin
             reject();
         });
     })
+}
+
+const checkIsTimeRatioNearAverage = (time, averageTime) => {
+    if(time < averageTime)
+        return "Uzyskany wynik czasowy jest lepszy od średniej";
+    if(time === averageTime)
+        return "Uzyskany wynik czasowy jest równy średniej";
+    if(time > averageTime){
+        return "Uzyskany wynik czasowy jest gorszy od średniej";
+    }
 }

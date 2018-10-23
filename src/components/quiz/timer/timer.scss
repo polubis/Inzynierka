@@ -10,6 +10,12 @@
         font-size: 15px;
         color: #B0B0B0;
     }
+    @media(max-width: 464px){
+        font-size: 24px;
+        span{
+            font-size: 12px;
+        }
+    }
 }
 .pulse-timer{
     animation: 1s animate-timer infinite;

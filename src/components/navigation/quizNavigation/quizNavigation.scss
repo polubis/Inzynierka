@@ -3,20 +3,53 @@
     display: flex;
     margin: 0 15px;
     border-bottom: 1px solid white;
+    @media(max-width: 464px){
+      margin: 0;
+    }
     .nav-btns-container{
       width: 100%;
       margin-left: 25px;
       display: flex;
       align-items: center;
+      @media(max-width: 464px){
+        justify-content: flex-end;
+      }
       .nav-quiz-item{
         font-size: 24px;
         margin: 0 15px;
         color: #B0B0B0;
         display: flex;
         flex-flow: column;
-      
+        @media(max-width: 976px){
+          font-size: 16px;
+        }
         span{
             font-size: 12px;
+            @media(max-width: 976px){
+              font-size: 10px;
+            }
+        }
+      }
+      @media(max-width: 644px){
+        .nav-quiz-item:nth-of-type(2){
+          display: none;
+        }
+        .nav-quiz-item:nth-of-type(3){
+          span{
+            display: none;
+          }
+        }
+        .nav-quiz-item:last-of-type{
+          span{
+            display: none;
+          }
+        }
+      }
+      @media(max-width: 464px){
+        .nav-quiz-item:nth-of-type(1){
+          span{
+            display: none;
+          }
         }
       }
     }

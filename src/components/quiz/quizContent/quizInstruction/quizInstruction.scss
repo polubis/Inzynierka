@@ -4,6 +4,10 @@
     justify-content: center;
     height: 100%;
     align-items: center;
+    @media(max-width: 976px){
+        align-self: flex-end;
+        margin-top: 25px;
+    }
     & > div{
         text-align: center;
         header{
@@ -11,6 +15,9 @@
             font-weight: lighter;
             &::before, &::after{
                 background: #7CB996
+            }
+            @media(max-width: 976px){
+                font-size: 20px;
             }
             span{
              color: #7CB996;

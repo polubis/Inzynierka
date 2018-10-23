@@ -1,21 +1,21 @@
 .side-stats-menu {
     color: white;
-    padding-bottom: 25px;
     .enable-result-list-animation {
       overflow-y: auto;
       max-height: 100vh;
-      padding: 0 15px;
+      padding: 0 10px;
+      box-sizing: border-box;
+      @media(max-width: 976px){
+        display: flex;
+        justify-content: center;
+        flex-flow: wrap;
+        padding-top: 15px;
+      }
       .correct-answer{
         background: #7CB996;
-        &:hover{
-            background: #69B98B;
-        }
       }
       .incorrect-answer{
         background: #C08787;
-        &:hover{
-            background: #BD7B7B;
-        }
       }
       .active-question{
           background: #F4BE5A;
@@ -25,13 +25,21 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          margin: 25px auto;
           border-radius: 50%;
+          margin: 25px auto;
           i{
             font-size: 22px;
           }
           &:hover{
               background: #F5BB4E
+          }
+          @media(max-width: 976px){
+            width: 20px;
+            height: 20px;
+            margin: 0 10px;
+            i{
+              font-size: 16px;
+            }
           }
       }
      
@@ -71,15 +79,24 @@
             width: 100%;
             i{
                 font-size: 24px;
+                @media(max-width: 976px){
+                  font-size: 16px;
+                }
             }
             p{
                 margin: 10px 0;
                 font-size: 15px;
                 text-align: center;
+                @media(max-width: 976px){
+                    display: none;
+                }
             }
             p:last-of-type{
               display: flex;
               align-items: center;
+              @media(max-width: 976px){
+                display: none;
+              }
               i{
                 margin-right: 5px;
                 font-size: 18px;
@@ -88,10 +105,22 @@
                 margin-left: 10px;
               }
             }
+           
+            
         }
         .lock-status-container{
             color: #B0B0B0;
         }
+        @media(max-width: 976px){
+          width: 20px;
+          border-radius: 50%;
+          height: 20px;
+          margin: 10px;
+        }
+        @media(max-width: 644px){
+          margin: 5px;
+        }
       }
+     
     }
   }
